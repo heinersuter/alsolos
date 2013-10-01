@@ -13,12 +13,21 @@ function ApplicationController($scope, angularFire) {
     $scope.isBuzzerDisabled = true;
     $scope.isResetDisabled = true;
 
+    $scope.$watch(
+        'winner',
+        function (newValue, oldValue) {
+            $scope.isBuzzerDisabled = ($scope.winner != "");
+            $scope.isResetDisabled = ($scope.winner != $scope.userName);
+        });
+
+
     $scope.addUser = function () {
         if ($scope.users.indexOf($scope.userName) != -1) {
             return;
         }
         $scope.isJoinDisabled = true;
-        $scope.isBuzzerDisabled = false;
+        $scope.isBuzzerDisabled = ($scope.winner != "");
+        $scope.isResetDisabled = ($scope.winner != $scope.userName);
         $scope.users.push($scope.userName);
         $scope.msg = "";
     };

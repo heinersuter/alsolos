@@ -1,2 +1,3 @@
 *.suo
-/Alsolos.Buzzer/Alsolos.Buzzer/bin
+bin
+obj

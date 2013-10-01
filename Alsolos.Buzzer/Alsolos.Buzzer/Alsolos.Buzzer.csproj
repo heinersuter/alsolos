@@ -34,10 +34,10 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="js\ApplicationController.js" />
+    <Content Include="js\LoginController.js" />
+    <Content Include="views\LoginView.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="views\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
