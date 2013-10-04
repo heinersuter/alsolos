@@ -1,0 +1,19 @@
+﻿<Application x:Class="Alsolos.Photo.Renamer.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:Alsolos.Commons.Mvvm.Converters;assembly=Alsolos.Commons"
+             StartupUri="MainView.xaml" Startup="OnApplicationStartup" Exit="OnApplicationExit">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/View/Infra/HeaderedContentControlStyles.xaml" />
+                <ResourceDictionary Source="/View/Infra/ItemsControlStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+            <converters:BoolToInverseBoolConverter x:Key="BoolToInverseBoolConverter" />
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

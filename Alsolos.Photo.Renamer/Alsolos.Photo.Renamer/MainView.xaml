@@ -1,0 +1,45 @@
+﻿<Window x:Class="Alsolos.Photo.Renamer.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:View="clr-namespace:Alsolos.Photo.Renamer.View" 
+        xmlns:Renamer="clr-namespace:Alsolos.Photo.Renamer"
+        Title="{Binding Title}" Height="512" Width="1024" 
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance View:FileRenameViewModel}">
+    <Window.DataContext>
+        <Renamer:MainViewModel />
+    </Window.DataContext>
+
+    <UniformGrid Columns="4">
+
+        <Border Background="LightBlue" Margin="0 0 8 0">
+            <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
+                <TextBlock Text="Files" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <View:FilesSelectorView DataContext="{Binding FileRenameViewModel.FilesSelectorViewModel}" />
+            </ItemsControl>
+        </Border>
+
+        <Border Background="LightBlue" Margin="0 0 8 0">
+            <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
+                <TextBlock Text="Parameters" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <View:ParameterView DataContext="{Binding FileRenameViewModel.ParameterViewModel}" />
+            </ItemsControl>
+        </Border>
+
+        <Border Background="LightBlue" Margin="0 0 8 0">
+            <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
+                <TextBlock Text="Preview" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <View:FilePreviewView DataContext="{Binding FileRenameViewModel.FilePreviewViewModel}" />
+            </ItemsControl>
+        </Border>
+
+        <Border Background="LightBlue" Margin="0">
+            <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
+                <TextBlock Text="Execute" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <View:ExecuteView DataContext="{Binding FileRenameViewModel.ExecuteViewModel}" />
+            </ItemsControl>
+        </Border>
+
+    </UniformGrid>
+</Window>

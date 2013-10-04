@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Alsolos.Photo.Renamer.View.ParameterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View" 
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance view:ParameterViewModel}">
+    <DockPanel IsEnabled="{Binding FileRenameViewModel.IsBusy, Converter={StaticResource BoolToInverseBoolConverter}}">
+
+        <UniformGrid DockPanel.Dock="Bottom" Columns="2">
+            <FrameworkElement Margin="8" />
+            <Button Command="{Binding ResetCommand}" Margin="0 8 8 8" Content="Reset" />
+        </UniformGrid>
+        <StackPanel>
+            <HeaderedContentControl Header="Constant Name" Margin="8 8 8 0">
+                <Border Background="White">
+                    <TextBox Text="{Binding ConstantName, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
+                </Border>
+            </HeaderedContentControl>
+
+            <FrameworkElement Height="46" Margin="8 8 8 0" />
+
+            <HeaderedContentControl Header="Offset Seconds" Margin="8 8 8 0">
+                <xctk:IntegerUpDown Value="{Binding Seconds, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
+            </HeaderedContentControl>
+
+            <HeaderedContentControl Header="Offset Minutes" Margin="8 8 8 0">
+                <xctk:IntegerUpDown Value="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
+            </HeaderedContentControl>
+
+            <HeaderedContentControl Header="Offset Hours" Margin="8 8 8 0">
+                <xctk:IntegerUpDown Value="{Binding Hours, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
+            </HeaderedContentControl>
+
+            <HeaderedContentControl Header="Offset Days" Margin="8 8 8 0">
+                <xctk:IntegerUpDown Value="{Binding Days, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
+            </HeaderedContentControl>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

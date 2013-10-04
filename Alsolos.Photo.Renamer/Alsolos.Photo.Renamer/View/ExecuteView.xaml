@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Alsolos.Photo.Renamer.View.ExecuteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View" 
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance view:ExecuteViewModel}">
+    <DockPanel>
+
+        <UniformGrid DockPanel.Dock="Bottom" Columns="2">
+            <Button Command="{Binding ExecuteCommand}" Margin="8">Execute</Button>
+            <Button Command="{Binding AbortCommand}" Margin="0 8 8 8">Cancel</Button>
+        </UniformGrid>
+
+        <ProgressBar Visibility="{Binding FileRenameViewModel.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" 
+            Margin="8" VerticalAlignment="Bottom" Height="22"
+            Value="{Binding ExecutionProgress}" Minimum="0.0" Maximum="1.0" />
+
+    </DockPanel>
+</UserControl>
