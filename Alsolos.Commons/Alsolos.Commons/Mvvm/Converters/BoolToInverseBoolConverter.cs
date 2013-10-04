@@ -4,6 +4,8 @@
     using System.Windows.Data;
 
     public class BoolToInverseBoolConverter : IValueConverter {
+        public static readonly BoolToInverseBoolConverter Instance = new BoolToInverseBoolConverter();
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             return !(bool)value;
         }

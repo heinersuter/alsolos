@@ -5,6 +5,8 @@
     using System.Windows.Data;
 
     public class BoolToVisibilityConverter : IValueConverter {
+        public static readonly BoolToVisibilityConverter Instance = new BoolToVisibilityConverter();
+
         public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             var boolValue = false;
 
