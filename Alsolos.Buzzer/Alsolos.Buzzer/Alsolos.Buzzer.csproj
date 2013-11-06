@@ -37,7 +37,8 @@
     <Content Include="app\controllers\buzzerController.js" />
     <Content Include="app\controllers\gameController.js" />
     <Content Include="app\controllers\userController.js" />
-    <Content Include="app\controllers\controllerContext.js" />
+    <Content Include="app\services\controllerContext.js" />
+    <Content Include="app\services\gameService.js" />
     <Content Include="app\views\buzzer.html" />
     <Content Include="app\views\game.html" />
     <Content Include="app\views\user.html" />
@@ -46,9 +47,7 @@
     <Content Include="lib\angularfire.min.js" />
     <Content Include="lib\firebase.js" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,31 +1,34 @@
 (function () {
     'use strict';
     var moduleId = 'GameController';
-    angular.module('app').controller(moduleId, ["$scope", "angularFire", "ControllerContext", controller]);
+    angular.module('app').controller(moduleId, ["$scope", "ControllerContext", "GameService", controller]);
 
-    function controller($scope, angularFire, controllerContext) {
-        $scope.state = controllerContext;
+    function controller($scope, controllerContext, gameService) {
+        $scope.context = controllerContext;
         controllerContext.gameName = "";
 
-		var firebaseRef = new Firebase("https://alsolos.firebaseIO.com/buzzer/games");
-		$scope.games = [];
-		angularFire(firebaseRef, $scope, "games");
-		
-		$scope.create = function () {
-		    if (controllerContext.gameName == "") {
-				return;
-			}
-		    controllerContext.isGameAssigned = true;
-		    controllerContext.isGameOwner = true;
-		};
+        $scope.create = function () {
+            if (controllerContext.gameName == "") {
+                return;
+            }
 
-		$scope.join = function () {
-		    if (controllerContext.gameName == "") {
-				return;
-			}
-		    controllerContext.isGameAssigned = true;
-		    controllerContext.isGameOwner = false;
-		};
+            gameService.canCreate($scope, controllerContext.gameName, function (result) {
+                if (result) {
+                    controllerContext.isGameAssigned = true;
+                    controllerContext.isGameOwner = true;
+                }
+            });
+        };
+
+        $scope.join = function () {
+            if (controllerContext.gameName == "") {
+                return;
+            }
+            if (gameService.canJoin(controllerContext.gameName)) {
+                controllerContext.isGameAssigned = true;
+                controllerContext.isGameOwner = true;
+            }
+        };
 
     }
 })();
