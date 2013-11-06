@@ -1,32 +1,32 @@
 ﻿<!DOCTYPE html>
-<html ng-app="buzzer">
+<html ng-app="app">
 <head>
     <meta charset="UTF-8">
-    <title>Alsolos Buzzer</title>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js'></script>
+    <title>Buzzer</title>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/firebase.js"></script>
+    <script src="lib/angularfire.min.js"></script>
+    <!--<script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js'></script>
     <script src='https://cdn.firebase.com/v0/firebase.js'></script>
-    <script src='https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js'></script>
-    <script src="js/ApplicationController.js"></script>
+    <script src='https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js'></script>-->
+    
+	<script src="app/app.js"></script>
+    <script src="app/controllers/controllerContext.js"></script>
+    <script src="app/controllers/applicationController.js"></script>
+    <script src="app/controllers/gameController.js"></script>
+    <script src="app/controllers/userController.js"></script>
+    <script src="app/controllers/buzzerController.js"></script>
 </head>
 <body ng-controller="ApplicationController">
     <header>
-        <h1>Alsolos Buzzer</h1>
+        <h1>Buzzer</h1>
     </header>
+	
+    <div ng-include="'app/views/game.html'"></div>
 
-    <div>
-        <form ng-submit="addUser()">
-            <input type="text" ng-model="userName" placeholder="Name" ng-disabled="isJoinDisabled">
-            <input type="submit" value="Join" ng-disabled="isJoinDisabled">
-        </form>
-    </div>
+    <div ng-include="'app/views/user.html'"></div>
 
-    <div>
-        <button ng-click="buzzer()" ng-disabled="isBuzzerDisabled">BUZZER</button>
-    </div>
+    <div ng-include="'app/views/buzzer.html'"></div>
 
-    <div>
-        <div>{{winner}}</div>
-        <button ng-click="reset()" ng-disabled="isResetDisabled">Reset</button>
-    </div>
 </body>
 </html>

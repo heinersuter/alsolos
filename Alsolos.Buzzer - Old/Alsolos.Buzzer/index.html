@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html ng-app="buzzer">
+<head>
+    <meta charset="UTF-8">
+    <title>Alsolos Buzzer</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.1.5/angular.min.js'></script>
+    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+    <script src='https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js'></script>
+    <script src="js/ApplicationController.js"></script>
+</head>
+<body ng-controller="ApplicationController">
+    <header>
+        <h1>Alsolos Buzzer</h1>
+    </header>
+
+    <div>
+        <form ng-submit="addUser()">
+            <input type="text" ng-model="userName" placeholder="Name" ng-disabled="isJoinDisabled">
+            <input type="submit" value="Join" ng-disabled="isJoinDisabled">
+        </form>
+    </div>
+
+    <div>
+        <button ng-click="buzzer()" ng-disabled="isBuzzerDisabled">BUZZER</button>
+    </div>
+
+    <div>
+        <div>{{winner}}</div>
+        <button ng-click="reset()" ng-disabled="isResetDisabled">Reset</button>
+    </div>
+</body>
+</html>

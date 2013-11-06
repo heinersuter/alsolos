@@ -32,23 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="app\app.js" />
-    <Content Include="app\controllers\applicationController.js" />
-    <Content Include="app\controllers\buzzerController.js" />
-    <Content Include="app\controllers\gameController.js" />
-    <Content Include="app\controllers\userController.js" />
-    <Content Include="app\controllers\controllerContext.js" />
-    <Content Include="app\views\buzzer.html" />
-    <Content Include="app\views\game.html" />
-    <Content Include="app\views\user.html" />
     <Content Include="index.html" />
-    <Content Include="lib\angular.min.js" />
-    <Content Include="lib\angularfire.min.js" />
-    <Content Include="lib\firebase.js" />
+    <Content Include="app\ApplicationController.js" />
+    <Content Include="app\LoginController.js" />
+    <Content Include="views\LoginView.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\services\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

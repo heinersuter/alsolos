@@ -1,0 +1,19 @@
+<div ng-controller="BuzzerController">
+	<div ng-show="state.isGameAssigned">
+		<div ng-show="state.isUserAssigned">
+		
+			<div ng-show="state.isBuzzerReady">
+				<input ng-click="buzzer()" type="submit" value="BUZZER"/>
+			</div>
+			
+			<div ng-hide="state.isBuzzerReady">
+				<div>Winner: {{state.winnerName}}</div>
+			</div>
+			
+			<div ng-show="state.isGameOwner &amp;&amp; !state.isBuzzerReady">
+				<input ng-click="reset()" type="submit" value="Reset"/>
+			</div>
+			
+		</div>
+	</div>
+</div>

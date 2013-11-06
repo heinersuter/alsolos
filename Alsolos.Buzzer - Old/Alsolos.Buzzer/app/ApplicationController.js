@@ -1,4 +1,4 @@
-﻿var app = angular.module("buzzer", ["firebase"]);
+﻿angular.module("buzzer", ["firebase"]);
 
 function ApplicationController($scope, angularFire) {
     var fbUsersRef = new Firebase("https://alsolos.firebaseIO.com/buzzer/game/users");

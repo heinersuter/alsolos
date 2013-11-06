@@ -1,0 +1,13 @@
+<div ng-controller="GameController">
+
+    <div ng-hide="state.isGameAssigned">
+        <input type="text" ng-model="state.gameName" placeholder="Game-Name"></input>
+        <input ng-click="create()" type="submit" value="Create"></input>
+        <input ng-click="join()" type="submit" value="Join"></input>
+    </div>
+
+    <div ng-show="state.isGameAssigned">
+		<div>Game: {{state.gameName}}</div>
+	</div>
+
+	</div>
