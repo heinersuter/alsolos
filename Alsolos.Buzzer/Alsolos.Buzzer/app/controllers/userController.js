@@ -7,17 +7,19 @@
         $scope.context = context;
         context.userName = "";
 		
-		$scope.joinAsUser = function () {
+		$scope.join = function () {
 		    if (context.userName == "") {
 				return;
 		    }
 		    if (context.isGameOwner) {
-		        gameService.create($scope, context.gameName, context.userName);
-		    }
+		        gameService.create(context.gameName, context.userName);
+		        context.isUserAssigned = true;
+            }
 		    else {
-		        gameService.join($scope, context.gameName, context.userName);
+		        if (gameService.join(context.gameName, context.userName)) {
+		            context.isUserAssigned = true;
+		        }
 		    }
-		    context.isUserAssigned = true;
 		};
     }
 })();

@@ -1,40 +1,69 @@
 ﻿(function () {
     'use strict';
     var moduleId = 'GameService';
-    angular.module('app').service(moduleId, ["angularFire", service]);
+    angular.module('app').service(moduleId, ["angularFire", "$rootScope", service]);
 
-    function service(angularFire) {
+    function service(angularFire, $rootScope) {
 
         var gamesRef = new Firebase("https://alsolos.firebaseIO.com/buzzer/games");
 
-        this.canCreate = function ($scope, gameName, callback) {
-            canCreateOrJoin($scope, gameName, callback, true);
+        this.canCreate = function (gameName, callback) {
+            canCreateOrJoin(gameName, callback, true);
         };
 
-        this.create = function ($scope, gameName, ownerName) {
-            gamesRef.child(gameName).set({ name: gameName, ownerName: ownerName, created: new Date().getTime() });
-            gamesRef.child(gameName).child("users").child(ownerName).set({ name: ownerName });
+        this.create = function (gameName, userName) {
+            var result = false;
+
+            var gameRef = gamesRef.child(gameName);
+            gameRef.transaction(function (currentData) {
+                if (currentData === null) {
+                    result = true;
+                    return { name: gameName, ownerName: userName, updated: new Date().getTime() };
+                } else {
+                    result = false;
+                    return undefined;
+                }
+            });
+
+            if (result) {
+                gamesRef.child(gameName).child("users").child(userName).set({ name: userName, updated: new Date().getTime() });
+            }
+            
+            return result;
         };
 
-        this.canJoin = function ($scope, gameName, callback) {
-            canCreateOrJoin($scope, gameName, callback, false);
+        this.canJoinGame = function (gameName, callback) {
+            canCreateOrJoin(gameName, callback, false);
         };
 
-        this.join = function ($scope, gameName, userName) {
-            gamesRef.child(gameName).child("users").child(userName).set({ name: userName });
+        this.join = function (gameName, userName) {
+            var result = false;
+
+            var userRef = gamesRef.child(gameName).child("users").child(userName);
+            userRef.transaction(function (currentData) {
+                if (currentData === null) {
+                    result = true;
+                    return { name: userName, updated: new Date().getTime() };
+                } else {
+                    result = false;
+                    return undefined;
+                }
+            });
+
+            return result;
         };
 
-        function canCreateOrJoin($scope, gameName, callback, isCreate) {
+        function canCreateOrJoin(gameName, callback, isCreate) {
             var isNameExisting;
-            if ($scope.games === undefined) {
-                $scope.games = [];
-                var promise = angularFire(gamesRef, $scope, "games");
+            if ($rootScope.games === undefined) {
+                $rootScope.games = [];
+                var promise = angularFire(gamesRef, $rootScope, "games");
                 promise.then(function () {
-                    isNameExisting = isItemContained($scope.games, gameName);
+                    isNameExisting = isItemContained($rootScope.games, gameName);
                     callback(isCreate != isNameExisting);
                 });
             } else {
-                isNameExisting = isItemContained($scope.games, gameName);
+                isNameExisting = isItemContained($rootScope.games, gameName);
                 callback(isCreate != isNameExisting);
             }
         }

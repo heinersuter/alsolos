@@ -3,18 +3,18 @@
     var moduleId = 'BuzzerController';
     angular.module('app').controller(moduleId, ["$scope", "ControllerContext", controller]);
 
-    function controller($scope, controllerContext) {
-        $scope.state = controllerContext;
-        controllerContext.isBuzzerReady = true;
+    function controller($scope, context) {
+        $scope.context = context;
+        context.isBuzzerReady = true;
 
 		$scope.buzzer = function () {
-		    controllerContext.winnerName = controllerContext.userName;
-		    controllerContext.isBuzzerReady = false;
+		    context.winnerName = context.userName;
+		    context.isBuzzerReady = false;
 		};
 
 		$scope.reset = function () {
-		    controllerContext.winnerName = "";
-		    controllerContext.isBuzzerReady = true;
+		    context.winnerName = "";
+		    context.isBuzzerReady = true;
 		};
     }
 })();

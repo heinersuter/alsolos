@@ -12,7 +12,7 @@
                 return;
             }
 
-            gameService.canCreate($scope, context.gameName, function (result) {
+            gameService.canCreate(context.gameName, function (result) {
                 if (result) {
                     context.isGameAssigned = true;
                     context.isGameOwner = true;
@@ -24,7 +24,7 @@
             if (context.gameName == "") {
                 return;
             }
-            gameService.canJoin($scope, context.gameName, function (result) {
+            gameService.canJoinGame(context.gameName, function (result) {
                 if (result) {
                     context.isGameAssigned = true;
                     context.isGameOwner = false;
