@@ -3,31 +3,33 @@
     var moduleId = 'GameController';
     angular.module('app').controller(moduleId, ["$scope", "ControllerContext", "GameService", controller]);
 
-    function controller($scope, controllerContext, gameService) {
-        $scope.context = controllerContext;
-        controllerContext.gameName = "";
+    function controller($scope, context, gameService) {
+        $scope.context = context;
+        context.gameName = "";
 
         $scope.create = function () {
-            if (controllerContext.gameName == "") {
+            if (context.gameName == "") {
                 return;
             }
 
-            gameService.canCreate($scope, controllerContext.gameName, function (result) {
+            gameService.canCreate($scope, context.gameName, function (result) {
                 if (result) {
-                    controllerContext.isGameAssigned = true;
-                    controllerContext.isGameOwner = true;
+                    context.isGameAssigned = true;
+                    context.isGameOwner = true;
                 }
             });
         };
 
         $scope.join = function () {
-            if (controllerContext.gameName == "") {
+            if (context.gameName == "") {
                 return;
             }
-            if (gameService.canJoin(controllerContext.gameName)) {
-                controllerContext.isGameAssigned = true;
-                controllerContext.isGameOwner = true;
-            }
+            gameService.canJoin($scope, context.gameName, function (result) {
+                if (result) {
+                    context.isGameAssigned = true;
+                    context.isGameOwner = false;
+                }
+            });
         };
 
     }

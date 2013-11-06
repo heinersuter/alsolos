@@ -5,39 +5,48 @@
 
     function service(angularFire) {
 
-        function canCreateCallback($scope, gameName, callback) {
-            var isNameNotExisting = true;
-            for (var i = 0; i < $scope.games.length; i++) {
-                if ($scope.games[i].name === gameName) {
-                    isNameNotExisting = false;
-                }
-            }
-            if (isNameNotExisting) {
-                $scope.games.push({ name: gameName });
-            }
-            callback(isNameNotExisting);
-        }
+        var gamesRef = new Firebase("https://alsolos.firebaseIO.com/buzzer/games");
 
         this.canCreate = function ($scope, gameName, callback) {
-            var firebaseRef = new Firebase("https://alsolos.firebaseIO.com/buzzer/games");
-            if ($scope.games === undefined) {
-                $scope.games = [];
-                var promise = angularFire(firebaseRef, $scope, "games");
-                promise.then(function () {
-                    canCreateCallback($scope, gameName, callback);
-                });
-            } else {
-                canCreateCallback($scope, gameName, callback);
-            }
+            canCreateOrJoin($scope, gameName, callback, true);
         };
 
-        this.camJoin = function ($scope, gameName) {
-            if ($scope.games.indexOf(gameName) == -1) {
-                return false;
-            }
-            $scope.games.push(gameName);
-            return true;
+        this.create = function ($scope, gameName, ownerName) {
+            gamesRef.child(gameName).set({ name: gameName, ownerName: ownerName, created: new Date().getTime() });
+            gamesRef.child(gameName).child("users").child(ownerName).set({ name: ownerName });
         };
+
+        this.canJoin = function ($scope, gameName, callback) {
+            canCreateOrJoin($scope, gameName, callback, false);
+        };
+
+        this.join = function ($scope, gameName, userName) {
+            gamesRef.child(gameName).child("users").child(userName).set({ name: userName });
+        };
+
+        function canCreateOrJoin($scope, gameName, callback, isCreate) {
+            var isNameExisting;
+            if ($scope.games === undefined) {
+                $scope.games = [];
+                var promise = angularFire(gamesRef, $scope, "games");
+                promise.then(function () {
+                    isNameExisting = isItemContained($scope.games, gameName);
+                    callback(isCreate != isNameExisting);
+                });
+            } else {
+                isNameExisting = isItemContained($scope.games, gameName);
+                callback(isCreate != isNameExisting);
+            }
+        }
+
+        function isItemContained(games, gameName) {
+            for (var game in games) {
+                if (game == gameName) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
 })();
