@@ -1,0 +1,21 @@
+﻿h1 {
+    margin: 8px;
+}
+
+.textInput {
+    margin: 8px;
+    width: auto;
+}
+
+.halfButton {
+    margin: 8px;
+    width: auto;
+}
+
+.buzzerButton {
+    background-color: red;
+    width: 200px;
+    height: 200px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}

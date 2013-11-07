@@ -51,6 +51,7 @@
     <Content Include="app\controllers\buzzerController.js" />
     <Content Include="app\controllers\gameController.js" />
     <Content Include="app\controllers\userController.js" />
+    <Content Include="app\css\app.css" />
     <Content Include="app\services\controllerContext.js" />
     <Content Include="app\services\gameService.js" />
     <Content Include="app\views\buzzer.html" />
