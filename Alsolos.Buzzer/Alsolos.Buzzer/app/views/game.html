@@ -1,14 +1,20 @@
 <div ng-controller="GameController">
 
-    <div ng-hide="context.isGameAssigned">
-        <input class="textInput" type="text" ng-model="context.gameName" placeholder="Game-Name" />
-        <div>
-            <input class="halfButton" ng-click="create()" type="submit" value="Create" />
-            <input class="halfButton" ng-click="join()" type="submit" value="Join" />
+    <div class="container" ng-hide="context.isGameAssigned">
+        <div class="row inputContainer">
+            <input class="form-control" type="text" ng-model="context.gameName" placeholder="Game-Name" />
+        </div>
+        <div class="row">
+            <span class="col-xs-6 inputContainer">
+                <input class="form-control btn btn-default" ng-click="create()" type="submit" value="Create" />
+            </span>
+            <span class="col-xs-6 inputContainer">
+                <input class="form-control btn btn-default" ng-click="join()" type="submit" value="Join" />
+            </span>
         </div>
     </div>
 
-    <div ng-show="context.isGameAssigned">
+    <div class="inputContainer" ng-show="context.isGameAssigned">
         <div>Game: {{context.gameName}}</div>
     </div>
 

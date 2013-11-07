@@ -8,7 +8,8 @@
         context.isBuzzerReady = true;
 
         $rootScope.$watch("winner", function (newValue, oldValue) {
-            context.isBuzzerReady = $rootScope.winner == "";
+            context.isBuzzerReady = $rootScope.winner === "";
+            context.isWinner = $rootScope.winner === context.userName;
         });
 
 

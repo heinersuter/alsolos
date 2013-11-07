@@ -1,12 +1,16 @@
 <div ng-controller="UserController">
     <div ng-show="context.isGameAssigned">
 
-        <div ng-hide="context.isUserAssigned">
-            <input type="text" ng-model="context.userName" placeholder="Name" />
-            <input ng-click="join()" type="submit" value="Join" />
+        <div class="" ng-hide="context.isUserAssigned">
+            <div class="inputContainer">
+                <input class="form-control" type="text" ng-model="context.userName" placeholder="Name" />
+            </div>
+            <div class="inputContainer">
+                <input class="form-control btn btn-default" ng-click="join()" type="submit" value="Join" />
+            </div>
         </div>
 
-        <div ng-show="context.isUserAssigned">
+        <div class="inputContainer" ng-show="context.isUserAssigned">
             <div>User: {{context.userName}}</div>
         </div>
 

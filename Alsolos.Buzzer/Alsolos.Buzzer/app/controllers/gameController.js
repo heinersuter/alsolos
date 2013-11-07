@@ -6,6 +6,7 @@
     function controller($scope, context, gameService) {
         $scope.context = context;
         context.gameName = "";
+        context.isBuzzerReady = true;
 
         $scope.create = function () {
             if (context.gameName == "") {

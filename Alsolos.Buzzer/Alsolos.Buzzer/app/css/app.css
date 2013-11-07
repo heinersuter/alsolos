@@ -1,10 +1,10 @@
 ﻿h1 {
     margin: 8px;
+    text-align: center;
 }
 
-.textInput {
-    margin: 8px;
-    width: auto;
+.inputContainer {
+    padding: 8px;
 }
 
 .halfButton {
