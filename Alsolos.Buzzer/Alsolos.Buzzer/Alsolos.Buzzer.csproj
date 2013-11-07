@@ -45,7 +45,10 @@
     <Content Include="index.html" />
     <Content Include="lib\angular.min.js" />
     <Content Include="lib\angularfire.min.js" />
+    <Content Include="lib\bootstrap.min.css" />
+    <Content Include="lib\bootstrap.min.js" />
     <Content Include="lib\firebase.js" />
+    <Content Include="lib\jquery-1.10.2.min.js" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
