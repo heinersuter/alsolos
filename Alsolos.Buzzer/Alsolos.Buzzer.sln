@@ -1,7 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alsolos.Buzzer", "Alsolos.Buzzer\Alsolos.Buzzer.csproj", "{1B81C9FB-7EEC-4CD2-AC5A-26F11FF53A73}"
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alsolos.Buzzer", "Alsolos.Buzzer\Alsolos.Buzzer.csproj", "{13EE4527-B3F6-45C1-8219-1043BDEA22F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1B81C9FB-7EEC-4CD2-AC5A-26F11FF53A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B81C9FB-7EEC-4CD2-AC5A-26F11FF53A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B81C9FB-7EEC-4CD2-AC5A-26F11FF53A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B81C9FB-7EEC-4CD2-AC5A-26F11FF53A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13EE4527-B3F6-45C1-8219-1043BDEA22F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13EE4527-B3F6-45C1-8219-1043BDEA22F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13EE4527-B3F6-45C1-8219-1043BDEA22F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13EE4527-B3F6-45C1-8219-1043BDEA22F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
