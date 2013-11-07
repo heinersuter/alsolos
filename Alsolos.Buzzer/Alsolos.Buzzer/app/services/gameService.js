@@ -18,15 +18,18 @@
             gameRef.transaction(function (currentData) {
                 if (currentData === null) {
                     result = true;
-                    return { name: gameName, ownerName: userName, updated: new Date().getTime() };
+                    return { name: gameName, ownerName: userName, winner: "", updated: new Date().getTime() };
                 } else {
                     result = false;
-                    return undefined;
+                    return currentData;
                 }
             });
 
             if (result) {
                 gamesRef.child(gameName).child("users").child(userName).set({ name: userName, updated: new Date().getTime() });
+
+                var winnerRef = gamesRef.child(gameName).child("winner");
+                angularFire(winnerRef, $rootScope, "winner");
             }
             
             return result;
@@ -46,12 +49,47 @@
                     return { name: userName, updated: new Date().getTime() };
                 } else {
                     result = false;
-                    return undefined;
+                    return currentData;
                 }
             });
+            
+            if (result) {
+                var winnerRef = gamesRef.child(gameName).child("winner");
+                angularFire(winnerRef, $rootScope, "winner");
+            }
 
             return result;
         };
+        
+        this.buzzer = function(gameName, userName) {
+            return setWinner(gameName, userName);
+        };
+        
+        this.reset = function(gameName) {
+            return setWinner(gameName, "");
+        };
+
+        function setWinner(gameName, userName) {
+            if ($rootScope.winner == "" || userName == "") {
+                $rootScope.winner = userName;
+                return true;
+            }
+            return false;
+            //var result = false;
+
+            //var winnerRef = gamesRef.child(gameName).child("winner");
+            //winnerRef.transaction(function (currentData) {
+            //    if (userName === "" || currentData === "") {
+            //        result = true;
+            //        return userName;
+            //    } else {
+            //        result = false;
+            //        return currentData;
+            //    }
+            //});
+
+            //return result;
+        }
 
         function canCreateOrJoin(gameName, callback, isCreate) {
             var isNameExisting;
@@ -76,6 +114,5 @@
             }
             return false;
         }
-
     }
 })();
