@@ -26,12 +26,12 @@
             });
 
             if (result) {
-                gamesRef.child(gameName).child("users").child(userName).set({ name: userName, updated: new Date().getTime() });
+                gamesRef.child(gameName).child("users").child(userName).set({ name: userName });
 
                 var winnerRef = gamesRef.child(gameName).child("winner");
                 angularFire(winnerRef, $rootScope, "winner");
             }
-            
+
             return result;
         };
 
@@ -46,13 +46,13 @@
             userRef.transaction(function (currentData) {
                 if (currentData === null) {
                     result = true;
-                    return { name: userName, updated: new Date().getTime() };
+                    return { name: userName };
                 } else {
                     result = false;
                     return currentData;
                 }
             });
-            
+
             if (result) {
                 var winnerRef = gamesRef.child(gameName).child("winner");
                 angularFire(winnerRef, $rootScope, "winner");
@@ -60,12 +60,12 @@
 
             return result;
         };
-        
-        this.buzzer = function(gameName, userName) {
+
+        this.buzzer = function (gameName, userName) {
             return setWinner(gameName, userName);
         };
-        
-        this.reset = function(gameName) {
+
+        this.reset = function (gameName) {
             return setWinner(gameName, "");
         };
 
@@ -97,22 +97,32 @@
                 $rootScope.games = [];
                 var promise = angularFire(gamesRef, $rootScope, "games");
                 promise.then(function () {
-                    isNameExisting = isItemContained($rootScope.games, gameName);
+                    isNameExisting = isGameContained($rootScope.games, gameName);
                     callback(isCreate != isNameExisting);
                 });
             } else {
-                isNameExisting = isItemContained($rootScope.games, gameName);
+                isNameExisting = isGameContained($rootScope.games, gameName);
                 callback(isCreate != isNameExisting);
             }
         }
 
-        function isItemContained(games, gameName) {
+        function isGameContained(games, gameName) {
+            var game = findGame($rootScope.games, gameName);
+            var isNameExisting = game != null;
+            if (isNameExisting && game.updated < new Date().getTime() - 1 * 24 * 60 * 60 * 1000) {
+                $rootScope.games[gameName] = null;
+                isNameExisting = false;
+            }
+            return isNameExisting;
+        }
+
+        function findGame(games, gameName) {
             for (var game in games) {
                 if (game == gameName) {
-                    return true;
+                    return games[gameName];
                 }
             }
-            return false;
+            return null;
         }
     }
 })();

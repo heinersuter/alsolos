@@ -8,5 +8,12 @@ h1 {
 }
 
 .buzzerButton {
-    height: 200px;
+    height: 256px;
+}
+
+.winnerText {
+    font-size: 24pt;
+    font-weight: bold;
+    color: dodgerblue;
+    height: 256px;
 }
