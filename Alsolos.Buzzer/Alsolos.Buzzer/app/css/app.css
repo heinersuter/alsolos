@@ -1,4 +1,4 @@
-﻿h1 {
+h1 {
     margin: 8px;
     text-align: center;
 }
@@ -7,15 +7,6 @@
     padding: 8px;
 }
 
-.halfButton {
-    margin: 8px;
-    width: auto;
-}
-
 .buzzerButton {
-    background-color: red;
-    width: 200px;
-    height: 200px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    line-height: 200px;
 }

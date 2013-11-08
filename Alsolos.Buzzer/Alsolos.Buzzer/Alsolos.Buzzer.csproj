@@ -57,7 +57,7 @@
     <Content Include="app\views\buzzer.html" />
     <Content Include="app\views\game.html" />
     <Content Include="app\views\user.html" />
-    <Content Include="index.html" />
+    <Content Include="app\index.html" />
     <Content Include="lib\angular.min.js" />
     <Content Include="lib\angularfire.min.js" />
     <Content Include="lib\bootstrap.min.css" />

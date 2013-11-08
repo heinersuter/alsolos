@@ -1,18 +1,18 @@
 <div ng-controller="BuzzerController">
     <div ng-show="context.isGameAssigned">
 
-        <div class="inputContainer" ng-hide="context.isBuzzerReady || !context.isUserAssigned">
-            <div>Winner: {{winner}}</div>
+        <div class="row inputContainer" ng-hide="context.isBuzzerReady || !context.isUserAssigned">
+            <div class="col-xs-12">Winner: {{winner}}</div>
         </div>
 
-        <div class="" ng-show="context.isUserAssigned">
+        <div ng-show="context.isUserAssigned">
 
-            <div class="inputContainer" ng-show="context.isBuzzerReady">
-                <input class="btn btn-danger" ng-click="buzzer()" type="submit" value="BUZZER" />
+            <div class="row inputContainer" ng-show="context.isBuzzerReady">
+                <input class="form-control btn btn-danger col-xs-12 buzzerButton" ng-click="buzzer()" type="submit" value="BUZZER" />
             </div>
 
-            <div class="inputContainer" ng-show="(context.isGameOwner || context.isWinner) &amp;&amp; !context.isBuzzerReady">
-                <input class="form-control btn btn-default" ng-click="reset()" type="submit" value="Reset" />
+            <div class="row inputContainer" ng-show="(context.isGameOwner || context.isWinner) &amp;&amp; !context.isBuzzerReady">
+                <input class="form-control btn btn-default col-xs-12" ng-click="reset()" type="submit" value="Reset" />
             </div>
 
         </div>
