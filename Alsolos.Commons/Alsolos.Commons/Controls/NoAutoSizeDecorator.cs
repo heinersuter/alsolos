@@ -4,7 +4,7 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// Idea from http://stackoverflow.com/questions/198656/nested-scroll-areas.
+    /// Idea from <a href="http://stackoverflow.com/questions/198656/nested-scroll-areas">here</a>.
     /// </summary>
     public class NoAutoSizeDecorator : Decorator {
         private static readonly Size _infinitySize = new Size(double.PositiveInfinity, double.PositiveInfinity);

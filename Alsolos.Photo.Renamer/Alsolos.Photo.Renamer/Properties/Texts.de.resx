@@ -117,10 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Area_Execute" xml:space="preserve">
+    <value>Ausführen</value>
+  </data>
+  <data name="Area_FileList" xml:space="preserve">
+    <value>Bild-Dateien</value>
+  </data>
+  <data name="Area_Parameter" xml:space="preserve">
+    <value>Veränderungen</value>
+  </data>
+  <data name="Area_Preview" xml:space="preserve">
+    <value>Vorschau</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="Button_Execute" xml:space="preserve">
+    <value>Ausführen</value>
+  </data>
   <data name="Button_OpenFiles" xml:space="preserve">
     <value>Dateien öffnen</value>
   </data>
   <data name="Button_OpenFolder" xml:space="preserve">
     <value>Ordner öffnen</value>
+  </data>
+  <data name="Button_Reset" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="FileListCountMany" xml:space="preserve">
+    <value>{0} Bilder</value>
+  </data>
+  <data name="FileListCountSingle" xml:space="preserve">
+    <value>1 Bild</value>
+  </data>
+  <data name="Param_ConstantName" xml:space="preserve">
+    <value>Konstanter Namensteil</value>
+  </data>
+  <data name="Param_OffsetDays" xml:space="preserve">
+    <value>Verschiebung Tage</value>
+  </data>
+  <data name="Param_OffsetHours" xml:space="preserve">
+    <value>Verschiebung Stunden</value>
+  </data>
+  <data name="Param_OffsetMinutes" xml:space="preserve">
+    <value>Verschiebung Minuten</value>
+  </data>
+  <data name="Param_OffsetSeconds" xml:space="preserve">
+    <value>Verschiebung Sekunden</value>
+  </data>
+  <data name="Preview_CreatedTime" xml:space="preserve">
+    <value>Datum und Zeit aus Bild</value>
+  </data>
+  <data name="Preview_FileName" xml:space="preserve">
+    <value>Neuer Dateiname</value>
   </data>
 </root>

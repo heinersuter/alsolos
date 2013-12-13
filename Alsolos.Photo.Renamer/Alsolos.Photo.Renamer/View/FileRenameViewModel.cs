@@ -8,9 +8,9 @@ namespace Alsolos.Photo.Renamer.View {
             get { return BackingFields.GetValue(() => FileRenameController, () => new FileRenameService()); }
         }
 
-        public FilesSelectorViewModel FilesSelectorViewModel {
-            get { return BackingFields.GetValue(() => FilesSelectorViewModel, () => new FilesSelectorViewModel(this)); }
-            set { BackingFields.SetValue(() => FilesSelectorViewModel, value); }
+        public FileListViewModel FileListViewModel {
+            get { return BackingFields.GetValue(() => FileListViewModel, () => new FileListViewModel(this)); }
+            set { BackingFields.SetValue(() => FileListViewModel, value); }
         }
 
         public ParameterViewModel ParameterViewModel {

@@ -78,10 +78,10 @@
     </Compile>
     <Compile Include="View\FilePreviewViewModel.cs" />
     <Compile Include="View\FileRenameViewModel.cs" />
-    <Compile Include="View\FilesSelectorView.xaml.cs">
-      <DependentUpon>FilesSelectorView.xaml</DependentUpon>
+    <Compile Include="View\FileListView.xaml.cs">
+      <DependentUpon>FileListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\FilesSelectorViewModel.cs" />
+    <Compile Include="View\FileListViewModel.cs" />
     <Compile Include="Model\FileWrapper.cs" />
     <Compile Include="MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -108,7 +108,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\FilesSelectorView.xaml">
+    <Page Include="View\FileListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

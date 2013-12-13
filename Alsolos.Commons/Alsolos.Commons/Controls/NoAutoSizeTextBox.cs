@@ -14,7 +14,7 @@
                     true,
                     (source, args) => { },
                     (source, args) => {
-                        // Force text box to be alwys enabled but set IsReadonly
+                        // Force text box to be always enabled but set IsReadonly
                         // http://social.msdn.microsoft.com/Forums/ar/wpf/thread/3bf5e186-845c-4b63-acd9-17d294a30f77
                         var textBox = (NoAutoSizeTextBox)source;
                         var parent = textBox.Parent as UIElement;
@@ -35,51 +35,51 @@
             "KeepWidth", typeof(bool), typeof(NoAutoSizeTextBox), new PropertyMetadata(false));
 
         public bool KeepWidth {
-            get { return (bool)this.GetValue(KeepWidthProperty); }
-            set { this.SetValue(KeepWidthProperty, value); }
+            get { return (bool)GetValue(KeepWidthProperty); }
+            set { SetValue(KeepWidthProperty, value); }
         }
 
         public static readonly DependencyProperty KeepHeightProperty = DependencyProperty.Register(
             "KeepHeight", typeof(bool), typeof(NoAutoSizeTextBox), new PropertyMetadata(true));
 
         public bool KeepHeight {
-            get { return (bool)this.GetValue(KeepHeightProperty); }
-            set { this.SetValue(KeepHeightProperty, value); }
+            get { return (bool)GetValue(KeepHeightProperty); }
+            set { SetValue(KeepHeightProperty, value); }
         }
 
         public static readonly DependencyProperty AutoToolTipProperty = DependencyProperty.Register(
             "AutoToolTip", typeof(bool), typeof(NoAutoSizeTextBox), new PropertyMetadata(true));
 
         public bool AutoToolTip {
-            get { return (bool)this.GetValue(AutoToolTipProperty); }
-            set { this.SetValue(AutoToolTipProperty, value); }
+            get { return (bool)GetValue(AutoToolTipProperty); }
+            set { SetValue(AutoToolTipProperty, value); }
         }
 
         protected override Size MeasureOverride(Size availableSize) {
-            var innerWidth = this.KeepWidth ? availableSize.Width : Math.Min(this._lastFinalSize.Width, availableSize.Width);
-            var innerHeight = this.KeepHeight ? availableSize.Height : Math.Min(this._lastFinalSize.Height, availableSize.Height);
+            var innerWidth = KeepWidth ? availableSize.Width : Math.Min(_lastFinalSize.Width, availableSize.Width);
+            var innerHeight = KeepHeight ? availableSize.Height : Math.Min(_lastFinalSize.Height, availableSize.Height);
             var baseSize = base.MeasureOverride(new Size(innerWidth, innerHeight));
 
-            var outerWidth = this.KeepWidth ? baseSize.Width : 0;
-            var outerHeight = this.KeepHeight ? baseSize.Height : 0;
+            var outerWidth = KeepWidth ? baseSize.Width : 0;
+            var outerHeight = KeepHeight ? baseSize.Height : 0;
             return new Size(outerWidth, outerHeight);
         }
 
         protected override Size ArrangeOverride(Size finalSize) {
-            if (this._lastFinalSize != finalSize) {
-                this.SetToolTipIfRequired(finalSize);
-                this._lastFinalSize = finalSize;
+            if (_lastFinalSize != finalSize) {
+                SetToolTipIfRequired(finalSize);
+                _lastFinalSize = finalSize;
                 base.MeasureOverride(finalSize);
             }
             return base.ArrangeOverride(finalSize);
         }
 
         private void SetToolTipIfRequired(Size arrangeBounds) {
-            if (!this.AutoToolTip) {
+            if (!AutoToolTip) {
                 return;
             }
             var baseSize = base.MeasureOverride(new Size(double.PositiveInfinity, double.PositiveInfinity));
-            this.ToolTip = baseSize.Width > arrangeBounds.Width ? this.Text : null;
+            ToolTip = baseSize.Width > arrangeBounds.Width ? Text : null;
         }
     }
 }

@@ -5,9 +5,15 @@
 
     public class TranslateExtension : MarkupExtension {
         private string _key;
+        private string _stringFormat;
 
-        public TranslateExtension(string key) {
+        public TranslateExtension(string key)
+            : this(key, null) {
+        }
+
+        public TranslateExtension(string key, string stringFormat) {
             _key = key;
+            _stringFormat = stringFormat;
         }
 
         [ConstructorArgument("key")]
@@ -16,9 +22,15 @@
             set { _key = value; }
         }
 
+        [ConstructorArgument("stringFormat")]
+        public string StringFormat {
+            get { return _stringFormat; }
+            set { _stringFormat = value; }
+        }
+
         public override object ProvideValue(IServiceProvider serviceProvider) {
             var binding = new Binding("Value") {
-                Source = new TranslationData(_key)
+                Source = new TranslationData(_key, _stringFormat)
             };
             return binding.ProvideValue(serviceProvider);
         }
