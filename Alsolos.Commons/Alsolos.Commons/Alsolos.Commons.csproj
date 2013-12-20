@@ -68,6 +68,7 @@
     <Compile Include="Mvvm\BackingFields.cs" />
     <Compile Include="Mvvm\Converters\BoolToInverseBoolConverter.cs" />
     <Compile Include="Mvvm\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Resources\SharedResourceDictionary.cs" />
     <Compile Include="Utils\ComparisonComparer.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
     <Compile Include="Mvvm\BackingFieldsHolder.cs" />
