@@ -23,7 +23,7 @@
 
         </StackPanel>
 
-        <Image Source="{Binding BitmapImage}" Stretch="Uniform" VerticalAlignment="Bottom" Margin="8" />
+        <Image Source="{Binding BitmapImage}" Stretch="Uniform" VerticalAlignment="Bottom" Margin="8" RenderOptions.BitmapScalingMode="HighQuality" />
 
     </ItemsControl>
 </UserControl>
