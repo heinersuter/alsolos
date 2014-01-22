@@ -1,24 +1,24 @@
 ﻿namespace Alsolos.Photo.Renamer.View {
     using System;
     using System.ComponentModel;
-    using System.IO;
     using System.Windows.Media.Imaging;
     using Alsolos.Commons.Mvvm;
     using Alsolos.Photo.Renamer.Services;
 
     public class FilePreviewViewModel : ViewModel {
-        private readonly FilesSelectorViewModel _filesSelectorViewModel;
+        private readonly FileListViewModel _fileListViewModel;
         private readonly ParameterViewModel _parameterViewModel;
         private readonly FileRenameService _fileRenameController;
+        private readonly FileMetaDataService _fileMetaDataService = new FileMetaDataService();
 
         public FilePreviewViewModel(FileRenameViewModel fileRenameViewModel) {
             FileRenameViewModel = fileRenameViewModel;
-            _filesSelectorViewModel = fileRenameViewModel.FilesSelectorViewModel;
+            _fileListViewModel = fileRenameViewModel.FileListViewModel;
             _parameterViewModel = fileRenameViewModel.ParameterViewModel;
             _fileRenameController = fileRenameViewModel.FileRenameController;
 
-            _filesSelectorViewModel.PropertyChanged += OnFileSelectorPropertyChanged;
-            _parameterViewModel.PropertyChanged += OnParameterPropertyChanged;
+            _fileListViewModel.PropertyChanged += OnFileListViewModelPropertyChanged;
+            _parameterViewModel.PropertyChanged += OnParameterViewModelPropertyChanged;
             UpdatePreviewFileName();
         }
 
@@ -39,29 +39,36 @@
             private set { BackingFields.SetValue(() => CreatedTime, value); }
         }
 
-        private void OnFileSelectorPropertyChanged(object sender, PropertyChangedEventArgs e) {
-            if (e.PropertyName == GetPropertyName(() => _filesSelectorViewModel.SelectedFile)) {
+        private void OnFileListViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if (e.PropertyName == GetPropertyName(() => _fileListViewModel.SelectedFile)) {
                 UpdatePreviewFileName();
                 UpdatePreviewImage();
             }
         }
 
-        private void OnParameterPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs) {
+        private void OnParameterViewModelPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs) {
             UpdatePreviewFileName();
         }
 
         private void UpdatePreviewFileName() {
-            CreatedTime = _filesSelectorViewModel.SelectedFile != null ? _filesSelectorViewModel.SelectedFile.CreatedTime : null;
-            var fileCount = _filesSelectorViewModel.AllFiles != null ? _filesSelectorViewModel.AllFiles.Count : 0;
+            if (_fileListViewModel.SelectedFile != null) {
+                if (_fileListViewModel.SelectedFile.CreatedTime == null) {
+                    _fileListViewModel.SelectedFile.CreatedTime = _fileMetaDataService.GetExifTime(_fileListViewModel.SelectedFile.FullName);
+                }
+                CreatedTime = _fileListViewModel.SelectedFile.CreatedTime;
+            } else {
+                CreatedTime = null;
+            }
+            var fileCount = _fileListViewModel.AllFiles != null ? _fileListViewModel.AllFiles.Count : 0;
             PreviewFileName = _fileRenameController.CalculateNewFileName(CreatedTime, 0, fileCount, _parameterViewModel.TimeOffset, _parameterViewModel.ConstantName);
         }
 
         private void UpdatePreviewImage() {
-            if (_filesSelectorViewModel.SelectedFile != null) {
+            if (_fileListViewModel.SelectedFile != null) {
                 var image = new BitmapImage();
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = new Uri(_filesSelectorViewModel.SelectedFile.FullName);
+                image.UriSource = new Uri(_fileListViewModel.SelectedFile.FullName);
                 image.EndInit();
                 BitmapImage = image;
             } else {

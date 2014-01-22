@@ -1,0 +1,19 @@
+h1 {
+    margin: 8px;
+    text-align: center;
+}
+
+.inputContainer {
+    padding: 8px;
+}
+
+.buzzerButton {
+    height: 128px;
+}
+
+.winnerText {
+    font-size: 24pt;
+    font-weight: bold;
+    color: green;
+    height: 128px;
+}

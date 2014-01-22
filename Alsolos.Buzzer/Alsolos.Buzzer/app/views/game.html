@@ -1,0 +1,21 @@
+<div ng-controller="GameController">
+
+    <div ng-hide="context.isGameAssigned">
+        <div class="row inputContainer">
+            <input class="form-control col-xs-12" type="text" ng-model="context.gameName" placeholder="Game-Name" />
+        </div>
+        <div class="row">
+            <span class="col-xs-6 inputContainer">
+                <input class="form-control btn btn-default" ng-click="create()" type="submit" value="Create" />
+            </span>
+            <span class="col-xs-6 inputContainer">
+                <input class="form-control btn btn-default" ng-click="join()" type="submit" value="Join" />
+            </span>
+        </div>
+    </div>
+
+    <div class="row inputContainer" ng-show="context.isGameAssigned">
+        <div class="col-xs-12">Game: {{context.gameName}}</div>
+    </div>
+
+</div>

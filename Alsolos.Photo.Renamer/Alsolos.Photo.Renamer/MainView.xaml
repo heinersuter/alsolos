@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:View="clr-namespace:Alsolos.Photo.Renamer.View" 
+        xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
         xmlns:Renamer="clr-namespace:Alsolos.Photo.Renamer"
         Title="{Binding Title}" Height="512" Width="1024" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance View:FileRenameViewModel}">
@@ -15,28 +16,28 @@
 
         <Border Background="LightBlue" Margin="0 0 8 0">
             <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
-                <TextBlock Text="Files" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
-                <View:FilesSelectorView DataContext="{Binding FileRenameViewModel.FilesSelectorViewModel}" />
+                <TextBlock Text="{i18n:Translate Area_FileList}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <View:FileListView DataContext="{Binding FileRenameViewModel.FileListViewModel}" />
             </ItemsControl>
         </Border>
 
         <Border Background="LightBlue" Margin="0 0 8 0">
             <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
-                <TextBlock Text="Parameters" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <TextBlock Text="{i18n:Translate Area_Parameter}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
                 <View:ParameterView DataContext="{Binding FileRenameViewModel.ParameterViewModel}" />
             </ItemsControl>
         </Border>
 
         <Border Background="LightBlue" Margin="0 0 8 0">
             <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
-                <TextBlock Text="Preview" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <TextBlock Text="{i18n:Translate Area_Preview}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
                 <View:FilePreviewView DataContext="{Binding FileRenameViewModel.FilePreviewViewModel}" />
             </ItemsControl>
         </Border>
 
         <Border Background="LightBlue" Margin="0">
             <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
-                <TextBlock Text="Execute" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <TextBlock Text="{i18n:Translate Area_Execute}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
                 <View:ExecuteView DataContext="{Binding FileRenameViewModel.ExecuteViewModel}" />
             </ItemsControl>
         </Border>

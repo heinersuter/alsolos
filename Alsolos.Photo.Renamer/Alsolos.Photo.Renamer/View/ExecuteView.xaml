@@ -4,12 +4,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View" 
+             xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance view:ExecuteViewModel}">
     <DockPanel>
 
         <UniformGrid DockPanel.Dock="Bottom" Columns="2">
-            <Button Command="{Binding ExecuteCommand}" Margin="8">Execute</Button>
-            <Button Command="{Binding AbortCommand}" Margin="0 8 8 8">Cancel</Button>
+            <Button Command="{Binding ExecuteCommand}" Content="{i18n:Translate Button_Execute}" Margin="8" />
+            <Button Command="{Binding AbortCommand}" Content="{i18n:Translate Button_Cancel}" Margin="0 8 8 8" />
         </UniformGrid>
 
         <ProgressBar Visibility="{Binding FileRenameViewModel.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" 

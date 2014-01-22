@@ -117,10 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Area_Execute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
+  <data name="Area_FileList" xml:space="preserve">
+    <value>Image Files</value>
+  </data>
+  <data name="Area_Parameter" xml:space="preserve">
+    <value>Parameters</value>
+  </data>
+  <data name="Area_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Button_Execute" xml:space="preserve">
+    <value>Execute</value>
+  </data>
   <data name="Button_OpenFiles" xml:space="preserve">
     <value>Open Files</value>
   </data>
   <data name="Button_OpenFolder" xml:space="preserve">
     <value>Open a Folder</value>
+  </data>
+  <data name="Button_Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="FileListCountMany" xml:space="preserve">
+    <value>{0} files</value>
+  </data>
+  <data name="FileListCountSingle" xml:space="preserve">
+    <value>1 file</value>
+  </data>
+  <data name="Param_ConstantName" xml:space="preserve">
+    <value>Constant Name Part</value>
+  </data>
+  <data name="Param_OffsetDays" xml:space="preserve">
+    <value>Offset Days</value>
+  </data>
+  <data name="Param_OffsetHours" xml:space="preserve">
+    <value>Offset Hours</value>
+  </data>
+  <data name="Param_OffsetMinutes" xml:space="preserve">
+    <value>Offset Minutes</value>
+  </data>
+  <data name="Param_OffsetSeconds" xml:space="preserve">
+    <value>Offset Seconds</value>
+  </data>
+  <data name="Preview_CreatedTime" xml:space="preserve">
+    <value>Date and Time from File</value>
+  </data>
+  <data name="Preview_FileName" xml:space="preserve">
+    <value>New File Name</value>
   </data>
 </root>

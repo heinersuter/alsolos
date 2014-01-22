@@ -6,14 +6,14 @@ namespace Alsolos.Photo.Renamer.View {
     using Alsolos.Photo.Renamer.Services;
 
     public class ExecuteViewModel : ViewModel {
-        private readonly FilesSelectorViewModel _filesSelectorViewModel;
+        private readonly FileListViewModel _fileListViewModel;
         private readonly ParameterViewModel _parameterViewModel;
         private readonly FileRenameService _fileRenameController;
 
         public ExecuteViewModel(FileRenameViewModel fileRenameViewModel) {
             FileRenameViewModel = fileRenameViewModel;
             ConnectIsBusy(fileRenameViewModel);
-            _filesSelectorViewModel = fileRenameViewModel.FilesSelectorViewModel;
+            _fileListViewModel = fileRenameViewModel.FileListViewModel;
             _parameterViewModel = fileRenameViewModel.ParameterViewModel;
             _fileRenameController = fileRenameViewModel.FileRenameController;
         }
@@ -39,7 +39,7 @@ namespace Alsolos.Photo.Renamer.View {
         }
 
         private bool CanExecute() {
-            return !IsBusy && _filesSelectorViewModel.AllFiles != null && _filesSelectorViewModel.AllFiles.Any();
+            return !IsBusy && _fileListViewModel.AllFiles != null && _fileListViewModel.AllFiles.Any();
         }
 
         private async void Execute() {
@@ -47,7 +47,7 @@ namespace Alsolos.Photo.Renamer.View {
             IsBusy = true;
             var progress = new Progress<double>();
             progress.ProgressChanged += (sender, d) => ExecutionProgress = d;
-            await _fileRenameController.RenameFilesAsync(_filesSelectorViewModel.AllFiles, _parameterViewModel.TimeOffset, _parameterViewModel.ConstantName, progress);
+            await _fileRenameController.RenameFilesAsync(_fileListViewModel.AllFiles, _parameterViewModel.TimeOffset, _parameterViewModel.ConstantName, progress);
             IsBusy = false;
         }
 

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title>Buzzer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!--<link rel="stylesheet" href="../lib/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/app.css" type="text/css" />
+
+    <!--<script src="../lib/jquery-1.10.2.min.js"></script>
+    <script src="../lib/angular.min.js"></script>
+    <script src="../lib/firebase.js"></script>
+    <script src="../lib/angularfire.min.js"></script>
+    <script src="../lib/bootstrap.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js'></script>
+    <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+    <script src='https://cdn.firebase.com/libs/angularfire/0.3.0/angularfire.min.js'></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+
+    <script src="app.js"></script>
+    <script src="services/gameService.js"></script>
+    <script src="services/controllerContext.js"></script>
+    <script src="controllers/applicationController.js"></script>
+    <script src="controllers/gameController.js"></script>
+    <script src="controllers/userController.js"></script>
+    <script src="controllers/buzzerController.js"></script>
+</head>
+<body ng-controller="ApplicationController" class="container form-group">
+
+    <header>
+        <h1>Buzzer</h1>
+    </header>
+
+    <div ng-include="'views/game.html'"></div>
+
+    <div ng-include="'views/user.html'"></div>
+
+    <div ng-include="'views/buzzer.html'"></div>
+
+</body>
+</html>
