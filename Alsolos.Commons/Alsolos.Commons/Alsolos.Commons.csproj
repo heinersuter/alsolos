@@ -56,6 +56,12 @@
     <Compile Include="Controls\EnabledExpander.cs" />
     <Compile Include="Controls\EnabledTabControl.cs" />
     <Compile Include="Controls\EnabledTabItem.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\HierachicalDataGridItemWrapper.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGrid.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\IHierarchicalDataGridItem.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\LevelToMarginConverter.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\ListEmptyToBrushConverter.cs" />
+    <Compile Include="Mvvm\Converters\ListEmptyToVisibilityConverter.cs" />
     <Compile Include="Controls\IEnabledControl.cs" />
     <Compile Include="Controls\NoAutoSizeDecorator.cs" />
     <Compile Include="Controls\NoAutoSizeTextBox.cs" />
@@ -81,6 +87,10 @@
     <Compile Include="Utils\ValueEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\HierarchicalDataGrid\HierarchicalDataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\ControlStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
