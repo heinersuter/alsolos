@@ -61,6 +61,8 @@
     <Compile Include="Controls\HierarchicalDataGrid\IHierarchicalDataGridItem.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\LevelToMarginConverter.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\ListEmptyToBrushConverter.cs" />
+    <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanel.cs" />
+    <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanelMode.cs" />
     <Compile Include="Mvvm\Converters\ListEmptyToVisibilityConverter.cs" />
     <Compile Include="Controls\IEnabledControl.cs" />
     <Compile Include="Controls\NoAutoSizeDecorator.cs" />
@@ -91,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\SimpleStretchPanel\SimpleStretchPanelStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\ControlStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -100,6 +106,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\ItemsControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
