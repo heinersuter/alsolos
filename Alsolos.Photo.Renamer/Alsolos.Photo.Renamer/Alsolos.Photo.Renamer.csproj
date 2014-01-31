@@ -39,9 +39,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Alsolos.Commons">
-      <HintPath>..\..\Alsolos.Commons\Alsolos.Commons\bin\Debug\Alsolos.Commons.dll</HintPath>
-    </Reference>
     <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0c15020868fd6249, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -112,17 +109,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Infra\HeaderedContentControlStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Infra\ItemsControlStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ParameterView.xaml">
       <SubType>Designer</SubType>
@@ -158,6 +147,12 @@
     <EmbeddedResource Include="Properties\Texts.de.resx">
       <DependentUpon>Texts.resx</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Alsolos.Commons\Alsolos.Commons\Alsolos.Commons.csproj">
+      <Project>{b0d4d546-6a3e-42bf-be7d-cde59ac33d44}</Project>
+      <Name>Alsolos.Commons</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

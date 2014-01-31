@@ -8,8 +8,9 @@
         <ResourceDictionary>
 
             <ResourceDictionary.MergedDictionaries>
-                <resources:SharedResourceDictionary Source="/View/Infra/HeaderedContentControlStyles.xaml" />
-                <resources:SharedResourceDictionary Source="/View/Infra/ItemsControlStyles.xaml" />
+                <resources:SharedResourceDictionary Source="/Alsolos.Commons;component/Styles/ItemsControlStyles.xaml"/>
+                <resources:SharedResourceDictionary Source="/Alsolos.Commons;component/Styles/HeaderedContentControlStyles.xaml"/>
+                <resources:SharedResourceDictionary Source="/Alsolos.Commons;component/Controls/SimpleStretchPanel/SimpleStretchPanelStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />

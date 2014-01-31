@@ -5,17 +5,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View" 
              xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
+             xmlns:simpleStretchPanel="clr-namespace:Alsolos.Commons.Controls.SimpleStretchPanel;assembly=Alsolos.Commons"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance view:ExecuteViewModel}">
-    <DockPanel>
 
-        <UniformGrid DockPanel.Dock="Bottom" Columns="2">
-            <Button Command="{Binding ExecuteCommand}" Content="{i18n:Translate Button_Execute}" Margin="8" />
-            <Button Command="{Binding AbortCommand}" Content="{i18n:Translate Button_Cancel}" Margin="0 8 8 8" />
-        </UniformGrid>
+    <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchTop">
 
         <ProgressBar Visibility="{Binding FileRenameViewModel.IsBusy, Converter={StaticResource BoolToVisibilityConverter}}" 
             Margin="8" VerticalAlignment="Bottom" Height="22"
             Value="{Binding ExecutionProgress}" Minimum="0.0" Maximum="1.0" />
 
-    </DockPanel>
+        <UniformGrid Columns="2">
+            <Button Command="{Binding ExecuteCommand}" Content="{i18n:Translate Button_Execute}" Margin="8" />
+            <Button Command="{Binding AbortCommand}" Content="{i18n:Translate Button_Cancel}" Margin="0 8 8 8" />
+        </UniformGrid>
+
+    </simpleStretchPanel:SimpleStretchPanel>
 </UserControl>

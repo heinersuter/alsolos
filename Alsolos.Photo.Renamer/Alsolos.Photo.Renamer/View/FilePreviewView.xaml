@@ -5,9 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
              xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View"
+             xmlns:simpleStretchPanel="clr-namespace:Alsolos.Commons.Controls.SimpleStretchPanel;assembly=Alsolos.Commons"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance view:FilePreviewViewModel}">
-    <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
-        
+    <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
+
         <StackPanel>
 
             <HeaderedContentControl Header="{i18n:Translate Preview_CreatedTime}" Margin="8 8 8 0">
@@ -26,5 +27,5 @@
 
         <Image Source="{Binding BitmapImage}" Stretch="Uniform" VerticalAlignment="Bottom" Margin="8" RenderOptions.BitmapScalingMode="HighQuality" />
 
-    </ItemsControl>
+    </simpleStretchPanel:SimpleStretchPanel>
 </UserControl>

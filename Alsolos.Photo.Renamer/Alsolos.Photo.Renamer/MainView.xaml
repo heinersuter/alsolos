@@ -6,6 +6,7 @@
         xmlns:View="clr-namespace:Alsolos.Photo.Renamer.View" 
         xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
         xmlns:Renamer="clr-namespace:Alsolos.Photo.Renamer"
+        xmlns:simpleStretchPanel="clr-namespace:Alsolos.Commons.Controls.SimpleStretchPanel;assembly=Alsolos.Commons"
         Title="{Binding Title}" Height="512" Width="1024" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance View:FileRenameViewModel}">
     <Window.DataContext>
@@ -15,31 +16,31 @@
     <UniformGrid Columns="4">
 
         <Border Background="LightBlue" Margin="0 0 8 0">
-            <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
+            <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
                 <TextBlock Text="{i18n:Translate Area_FileList}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
                 <View:FileListView DataContext="{Binding FileRenameViewModel.FileListViewModel}" />
-            </ItemsControl>
+            </simpleStretchPanel:SimpleStretchPanel>
         </Border>
 
         <Border Background="LightBlue" Margin="0 0 8 0">
-            <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
+            <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
                 <TextBlock Text="{i18n:Translate Area_Parameter}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
                 <View:ParameterView DataContext="{Binding FileRenameViewModel.ParameterViewModel}" />
-            </ItemsControl>
+            </simpleStretchPanel:SimpleStretchPanel>
         </Border>
 
         <Border Background="LightBlue" Margin="0 0 8 0">
-            <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
+            <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
                 <TextBlock Text="{i18n:Translate Area_Preview}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
                 <View:FilePreviewView DataContext="{Binding FileRenameViewModel.FilePreviewViewModel}" />
-            </ItemsControl>
+            </simpleStretchPanel:SimpleStretchPanel>
         </Border>
 
         <Border Background="LightBlue" Margin="0">
-            <ItemsControl Style="{StaticResource PairControlStarBottomStyle}">
+            <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
                 <TextBlock Text="{i18n:Translate Area_Execute}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
                 <View:ExecuteView DataContext="{Binding FileRenameViewModel.ExecuteViewModel}" />
-            </ItemsControl>
+            </simpleStretchPanel:SimpleStretchPanel>
         </Border>
 
     </UniformGrid>
