@@ -13,21 +13,40 @@
             "HierarchicalDataGridItems",
             typeof(IEnumerable),
             typeof(HierarchicalDataGrid),
-            new PropertyMetadata(new List<IHierarchicalDataGridItem>(), OnHierarchicalDataGridItemsChanged));
+            new FrameworkPropertyMetadata(default(IEnumerable), OnHierarchicalDataGridItemsChanged) {
+                DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                BindsTwoWayByDefault = true,
+            });
 
         public IEnumerable HierarchicalDataGridItems {
             get { return (IEnumerable)GetValue(HierarchicalDataGridItemsProperty); }
             set { SetValue(HierarchicalDataGridItemsProperty, value); }
         }
 
-        private static void OnHierarchicalDataGridItemsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) {
-            var grid = (HierarchicalDataGrid)sender;
-            var items = (IEnumerable)e.NewValue;
-            if (items != null) {
-                var dataGridItems = items.Cast<IHierarchicalDataGridItem>();
-                grid.AddItems(dataGridItems);
-            } else {
-                grid.AddItems(null);
+        public static readonly DependencyProperty SelectedWrappersProperty = DependencyProperty.Register(
+            "SelectedWrappers",
+            typeof(IEnumerable<HierachicalDataGridItemWrapper>),
+            typeof(HierarchicalDataGrid),
+            new FrameworkPropertyMetadata(null) {
+                DefaultUpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+            });
+
+        public IEnumerable<HierachicalDataGridItemWrapper> SelectedWrappers {
+            get { return (IEnumerable<HierachicalDataGridItemWrapper>)GetValue(SelectedWrappersProperty); }
+            set { SetValue(SelectedWrappersProperty, value); }
+        }
+
+        public void ExpandAll() {
+            foreach (var item in Items) {
+                var wrapper = (HierachicalDataGridItemWrapper)item;
+                wrapper.ExpandRecursively();
+            }
+        }
+
+        public void CollapseAll() {
+            foreach (var item in Items) {
+                var wrapper = (HierachicalDataGridItemWrapper)item;
+                wrapper.CollapseRecursively();
             }
         }
 
@@ -44,17 +63,19 @@
             base.OnInitialized(e);
         }
 
-        public void ExpandAll() {
-            foreach (var item in Items) {
-                var wrapper = (HierachicalDataGridItemWrapper)item;
-                wrapper.ExpandRecursively();
-            }
+        protected override void OnSelectionChanged(SelectionChangedEventArgs e) {
+            base.OnSelectionChanged(e);
+            SelectedWrappers = SelectedItems.Cast<HierachicalDataGridItemWrapper>().ToList();
         }
 
-        public void CollapseAll() {
-            foreach (var item in Items) {
-                var wrapper = (HierachicalDataGridItemWrapper)item;
-                wrapper.CollapseRecursively();
+        private static void OnHierarchicalDataGridItemsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) {
+            var grid = (HierarchicalDataGrid)sender;
+            var items = (IEnumerable)e.NewValue;
+            if (items != null) {
+                var dataGridItems = items.Cast<IHierarchicalDataGridItem>();
+                grid.AddItems(dataGridItems);
+            } else {
+                grid.AddItems(null);
             }
         }
 
