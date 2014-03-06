@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Alsolos.Commons</RootNamespace>
     <AssemblyName>Alsolos.Commons</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -42,6 +45,8 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,20 +56,33 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\EnabledControl.cs" />
-    <Compile Include="Controls\EnabledControlHelper.cs" />
-    <Compile Include="Controls\EnabledExpander.cs" />
-    <Compile Include="Controls\EnabledTabControl.cs" />
-    <Compile Include="Controls\EnabledTabItem.cs" />
-    <Compile Include="Controls\HierarchicalDataGrid\HierachicalDataGridItemWrapper.cs" />
+    <Compile Include="Behaviors\MultiSelectBehavior\DoNothingListItemConverter.cs" />
+    <Compile Include="Behaviors\MultiSelectBehavior\IListItemConverter.cs" />
+    <Compile Include="Behaviors\MultiSelectBehavior\MultiSelectBehaviour.cs" />
+    <Compile Include="Behaviors\MultiSelectBehavior\SynchronizationManager.cs" />
+    <Compile Include="Behaviors\MultiSelectBehavior\TwoListSynchronizer.cs" />
+    <Compile Include="Controls\Enabled\EnabledControl.cs" />
+    <Compile Include="Controls\Enabled\EnabledControlHelper.cs" />
+    <Compile Include="Controls\Enabled\EnabledExpander.cs" />
+    <Compile Include="Controls\Enabled\EnabledTabControl.cs" />
+    <Compile Include="Controls\Enabled\EnabledTabItem.cs" />
+    <Compile Include="Controls\FindInSelector\FindInSelector.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGrid.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGridItemWrapper.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGridItemWrapperCollection.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\IHierarchicalDataGridItem.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\LevelToMarginConverter.cs" />
-    <Compile Include="Controls\HierarchicalDataGrid\ListEmptyToBrushConverter.cs" />
+    <Compile Include="Controls\ProportionalColumnsPanel.cs" />
     <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanel.cs" />
     <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanelMode.cs" />
+    <Compile Include="Mvvm\Converters\BoolToValueConverter.cs" />
+    <Compile Include="Mvvm\Converters\EqualityToBoolConverter.cs" />
+    <Compile Include="Mvvm\Converters\EqualityToValueConverter.cs" />
+    <Compile Include="Mvvm\Converters\EqualityToVisibilityConverter.cs" />
+    <Compile Include="Mvvm\Converters\ListEmptyToBoolConverter.cs" />
+    <Compile Include="Mvvm\Converters\ListEmptyToValueConverter.cs" />
     <Compile Include="Mvvm\Converters\ListEmptyToVisibilityConverter.cs" />
-    <Compile Include="Controls\IEnabledControl.cs" />
+    <Compile Include="Controls\Enabled\IEnabledControl.cs" />
     <Compile Include="Controls\NoAutoSizeDecorator.cs" />
     <Compile Include="Controls\NoAutoSizeTextBox.cs" />
     <Compile Include="I18N\ITranslationProvider.cs" />
@@ -76,6 +94,10 @@
     <Compile Include="Mvvm\BackingFields.cs" />
     <Compile Include="Mvvm\Converters\BoolToInverseBoolConverter.cs" />
     <Compile Include="Mvvm\Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Mvvm\Converters\NullToBoolConverter.cs" />
+    <Compile Include="Mvvm\Converters\NullToValueConverter.cs" />
+    <Compile Include="Mvvm\Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Mvvm\Converters\ValueConverter.cs" />
     <Compile Include="Resources\SharedResourceDictionary.cs" />
     <Compile Include="Utils\ComparisonComparer.cs" />
     <Compile Include="Mvvm\DelegateCommand.cs" />
@@ -89,7 +111,11 @@
     <Compile Include="Utils\ValueEventHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\HierarchicalDataGrid\HierarchicalDataGrid.xaml">
+    <Page Include="Controls\FindInSelector\FindInSelectorStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\HierarchicalDataGrid\HierarchicalDataGridStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -106,6 +132,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\ItemsControlStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

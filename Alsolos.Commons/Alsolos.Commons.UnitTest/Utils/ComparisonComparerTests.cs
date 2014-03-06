@@ -31,7 +31,7 @@ namespace Alsolos.Commons.UnitTest.Utils {
             Assert.AreEqual(-1, result);
         }
 
-        private int CompareStrings(string x, string y) {
+        private static int CompareStrings(string x, string y) {
             return string.CompareOrdinal(x, y);
         }
     }

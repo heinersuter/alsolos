@@ -3,23 +3,27 @@
                     xmlns:converters="clr-namespace:Alsolos.Commons.Mvvm.Converters"
                     xmlns:hierarchicalDataGrid="clr-namespace:Alsolos.Commons.Controls.HierarchicalDataGrid">
 
-    <hierarchicalDataGrid:ListEmptyToBrushConverter x:Key="ListEmptyToBrushConverter"/>
-    <hierarchicalDataGrid:LevelToMarginConverter x:Key="LevelToMarginConverter"/>
-    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
     <converters:ListEmptyToVisibilityConverter x:Key="ListEmptyToVisibilityConverter"/>
+    <converters:ListEmptyToValueConverter x:Key="ListEmptyToBrushConverter" EmptyValue="Gray" NotEmptyValue="white"/>
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    <hierarchicalDataGrid:LevelToMarginConverter x:Key="LevelToMarginConverter"/>
+
+    <x:Array x:Key="VerticalLineVisibilities" Type="Visibility">
+        <x:Static Member="Visibility.Collapsed" />
+        <x:Static Member="Visibility.Visible" />
+    </x:Array>
 
     <ControlTemplate x:Key="ToggleButtonTemplate" TargetType="ToggleButton">
-        <Border BorderThickness="1" BorderBrush="{Binding Children, Converter={StaticResource ListEmptyToBrushConverter}}" Background="White">
+        <Border BorderThickness="1" BorderBrush="Black" Background="{Binding Children, Converter={StaticResource ListEmptyToBrushConverter}}">
             <Grid Visibility="{Binding Children, Converter={StaticResource ListEmptyToVisibilityConverter}}">
                 <Path Stroke="Black" StrokeThickness="1" Data="M 2 5 H 8" UseLayoutRounding="True" />
-                <Path Stroke="Black" StrokeThickness="1" Data="M 5 2 V 8" UseLayoutRounding="True" Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter=True}" />
+                <Path Stroke="Black" StrokeThickness="1" Data="M 5 2 V 8" UseLayoutRounding="True" Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter={StaticResource VerticalLineVisibilities}}" />
             </Grid>
         </Border>
     </ControlTemplate>
 
     <Style x:Key="ToggleButtonStye" TargetType="{x:Type ToggleButton}">
-        <Setter Property="Content" Value="+"/>
-        <Setter Property="IsChecked" Value="{Binding IsExpanded, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Setter Property="IsChecked" Value="{Binding IsExpanded, UpdateSourceTrigger=PropertyChanged}"/>
         <Setter Property="Margin" Value="{Binding Level, Converter={StaticResource LevelToMarginConverter}}"/>
         <Setter Property="Width" Value="12"/>
         <Setter Property="Height" Value="12"/>
@@ -27,7 +31,7 @@
         <Setter Property="Template" Value="{StaticResource ToggleButtonTemplate}"/>
     </Style>
 
-    <DataTemplate x:Key="ExpanderCellTemplate" DataType="{x:Type hierarchicalDataGrid:HierachicalDataGridItemWrapper}">
+    <DataTemplate x:Key="ExpanderCellTemplate" DataType="{x:Type hierarchicalDataGrid:HierarchicalDataGridItemWrapper}">
         <ToggleButton Style="{StaticResource ToggleButtonStye}"/>
     </DataTemplate>
 

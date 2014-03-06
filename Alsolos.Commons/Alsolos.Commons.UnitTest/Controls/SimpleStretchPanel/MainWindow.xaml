@@ -1,0 +1,52 @@
+﻿<Window x:Class="Alsolos.Commons.UnitTest.Controls.SimpleStretchPanel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:simpleStretchPanel="clr-namespace:Alsolos.Commons.Controls.SimpleStretchPanel;assembly=Alsolos.Commons"
+        Title="Proportional Columns Panel" Height="256" Width="512">
+
+    <TabControl>
+        <TabItem Header="HorizontalStretchCenter">
+            <simpleStretchPanel:SimpleStretchPanel Mode="HorizontalStretchCenter">
+                <Button Content="small"/>
+                <Button Content="wide"/>
+                <Button Content="small"/>
+            </simpleStretchPanel:SimpleStretchPanel>
+        </TabItem>
+
+        <TabItem Header="HorizontalStretchLeft">
+            <simpleStretchPanel:SimpleStretchPanel Mode="HorizontalStretchLeft">
+                <Button Content="wide"/>
+                <Button Content="small"/>
+            </simpleStretchPanel:SimpleStretchPanel>
+        </TabItem>
+
+        <TabItem Header="HorizontalStretchRight">
+            <simpleStretchPanel:SimpleStretchPanel Mode="HorizontalStretchRight">
+                <Button Content="small"/>
+                <Button Content="wide"/>
+            </simpleStretchPanel:SimpleStretchPanel>
+        </TabItem>
+
+        <TabItem Header="VerticalStretchBottom">
+            <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
+                <Button Content="small"/>
+                <Button Content="wide"/>
+            </simpleStretchPanel:SimpleStretchPanel>
+        </TabItem>
+
+        <TabItem Header="VerticalStretchCenter">
+            <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchCenter">
+                <Button Content="small"/>
+                <Button Content="wide"/>
+                <Button Content="small"/>
+            </simpleStretchPanel:SimpleStretchPanel>
+        </TabItem>
+
+        <TabItem Header="VerticalStretchTop">
+            <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchTop">
+                <Button Content="wide"/>
+                <Button Content="small"/>
+            </simpleStretchPanel:SimpleStretchPanel>
+        </TabItem>
+    </TabControl>
+</Window>

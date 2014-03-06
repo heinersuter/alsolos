@@ -2,23 +2,30 @@
     using System;
     using System.Collections;
     using System.Globalization;
+    using System.Linq;
     using System.Windows;
-    using System.Windows.Data;
 
-    public class ListEmptyToVisibilityConverter : IValueConverter {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            var list = value as IList;
-            if (list == null) {
-                return Visibility.Collapsed;
-            }
-
-            if (list.Count > 0) {
-                return Visibility.Visible;
-            }
-            return Visibility.Collapsed;
+    public class ListEmptyToVisibilityConverter : ValueConverter {
+        public ListEmptyToVisibilityConverter() {
+            EmptyVisibility = Visibility.Collapsed;
+            NotEmptyVisibility = Visibility.Visible;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+        public Visibility EmptyVisibility { get; set; }
+        public Visibility NotEmptyVisibility { get; set; }
+
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            var list = value as IEnumerable;
+            var isEmpty = list == null || !list.Cast<object>().Any();
+
+            if (parameter != null) {
+                isEmpty = !isEmpty;
+            }
+
+            return isEmpty ? EmptyVisibility : NotEmptyVisibility;
+        }
+
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             throw new NotImplementedException();
         }
     }

@@ -1,17 +1,18 @@
 ﻿namespace Alsolos.Commons.Mvvm.Converters {
     using System;
     using System.Globalization;
-    using System.Windows.Data;
 
-    public class BoolToInverseBoolConverter : IValueConverter {
+    public class BoolToInverseBoolConverter : ValueConverter {
         public static readonly BoolToInverseBoolConverter Instance = new BoolToInverseBoolConverter();
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            return !(bool)value;
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            var isTrue = (value as bool?) == true;
+            return !isTrue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
-            return !(bool)value;
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+            var isTrue = (value as bool?) == true;
+            return !isTrue;
         }
     }
 }

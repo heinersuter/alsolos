@@ -2,26 +2,27 @@
     using System;
     using System.Globalization;
     using System.Windows;
-    using System.Windows.Data;
 
-    public class BoolToVisibilityConverter : IValueConverter {
-        public static readonly BoolToVisibilityConverter Instance = new BoolToVisibilityConverter();
-
-        public virtual object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            var boolValue = false;
-
-            if (value is bool) {
-                boolValue = (bool)value;
-            }
-
-            if (parameter != null) {
-                boolValue = !boolValue;
-            }
-
-            return boolValue ? Visibility.Visible : Visibility.Collapsed;
+    public class BoolToVisibilityConverter : ValueConverter {
+        public BoolToVisibilityConverter() {
+            TrueVisibility = Visibility.Visible;
+            FalseVisibility = Visibility.Collapsed;
         }
 
-        public virtual object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
+        public Visibility TrueVisibility { get; set; }
+        public Visibility FalseVisibility { get; set; }
+
+        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            var isTrue = (value as bool?) == true;
+
+            if (parameter != null) {
+                isTrue = !isTrue;
+            }
+
+            return isTrue ? TrueVisibility : FalseVisibility;
+        }
+
+        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
             throw new NotImplementedException();
         }
     }

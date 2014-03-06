@@ -30,8 +30,8 @@
     <ControlTemplate x:Key="HorizontalStretchRightControlTemplate">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <ContentControl Grid.Column="0" Content="{Binding Items[0], RelativeSource={RelativeSource TemplatedParent}}" />
             <ContentControl Grid.Column="1" Content="{Binding Items[1], RelativeSource={RelativeSource TemplatedParent}}" />
