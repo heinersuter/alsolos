@@ -24,6 +24,10 @@
                 <Button Content="Move selection" Command="{Binding MoveSelectionCommand}"/>
                 <Button Content="Add selection" Command="{Binding AddSelectionCommand}"/>
                 <Button Content="Select all" Command="{Binding SelectAllCommand}"/>
+                <Button Content="Clear selection" Command="{Binding ClearSelectionCommand}"/>
+                <Button Content="Delete" Command="{Binding DeleteCommand}"/>
+                <Button Content="Add root" Command="{Binding AddRootCommand}"/>
+                <Button Content="Add child" Command="{Binding AddChildCommand}"/>
             </StackPanel>
 
             <HeaderedContentControl Header="Restrictive Filter" IsTabStop="False">

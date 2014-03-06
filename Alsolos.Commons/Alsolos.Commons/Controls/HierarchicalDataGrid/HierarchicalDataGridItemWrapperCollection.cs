@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
@@ -10,7 +11,7 @@ using Alsolos.Commons.Mvvm;
 namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
     public class HierarchicalDataGridItemWrapperCollection : IList<HierarchicalDataGridItemWrapper>, IList, INotifyCollectionChanged {
         private readonly List<HierarchicalDataGridItemWrapper> _wrappers = new List<HierarchicalDataGridItemWrapper>();
-        private readonly List<HierarchicalDataGridItemWrapper> _displayedWrappers = new List<HierarchicalDataGridItemWrapper>();
+        private readonly ObservableCollection<HierarchicalDataGridItemWrapper> _displayedWrappers = new ObservableCollection<HierarchicalDataGridItemWrapper>();
         private readonly ICommand _expandAllCommand;
         private readonly ICommand _collapseAllCommand;
 
@@ -27,7 +28,10 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             AddRange(items);
         }
 
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
+        public event NotifyCollectionChangedEventHandler CollectionChanged {
+            add { _displayedWrappers.CollectionChanged += value; }
+            remove { _displayedWrappers.CollectionChanged -= value; }
+        }
 
         public IEnumerator<HierarchicalDataGridItemWrapper> GetEnumerator() {
             return _displayedWrappers.GetEnumerator();
@@ -93,7 +97,6 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
 
         public void Add(HierarchicalDataGridItemWrapper wrapper) {
             AddWrapperRecursively(wrapper);
-            UpdateDisplayedWrappers();
         }
 
         public int Add(object value) {
@@ -110,9 +113,8 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         }
 
         public bool Remove(HierarchicalDataGridItemWrapper wrapper) {
-            if (_displayedWrappers.Contains(wrapper)) {
+            if (_wrappers.Contains(wrapper)) {
                 RemoveWrapperRecursively(wrapper);
-                UpdateDisplayedWrappers();
                 return true;
             }
             return false;
@@ -125,7 +127,6 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         public void RemoveAt(int index) {
             var wrapper = _displayedWrappers[index];
             RemoveWrapperRecursively(wrapper);
-            UpdateDisplayedWrappers();
         }
 
         public ICommand ExpandAllCommand {
@@ -150,12 +151,12 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
 
         public void SetRestrictiveFilter(Func<HierarchicalDataGridItemWrapper, bool> filter) {
             _restrictiveFilter = filter;
-            UpdateDisplayedWrappers();
+            FilterWrappers();
         }
 
         public void SetTollerantFilter(Func<HierarchicalDataGridItemWrapper, bool> filter) {
             _tollerantFilter = filter;
-            UpdateDisplayedWrappers();
+            FilterWrappers();
         }
 
         public IEnumerable<HierarchicalDataGridItemWrapper> AddRange(IEnumerable<IHierarchicalDataGridItem> items) {
@@ -170,9 +171,14 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         public HierarchicalDataGridItemWrapper Add(IHierarchicalDataGridItem item) {
             var wrapper = HierarchicalDataGridItemWrapper.CreateRecursively(item);
             AddWrapperRecursively(wrapper);
-            wrapper.IsParentExpanded = true;
-            wrapper.IsExpanded = false;
-            UpdateDisplayedWrappers();
+            return wrapper;
+        }
+
+        public HierarchicalDataGridItemWrapper Add(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent) {
+            parent.Value.Children.Add(item);
+            var wrapper = HierarchicalDataGridItemWrapper.CreateRecursively(item, parent);
+            parent.Children.Add(wrapper);
+            parent.IsExpanded = true;
             return wrapper;
         }
 
@@ -180,7 +186,6 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             foreach (var wrapper in _wrappers) {
                 RemoveWrapperRecursively(wrapper);
             }
-            UpdateDisplayedWrappers();
         }
 
         public void Remove(IHierarchicalDataGridItem item) {
@@ -188,12 +193,13 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             foreach (var wrapper in wrappers) {
                 RemoveWrapperRecursively(wrapper);
             }
-            UpdateDisplayedWrappers();
         }
 
         private void AddWrapperRecursively(HierarchicalDataGridItemWrapper wrapper) {
             _wrappers.Add(wrapper);
             wrapper.PropertyChanged += OnWrapperPropertyChanged;
+            wrapper.Children.CollectionChanged += OnChildrenCollectionChanged;
+            DisplayWrapper(wrapper);
             foreach (var child in wrapper.Children) {
                 AddWrapperRecursively(child);
             }
@@ -202,6 +208,8 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         private void RemoveWrapperRecursively(HierarchicalDataGridItemWrapper wrapper) {
             _wrappers.Remove(wrapper);
             wrapper.PropertyChanged -= OnWrapperPropertyChanged;
+            wrapper.Children.CollectionChanged -= OnChildrenCollectionChanged;
+            _displayedWrappers.Remove(wrapper);
             foreach (var child in wrapper.Children) {
                 RemoveWrapperRecursively(child);
             }
@@ -209,7 +217,20 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
 
         private void OnWrapperPropertyChanged(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName == "IsParentExpanded") {
-                UpdateDisplayedWrappers();
+                DisplayWrapper((HierarchicalDataGridItemWrapper)sender);
+            }
+        }
+
+        private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
+            if (e.NewItems != null) {
+                foreach (HierarchicalDataGridItemWrapper newItem in e.NewItems) {
+                    AddWrapperRecursively(newItem);
+                }
+            }
+            if (e.OldItems != null) {
+                foreach (HierarchicalDataGridItemWrapper oldItem in e.OldItems) {
+                    RemoveWrapperRecursively(oldItem);
+                }
             }
         }
 
@@ -218,29 +239,37 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
                 return true;
             }
             return (_restrictiveFilter == null || _restrictiveFilter.Invoke(wrapper))
-                && ((wrapper.Parent == null || CheckRestrictiveIfWrapperIsDisplayedRecursively(wrapper.Parent)));
+                && (wrapper.Parent == null || CheckRestrictiveIfWrapperIsDisplayedRecursively(wrapper.Parent));
         }
 
         private bool CheckTollerantIfWrapperIsDisplayedRecursively(HierarchicalDataGridItemWrapper wrapper) {
             if (_tollerantFilter == null && _restrictiveFilter != null) {
                 return true;
             }
-            return (_tollerantFilter == null || _tollerantFilter.Invoke(wrapper) || wrapper.Children.Any(CheckTollerantIfWrapperIsDisplayedRecursively));
+            return _tollerantFilter == null || _tollerantFilter.Invoke(wrapper) || wrapper.Children.Any(CheckTollerantIfWrapperIsDisplayedRecursively);
         }
 
-        private void UpdateDisplayedWrappers() {
-            _displayedWrappers.Clear();
-            _displayedWrappers.AddRange(_wrappers.Where(wrapper => wrapper.IsParentExpanded
-                && CheckRestrictiveIfWrapperIsDisplayedRecursively(wrapper)
-                && CheckTollerantIfWrapperIsDisplayedRecursively(wrapper)));
-            RaiseCollectionChangedEvent();
+        private void FilterWrappers() {
+            foreach (var wrapper in _wrappers) {
+                DisplayWrapper(wrapper);
+            }
         }
 
-        private void RaiseCollectionChangedEvent() {
-            if (CollectionChanged != null) {
-                var args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
-                var copy = CollectionChanged;
-                copy.Invoke(this, args);
+        private void DisplayWrapper(HierarchicalDataGridItemWrapper wrapper) {
+            if (wrapper.IsParentExpanded && CheckRestrictiveIfWrapperIsDisplayedRecursively(wrapper) && CheckTollerantIfWrapperIsDisplayedRecursively(wrapper)) {
+                if (!_displayedWrappers.Contains(wrapper)) {
+                    if (wrapper.Parent == null) {
+                        _displayedWrappers.Add(wrapper);
+                    } else {
+                        var displayedChildrenCount = wrapper.Parent.Children.Count(child => _displayedWrappers.Contains(child));
+                        var index = _displayedWrappers.IndexOf(wrapper.Parent) + displayedChildrenCount + 1;
+                        _displayedWrappers.Insert(index, wrapper);
+                    }
+                }
+            } else {
+                if (_displayedWrappers.Contains(wrapper)) {
+                    _displayedWrappers.Remove(wrapper);
+                }
             }
         }
     }

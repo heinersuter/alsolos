@@ -1,16 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
 using Alsolos.Commons.Controls.HierarchicalDataGrid;
 using Alsolos.Commons.Mvvm;
 
 namespace Alsolos.Commons.UnitTest.Controls.HierarchicalDataGrid {
     public class MainViewModel : ViewModel {
         public MainViewModel() {
-            MoveSelectionCommand = new DelegateCommand(MoveSelection);
-            AddSelectionCommand = new DelegateCommand(AddSelection);
-            SelectAllCommand = new DelegateCommand(SelectAll);
-
             Items = new HierarchicalDataGridItemWrapperCollection {
                 CreateItem("A"), 
                 CreateItem("B"), 
@@ -19,11 +14,33 @@ namespace Alsolos.Commons.UnitTest.Controls.HierarchicalDataGrid {
             RaisePropertyChanged(() => Items);
         }
 
-        public ICommand MoveSelectionCommand { get; private set; }
+        public DelegateCommand MoveSelectionCommand {
+            get { return BackingFields.GetCommand(() => MoveSelectionCommand, MoveSelection); }
+        }
 
-        public ICommand AddSelectionCommand { get; private set; }
+        public DelegateCommand AddSelectionCommand {
+            get { return BackingFields.GetCommand(() => AddSelectionCommand, AddSelection); }
+        }
 
-        public ICommand SelectAllCommand { get; private set; }
+        public DelegateCommand SelectAllCommand {
+            get { return BackingFields.GetCommand(() => SelectAllCommand, SelectAll); }
+        }
+
+        public DelegateCommand ClearSelectionCommand {
+            get { return BackingFields.GetCommand(() => ClearSelectionCommand, ClearSelection); }
+        }
+
+        public DelegateCommand DeleteCommand {
+            get { return BackingFields.GetCommand(() => DeleteCommand, Delete); }
+        }
+
+        public DelegateCommand AddRootCommand {
+            get { return BackingFields.GetCommand(() => AddRootCommand, AddRoot); }
+        }
+
+        public DelegateCommand AddChildCommand {
+            get { return BackingFields.GetCommand(() => AddChildCommand, AddChild); }
+        }
 
         public HierarchicalDataGridItemWrapperCollection Items { get; private set; }
 
@@ -77,6 +94,29 @@ namespace Alsolos.Commons.UnitTest.Controls.HierarchicalDataGrid {
                     SelectedItems.Add(item);
                 }
             }
+        }
+
+        private void ClearSelection() {
+            SelectedItems.Clear();
+        }
+
+        private void Delete() {
+            foreach (var wrapper in SelectedItems.ToList()) {
+                Items.Remove(wrapper);
+            }
+        }
+
+        private void AddRoot() {
+            Items.Add(new MyItem { CompanyName = "Company " + Items.Count, FirstName = "First " + Items.Count, LastName = "Last " + Items.Count });
+        }
+
+        private void AddChild() {
+            if (SelectedItems.Count != 1) {
+                return;
+            }
+            var parent = SelectedItems.Single();
+            var item = new MyItem { CompanyName = "Child" + Items.Count, FirstName = "Child" + Items.Count, LastName = "Child" + Items.Count };
+            Items.Add(item, parent);
         }
 
         private static MyItem CreateItem(string name) {

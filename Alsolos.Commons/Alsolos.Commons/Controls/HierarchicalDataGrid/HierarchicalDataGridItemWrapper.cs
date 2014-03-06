@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using Alsolos.Commons.Mvvm;
 
 namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
@@ -7,14 +10,17 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             Value = item;
             Parent = parent;
             Level = Parent != null ? Parent.Level + 1 : 0;
-            Children = new List<HierarchicalDataGridItemWrapper>();
+            IsExpanded = false;
+            IsParentExpanded = Parent == null || Parent.IsExpanded;
+            Children = new ObservableCollection<HierarchicalDataGridItemWrapper>();
+            Children.CollectionChanged += OnChildrenCollectionChanged;
         }
 
         public static HierarchicalDataGridItemWrapper CreateRecursively(IHierarchicalDataGridItem item) {
             return CreateRecursively(item, null);
         }
 
-        private static HierarchicalDataGridItemWrapper CreateRecursively(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent) {
+        public static HierarchicalDataGridItemWrapper CreateRecursively(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent) {
             var wrapper = new HierarchicalDataGridItemWrapper(item, parent);
             foreach (var childItem in item.Children) {
                 var childWrapper = CreateRecursively(childItem, wrapper);
@@ -29,7 +35,7 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
 
         public int Level { get; private set; }
 
-        public IList<HierarchicalDataGridItemWrapper> Children { get; private set; }
+        public ObservableCollection<HierarchicalDataGridItemWrapper> Children { get; private set; }
 
         public bool IsExpanded {
             get { return BackingFields.GetValue(() => IsExpanded); }
@@ -57,6 +63,10 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             foreach (var child in Children) {
                 child.CollapseRecursively();
             }
+        }
+
+        private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs) {
+            RaisePropertyChanged(() => Children);
         }
 
         private void SetIsParentExpandedToAllSubItemsRecursively(bool isExpanded) {
