@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Alsolos.Commons.Mvvm;
 
@@ -65,7 +63,7 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             }
         }
 
-        private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs) {
+        private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
             RaisePropertyChanged(() => Children);
         }
 

@@ -261,7 +261,8 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
                     if (wrapper.Parent == null) {
                         _displayedWrappers.Add(wrapper);
                     } else {
-                        var displayedChildrenCount = wrapper.Parent.Children.Count(child => _displayedWrappers.Contains(child));
+                        var displayedChildrenCount = GetNumberOfDisplayedChildrenRecursively(wrapper.Parent);
+                        //var displayedChildrenCount = wrapper.Parent.Children.Count(child => _displayedWrappers.Contains(child));
                         var index = _displayedWrappers.IndexOf(wrapper.Parent) + displayedChildrenCount + 1;
                         _displayedWrappers.Insert(index, wrapper);
                     }
@@ -271,6 +272,15 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
                     _displayedWrappers.Remove(wrapper);
                 }
             }
+        }
+
+        private int GetNumberOfDisplayedChildrenRecursively(HierarchicalDataGridItemWrapper wrapper) {
+            var counter = 0;
+            foreach (var childWrapper in wrapper.Children.Where(child => _displayedWrappers.Contains(child))) {
+                counter++;
+                counter += GetNumberOfDisplayedChildrenRecursively(childWrapper);
+            }
+            return counter;
         }
     }
 }

@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="8">
-            <StackPanel Orientation="Horizontal">
+            <WrapPanel Orientation="Horizontal">
                 <Button Content="Expand all" Command="{Binding Items.ExpandAllCommand}"/>
                 <Button Content="Collapse all" Command="{Binding Items.CollapseAllCommand}"/>
                 <Button Content="Move selection" Command="{Binding MoveSelectionCommand}"/>
@@ -28,7 +28,7 @@
                 <Button Content="Delete" Command="{Binding DeleteCommand}"/>
                 <Button Content="Add root" Command="{Binding AddRootCommand}"/>
                 <Button Content="Add child" Command="{Binding AddChildCommand}"/>
-            </StackPanel>
+            </WrapPanel>
 
             <HeaderedContentControl Header="Restrictive Filter" IsTabStop="False">
                 <TextBox Text="{Binding RestrictivFilterText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
@@ -41,7 +41,7 @@
 
         <hierarchicalDataGrid:HierarchicalDataGrid Grid.Row="1" x:Name="_grid" ItemsSource="{Binding Items}" 
             multiSelectBehavior:MultiSelectBehaviour.SelectedItems="{Binding SelectedItems}" 
-            Margin="8">
+            AutoGenerateColumns="False" Margin="8">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Company" Binding="{Binding Value.CompanyName}"/>
                 <DataGridTextColumn Header="First Name" Binding="{Binding Value.FirstName}"/>
