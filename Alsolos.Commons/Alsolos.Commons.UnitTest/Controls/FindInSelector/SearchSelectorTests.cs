@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Alsolos.Commons.UnitTest.Controls.SimpleStretchPanel {
+namespace Alsolos.Commons.UnitTest.Controls.FindInSelector {
     [TestClass]
-    public class SimpleStretchPanelTests {
+    public class SearchSelectorTests {
         [Ignore]
         [TestMethod]
         public void OpenWindowTest() {

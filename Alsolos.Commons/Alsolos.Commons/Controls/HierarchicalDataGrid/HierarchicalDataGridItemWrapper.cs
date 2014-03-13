@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using Alsolos.Commons.Mvvm;
 
 namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
+    [DebuggerDisplay("{Value}")]
     public class HierarchicalDataGridItemWrapper : BackingFieldsHolder {
         private HierarchicalDataGridItemWrapper(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent) {
             Value = item;

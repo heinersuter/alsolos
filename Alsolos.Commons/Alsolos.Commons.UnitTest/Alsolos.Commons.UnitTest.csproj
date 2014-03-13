@@ -56,6 +56,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controls\FindInSelector\MainViewModel.cs" />
+    <Compile Include="Controls\FindInSelector\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FindInSelector\MyItem.cs" />
+    <Compile Include="Controls\FindInSelector\SearchSelectorTests.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGridItemWrapperCollectionTests.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGridItemWrapperComparerTests.cs" />
+    <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGridItemWrapperSorterTests.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGridTests.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\MainViewModel.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\MainWindow.xaml.cs">
@@ -79,10 +88,12 @@
       <Name>Alsolos.Commons</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Controls\FindInSelector\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Page Include="Controls\FindInSelector\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\HierarchicalDataGrid\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

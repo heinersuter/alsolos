@@ -50,14 +50,16 @@ namespace Alsolos.Commons.Behaviors.MultiSelectBehavior {
         }
 
         protected void ListenForChangeEvents(IList list) {
-            if (list is INotifyCollectionChanged) {
-                CollectionChangedEventManager.AddListener(list as INotifyCollectionChanged, this);
+            var observableCollection = list as INotifyCollectionChanged;
+            if (observableCollection != null) {
+                CollectionChangedEventManager.AddListener(observableCollection, this);
             }
         }
 
         protected void StopListeningForChangeEvents(IList list) {
-            if (list is INotifyCollectionChanged) {
-                CollectionChangedEventManager.RemoveListener(list as INotifyCollectionChanged, this);
+            var observableCollection = list as INotifyCollectionChanged;
+            if (observableCollection != null) {
+                CollectionChangedEventManager.RemoveListener(observableCollection, this);
             }
         }
 
@@ -100,7 +102,7 @@ namespace Alsolos.Commons.Behaviors.MultiSelectBehavior {
                     PerformActionOnAllLists(ReplaceItems, sourceList, e);
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    UpdateListsFromSource(sender as IList);
+                    UpdateListsFromSource(sourceList);
                     break;
                 default:
                     break;

@@ -43,9 +43,9 @@
             multiSelectBehavior:MultiSelectBehaviour.SelectedItems="{Binding SelectedItems}" 
             AutoGenerateColumns="False" Margin="8">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Company" Binding="{Binding Value.CompanyName}"/>
-                <DataGridTextColumn Header="First Name" Binding="{Binding Value.FirstName}"/>
-                <DataGridTextColumn Header="Last Name" Binding="{Binding Value.LastName}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Value.Name}"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding Value.Text}"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding Value.Number}"/>
                 <DataGridCheckBoxColumn Header="IsExpanded" Binding="{Binding IsExpanded}"/>
                 <DataGridCheckBoxColumn Header="IsParentExpanded" Binding="{Binding IsParentExpanded}"/>
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}"/>
@@ -58,7 +58,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Value.CompanyName}"/>
+                            <TextBlock Text="{Binding Value.Name}"/>
                             <TextBlock Text=" | IsExpanded: "/>
                             <TextBlock Text="{Binding IsExpanded}"/>
                         </StackPanel>
