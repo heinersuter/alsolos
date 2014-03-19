@@ -1,4 +1,4 @@
-namespace Alsolos.Commons.Behaviors.MultiSelectBehavior {
+namespace Alsolos.Commons.Behaviors.MultiselectBehavior {
     public interface IListItemConverter {
         object Convert(object masterListItem);
         object ConvertBack(object targetListItem);

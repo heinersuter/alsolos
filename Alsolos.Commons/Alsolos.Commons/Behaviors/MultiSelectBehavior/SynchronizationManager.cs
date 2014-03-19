@@ -1,9 +1,9 @@
-using System;
-using System.Collections;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+namespace Alsolos.Commons.Behaviors.MultiselectBehavior {
+    using System;
+    using System.Collections;
+    using System.Windows.Controls;
+    using System.Windows.Controls.Primitives;
 
-namespace Alsolos.Commons.Behaviors.MultiSelectBehavior {
     public class SynchronizationManager {
         private readonly Selector _multiSelector;
         private TwoListSynchronizer _synchronizer;
@@ -13,7 +13,7 @@ namespace Alsolos.Commons.Behaviors.MultiSelectBehavior {
         }
 
         public void StartSynchronizingList() {
-            var list = MultiSelectBehaviour.GetSelectedItems(_multiSelector);
+            var list = MultiselectBehaviour.GetSelectedItems(_multiSelector);
 
             if (list != null) {
                 _synchronizer = new TwoListSynchronizer(GetSelectedItemsCollection(_multiSelector), list);

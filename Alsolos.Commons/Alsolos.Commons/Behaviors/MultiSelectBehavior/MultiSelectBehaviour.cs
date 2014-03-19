@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Windows;
-using System.Windows.Controls.Primitives;
+namespace Alsolos.Commons.Behaviors.MultiselectBehavior {
+    using System.Collections;
+    using System.Windows;
+    using System.Windows.Controls.Primitives;
 
-namespace Alsolos.Commons.Behaviors.MultiSelectBehavior {
     /// <summary>
     /// Published <a href="http://blog.functionalfun.net/2009/02/how-to-databind-to-selecteditems.html">on the web</a> by Samuel Jack.
     /// </summary>
-    public static class MultiSelectBehaviour {
+    public static class MultiselectBehaviour {
         public static readonly DependencyProperty SelectedItems = DependencyProperty.RegisterAttached(
-            "SelectedItems", typeof(IList), typeof(MultiSelectBehaviour), new PropertyMetadata(null, OnSelectedItemsChanged));
+            "SelectedItems", typeof(IList), typeof(MultiselectBehaviour), new PropertyMetadata(null, OnSelectedItemsChanged));
 
         private static readonly DependencyProperty SynchronizationManagerProperty = DependencyProperty.RegisterAttached(
-            "SynchronizationManager", typeof(SynchronizationManager), typeof(MultiSelectBehaviour), new PropertyMetadata(null));
+            "SynchronizationManager", typeof(SynchronizationManager), typeof(MultiselectBehaviour), new PropertyMetadata(null));
 
         public static IList GetSelectedItems(DependencyObject dependencyObject) {
             return (IList)dependencyObject.GetValue(SelectedItems);

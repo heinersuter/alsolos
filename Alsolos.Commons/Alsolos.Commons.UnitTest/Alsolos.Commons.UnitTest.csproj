@@ -71,6 +71,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\HierarchicalDataGrid\MyItem.cs" />
+    <Compile Include="Controls\NoAutoSize\NoAutoSizeDecoratorWindow.xaml.cs">
+      <DependentUpon>NoAutoSizeDecoratorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NoAutoSize\NoAutoSizeDecoratorTests.cs" />
     <Compile Include="Controls\ProportionalColumnsPanel\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -95,6 +99,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\HierarchicalDataGrid\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\NoAutoSize\NoAutoSizeDecoratorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

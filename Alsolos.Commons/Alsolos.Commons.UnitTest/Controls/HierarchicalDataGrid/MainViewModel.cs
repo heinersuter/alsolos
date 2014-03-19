@@ -62,12 +62,12 @@ namespace Alsolos.Commons.UnitTest.Controls.HierarchicalDataGrid {
             }
         }
 
-        public string TollerantFilterText {
+        public string TolerantFilterText {
             set {
                 if (!string.IsNullOrWhiteSpace(value)) {
-                    Items.SetTollerantFilter(wrapper => Filter(wrapper, value));
+                    Items.SetTolerantFilter(wrapper => Filter(wrapper, value));
                 } else {
-                    Items.SetTollerantFilter(null);
+                    Items.SetTolerantFilter(null);
                 }
             }
         }

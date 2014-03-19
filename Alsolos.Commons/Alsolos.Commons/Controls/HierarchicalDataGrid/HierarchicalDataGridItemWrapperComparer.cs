@@ -38,7 +38,7 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             if (currentObj != null && comparable == null) {
                 throw new InvalidOperationException(string.Format(
                     CultureInfo.InvariantCulture,
-                    @"The object where SortMemberPath points to must implement IComparable. SortMemberPath: '{0}', object: '{1}'.",
+                    @"The object where 'SortMemberPath' points to must implement 'IComparable'. SortMemberPath: '{0}', object: '{1}'.",
                     _sortMemberPath,
                     currentObj));
             }

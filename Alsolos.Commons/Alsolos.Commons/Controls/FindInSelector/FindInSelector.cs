@@ -53,7 +53,7 @@ namespace Alsolos.Commons.Controls.FindInSelector {
             if (selector != null) {
                 _selector = selector;
             } else {
-                throw new InvalidOperationException("Content control of FindInSelector must be of type Selector.");
+                throw new InvalidOperationException("Content control of 'FindInSelector' must be of type 'Selector'.");
             }
         }
 

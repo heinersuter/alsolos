@@ -2,8 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:test="clr-namespace:Alsolos.Commons.UnitTest.Controls.HierarchicalDataGrid"
-        xmlns:hierarchicalDataGrid="clr-namespace:Alsolos.Commons.Controls.HierarchicalDataGrid;assembly=Alsolos.Commons"
-        xmlns:multiSelectBehavior="clr-namespace:Alsolos.Commons.Behaviors.MultiSelectBehavior;assembly=Alsolos.Commons"
+        xmlns:commons="http://alsolos.ch/Commons"
         Title="Hierarchical Data Grid Test" Height="512" Width="768">
 
     <Window.DataContext>
@@ -34,13 +33,13 @@
                 <TextBox Text="{Binding RestrictivFilterText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
             </HeaderedContentControl>
 
-            <HeaderedContentControl Header="Tollerant Filter" IsTabStop="False">
-                <TextBox Text="{Binding TollerantFilterText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
+            <HeaderedContentControl Header="Tolerant Filter" IsTabStop="False">
+                <TextBox Text="{Binding TolerantFilterText, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}"/>
             </HeaderedContentControl>
         </StackPanel>
 
-        <hierarchicalDataGrid:HierarchicalDataGrid Grid.Row="1" x:Name="_grid" ItemsSource="{Binding Items}" 
-            multiSelectBehavior:MultiSelectBehaviour.SelectedItems="{Binding SelectedItems}" 
+        <commons:HierarchicalDataGrid Grid.Row="1" x:Name="_grid" ItemsSource="{Binding Items}" 
+            commons:MultiselectBehaviour.SelectedItems="{Binding SelectedItems}" 
             AutoGenerateColumns="False" Margin="8">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Value.Name}"/>
@@ -50,7 +49,7 @@
                 <DataGridCheckBoxColumn Header="IsParentExpanded" Binding="{Binding IsParentExpanded}"/>
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}"/>
             </DataGrid.Columns>
-        </hierarchicalDataGrid:HierarchicalDataGrid>
+        </commons:HierarchicalDataGrid>
 
         <DockPanel Grid.Row="2" Margin="8">
             <TextBlock DockPanel.Dock="Top" Text="SelectedItems"/>

@@ -16,7 +16,7 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         private readonly ICommand _collapseAllCommand;
 
         private Func<HierarchicalDataGridItemWrapper, bool> _restrictiveFilter;
-        private Func<HierarchicalDataGridItemWrapper, bool> _tollerantFilter;
+        private Func<HierarchicalDataGridItemWrapper, bool> _tolerantFilter;
 
         public HierarchicalDataGridItemWrapperCollection() {
             _expandAllCommand = new DelegateCommand(ExpandAll);
@@ -51,16 +51,16 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             set { _displayedWrappers[index] = (HierarchicalDataGridItemWrapper)value; }
         }
 
-        public int IndexOf(HierarchicalDataGridItemWrapper wrapper) {
-            return _displayedWrappers.IndexOf(wrapper);
+        public int IndexOf(HierarchicalDataGridItemWrapper item) {
+            return _displayedWrappers.IndexOf(item);
         }
 
         public int IndexOf(object value) {
             return IndexOf((HierarchicalDataGridItemWrapper)value);
         }
 
-        public bool Contains(HierarchicalDataGridItemWrapper wrapper) {
-            return _displayedWrappers.Contains(wrapper);
+        public bool Contains(HierarchicalDataGridItemWrapper item) {
+            return _displayedWrappers.Contains(item);
         }
 
         public bool Contains(object value) {
@@ -87,16 +87,16 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             get { return false; }
         }
 
-        public void CopyTo(HierarchicalDataGridItemWrapper[] array, int startIndex) {
-            _displayedWrappers.CopyTo(array, startIndex);
+        public void CopyTo(HierarchicalDataGridItemWrapper[] array, int arrayIndex) {
+            _displayedWrappers.CopyTo(array, arrayIndex);
         }
 
-        public void CopyTo(Array array, int startIndex) {
-            ((IList)_displayedWrappers).CopyTo(array, startIndex);
+        public void CopyTo(Array array, int index) {
+            ((IList)_displayedWrappers).CopyTo(array, index);
         }
 
-        public void Add(HierarchicalDataGridItemWrapper wrapper) {
-            AddWrapperRecursively(wrapper);
+        public void Add(HierarchicalDataGridItemWrapper item) {
+            AddWrapperRecursively(item);
         }
 
         public int Add(object value) {
@@ -104,7 +104,7 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             return _displayedWrappers.Count - 1;
         }
 
-        public void Insert(int index, HierarchicalDataGridItemWrapper wrapper) {
+        public void Insert(int index, HierarchicalDataGridItemWrapper item) {
             throw new NotSupportedException("Insert is not supported.");
         }
 
@@ -112,9 +112,9 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             Insert(index, (HierarchicalDataGridItemWrapper)value);
         }
 
-        public bool Remove(HierarchicalDataGridItemWrapper wrapper) {
-            if (_wrappers.Contains(wrapper)) {
-                RemoveWrapperRecursively(wrapper);
+        public bool Remove(HierarchicalDataGridItemWrapper item) {
+            if (_wrappers.Contains(item)) {
+                RemoveWrapperRecursively(item);
                 return true;
             }
             return false;
@@ -154,8 +154,8 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             FilterWrappers();
         }
 
-        public void SetTollerantFilter(Func<HierarchicalDataGridItemWrapper, bool> filter) {
-            _tollerantFilter = filter;
+        public void SetTolerantFilter(Func<HierarchicalDataGridItemWrapper, bool> filter) {
+            _tolerantFilter = filter;
             FilterWrappers();
         }
 
@@ -175,6 +175,9 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         }
 
         public HierarchicalDataGridItemWrapper Add(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent) {
+            if (parent == null) {
+                throw new ArgumentNullException("parent", "The parent must not be null");
+            }
             parent.Value.Children.Add(item);
             var wrapper = HierarchicalDataGridItemWrapper.CreateRecursively(item, parent);
             parent.Children.Add(wrapper);
@@ -245,18 +248,18 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         }
 
         private bool CheckRestrictiveIfWrapperIsDisplayedRecursively(HierarchicalDataGridItemWrapper wrapper) {
-            if (_restrictiveFilter == null && _tollerantFilter != null) {
+            if (_restrictiveFilter == null && _tolerantFilter != null) {
                 return true;
             }
             return (_restrictiveFilter == null || _restrictiveFilter.Invoke(wrapper))
                 && (wrapper.Parent == null || CheckRestrictiveIfWrapperIsDisplayedRecursively(wrapper.Parent));
         }
 
-        private bool CheckTollerantIfWrapperIsDisplayedRecursively(HierarchicalDataGridItemWrapper wrapper) {
-            if (_tollerantFilter == null && _restrictiveFilter != null) {
+        private bool CheckTolerantIfWrapperIsDisplayedRecursively(HierarchicalDataGridItemWrapper wrapper) {
+            if (_tolerantFilter == null && _restrictiveFilter != null) {
                 return true;
             }
-            return _tollerantFilter == null || _tollerantFilter.Invoke(wrapper) || wrapper.Children.Any(CheckTollerantIfWrapperIsDisplayedRecursively);
+            return _tolerantFilter == null || _tolerantFilter.Invoke(wrapper) || wrapper.Children.Any(CheckTolerantIfWrapperIsDisplayedRecursively);
         }
 
         private void FilterWrappers() {
@@ -266,7 +269,7 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         }
 
         private void DisplayWrapper(HierarchicalDataGridItemWrapper wrapper) {
-            if (wrapper.IsParentExpanded && CheckRestrictiveIfWrapperIsDisplayedRecursively(wrapper) && CheckTollerantIfWrapperIsDisplayedRecursively(wrapper)) {
+            if (wrapper.IsParentExpanded && CheckRestrictiveIfWrapperIsDisplayedRecursively(wrapper) && CheckTolerantIfWrapperIsDisplayedRecursively(wrapper)) {
                 if (!_displayedWrappers.Contains(wrapper)) {
                     if (wrapper.Parent == null) {
                         _displayedWrappers.Add(wrapper);

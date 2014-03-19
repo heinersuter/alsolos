@@ -16,7 +16,11 @@
             _propertyChangedEventHandler = propertyChangedEventHandler;
         }
 
-        public T GetValue<T>(Expression<Func<T>> propertyExpression, Func<T> initializeFunction = null) {
+        public T GetValue<T>(Expression<Func<T>> propertyExpression) {
+            return GetValue(propertyExpression, null);
+        }
+
+        public T GetValue<T>(Expression<Func<T>> propertyExpression, Func<T> initializeFunction) {
             object value;
             if (_properties.TryGetValue(GetPropertyName(propertyExpression), out value)) {
                 return (T)value;
@@ -49,14 +53,22 @@
             return GetValueAndObserve(propertyExpression, initializeFunction, GetObserver(propertyExpression));
         }
 
-        public DelegateCommand GetCommand(Expression<Func<DelegateCommand>> propertyExpression, Action executeMethod, Func<bool> canExecuteMethod = null) {
+        public DelegateCommand GetCommand(Expression<Func<DelegateCommand>> propertyExpression, Action executeMethod) {
+            return GetCommand(propertyExpression, executeMethod, null);
+        }
+
+        public DelegateCommand GetCommand(Expression<Func<DelegateCommand>> propertyExpression, Action executeMethod, Func<bool> canExecuteMethod) {
             if (canExecuteMethod == null) {
                 canExecuteMethod = () => true;
             }
             return GetValue(propertyExpression, () => new DelegateCommand(executeMethod, canExecuteMethod));
         }
 
-        public bool SetValue<T>(Expression<Func<T>> propertyExpression, T value, Action<T> propertyChangedCallback = null) {
+        public bool SetValue<T>(Expression<Func<T>> propertyExpression, T value) {
+            return SetValue(propertyExpression, value, null);
+        }
+
+        public bool SetValue<T>(Expression<Func<T>> propertyExpression, T value, Action<T> propertyChangedCallback) {
             var previousValue = GetValue(propertyExpression);
 
             if (!Equals(previousValue, value)) {

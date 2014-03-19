@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 
-namespace Alsolos.Commons.Behaviors.MultiSelectBehavior {
+namespace Alsolos.Commons.Behaviors.MultiselectBehavior {
     public class TwoListSynchronizer : IWeakEventListener {
         private static readonly IListItemConverter _defaultConverter = new DoNothingListItemConverter();
         private readonly IList _masterList;

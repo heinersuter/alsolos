@@ -24,16 +24,17 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             base.OnInitialized(e);
         }
 
-        protected override void OnSorting(DataGridSortingEventArgs e) {
+        protected override void OnSorting(DataGridSortingEventArgs eventArgs) {
+            if (eventArgs == null) {
+                throw new ArgumentException("Arguments must not be null.", "eventArgs");
+            }
             var collection = ItemsSource as HierarchicalDataGridItemWrapperCollection;
             if (collection == null) {
                 return;
             }
-
-            e.Column.SortDirection = e.Column.SortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
-            collection.Sort(e.Column.SortMemberPath, e.Column.SortDirection.Value);
-
-            e.Handled = true;
+            eventArgs.Column.SortDirection = eventArgs.Column.SortDirection == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            collection.Sort(eventArgs.Column.SortMemberPath, eventArgs.Column.SortDirection.Value);
+            eventArgs.Handled = true;
         }
 
         private void ExpandSelectedRow() {

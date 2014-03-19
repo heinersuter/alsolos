@@ -1,4 +1,4 @@
-namespace Alsolos.Commons.Behaviors.MultiSelectBehavior {
+namespace Alsolos.Commons.Behaviors.MultiselectBehavior {
     public class DoNothingListItemConverter : IListItemConverter {
         public object Convert(object masterListItem) {
             return masterListItem;
