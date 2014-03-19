@@ -183,7 +183,7 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
         }
 
         public void Clear() {
-            foreach (var wrapper in _wrappers.ToList()) {
+            foreach (var wrapper in _wrappers.Where(wrapper => wrapper.Parent == null).ToList()) {
                 RemoveWrapperRecursively(wrapper);
             }
         }

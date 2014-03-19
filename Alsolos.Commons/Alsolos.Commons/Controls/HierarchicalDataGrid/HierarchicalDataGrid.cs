@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using Alsolos.Commons.Mvvm;
 
 namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
     public class HierarchicalDataGrid : DataGrid {
@@ -16,6 +18,9 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
                     IsReadOnly = true,
                 });
 
+            InputBindings.Add(new KeyBinding(new DelegateCommand(ExpandSelectedRow), Key.Right, ModifierKeys.None));
+            InputBindings.Add(new KeyBinding(new DelegateCommand(CollapseSelectedRow), Key.Left, ModifierKeys.None));
+
             base.OnInitialized(e);
         }
 
@@ -29,6 +34,20 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             collection.Sort(e.Column.SortMemberPath, e.Column.SortDirection.Value);
 
             e.Handled = true;
+        }
+
+        private void ExpandSelectedRow() {
+            var selectedWrapper = SelectedItem as HierarchicalDataGridItemWrapper;
+            if (selectedWrapper != null) {
+                selectedWrapper.IsExpanded = true;
+            }
+        }
+
+        private void CollapseSelectedRow() {
+            var selectedWrapper = SelectedItem as HierarchicalDataGridItemWrapper;
+            if (selectedWrapper != null) {
+                selectedWrapper.IsExpanded = false;
+            }
         }
     }
 }

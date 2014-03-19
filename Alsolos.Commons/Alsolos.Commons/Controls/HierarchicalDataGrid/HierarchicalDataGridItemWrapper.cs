@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using Alsolos.Commons.Mvvm;
 
@@ -13,7 +12,6 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             IsExpanded = false;
             IsParentExpanded = Parent == null || Parent.IsExpanded;
             Children = new ObservableCollection<HierarchicalDataGridItemWrapper>();
-            Children.CollectionChanged += OnChildrenCollectionChanged;
         }
 
         public static HierarchicalDataGridItemWrapper CreateRecursively(IHierarchicalDataGridItem item) {
@@ -63,10 +61,6 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             foreach (var child in Children) {
                 child.CollapseRecursively();
             }
-        }
-
-        private void OnChildrenCollectionChanged(object sender, NotifyCollectionChangedEventArgs e) {
-            RaisePropertyChanged(() => Children);
         }
 
         private void SetIsParentExpandedToAllSubItemsRecursively(bool isExpanded) {
