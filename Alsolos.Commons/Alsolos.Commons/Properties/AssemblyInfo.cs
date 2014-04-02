@@ -21,5 +21,6 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Controls.HierarchicalDataGrid")]
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Controls.SimpleStretchPanel")]
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Mvvm.Converters")]
+[assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Resources")]
 
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
