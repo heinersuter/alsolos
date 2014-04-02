@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:Alsolos.Commons.Mvvm.Converters">
+
+    <converters:BoolToInverseBoolConverter x:Key="BoolToInverseBoolConverter"/>
+    <converters:BoolToValueConverter x:Key="BoolToValueConverter"/>
+    <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+
+    <converters:EqualityToBoolConverter x:Key="EqualityToBoolConverter"/>
+    <converters:EqualityToValueConverter x:Key="EqualityToValueConverter"/>
+    <converters:EqualityToVisibilityConverter x:Key="EqualityToVisibilityConverter"/>
+
+    <converters:ListEmptyToBoolConverter x:Key="ListEmptyToBoolConverter"/>
+    <converters:ListEmptyToValueConverter x:Key="ListEmptyToValueConverter"/>
+    <converters:ListEmptyToVisibilityConverter x:Key="ListEmptyToVisibilityConverter"/>
+
+    <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
+    <converters:NullToValueConverter x:Key="NullToValueConverter"/>
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+
+    <converters:StringToSingleLineStringConverter x:Key="StringToSingleLineStringConverter"/>
+
+</ResourceDictionary>

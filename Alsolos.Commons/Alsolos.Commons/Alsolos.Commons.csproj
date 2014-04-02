@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -96,6 +96,7 @@
     <Compile Include="Mvvm\Converters\NullToBoolConverter.cs" />
     <Compile Include="Mvvm\Converters\NullToValueConverter.cs" />
     <Compile Include="Mvvm\Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="Mvvm\Converters\StringToSingleLineStringConverter.cs" />
     <Compile Include="Mvvm\Converters\ValueConverter.cs" />
     <Compile Include="Resources\SharedResourceDictionary.cs" />
     <Compile Include="Utils\ComparisonComparer.cs" />
@@ -121,6 +122,10 @@
     <Page Include="Controls\SimpleStretchPanel\SimpleStretchPanelStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Mvvm\Converters\Converters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\ControlStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
