@@ -11,6 +11,16 @@
             set { BackingFields.SetValue(() => IsBusy, value, OnIsBusyChanged); }
         }
 
+        public void ConnectIsBusy(ViewModel parentViewModel) {
+            if (_parentViewModel != null) {
+                _parentViewModel.IsBusyChanged -= OnParentIsBusyChanged;
+            }
+            _parentViewModel = parentViewModel;
+            if (_parentViewModel != null) {
+                parentViewModel.IsBusyChanged += OnParentIsBusyChanged;
+            }
+        }
+
         protected virtual void OnIsBusyChanged(bool isBusy) {
             var handler = IsBusyChanged;
             if (handler != null) {
@@ -18,16 +28,6 @@
             }
             if (_parentViewModel != null) {
                 _parentViewModel.IsBusy = isBusy;
-            }
-        }
-
-        protected void ConnectIsBusy(ViewModel parentViewModel) {
-            if (_parentViewModel != null) {
-                _parentViewModel.IsBusyChanged -= OnParentIsBusyChanged;
-            }
-            _parentViewModel = parentViewModel;
-            if (_parentViewModel != null) {
-                parentViewModel.IsBusyChanged += OnParentIsBusyChanged;
             }
         }
 
