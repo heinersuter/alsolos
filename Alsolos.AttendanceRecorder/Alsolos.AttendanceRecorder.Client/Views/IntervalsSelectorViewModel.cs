@@ -7,27 +7,24 @@ using Alsolos.Commons.Mvvm;
 
 namespace Alsolos.AttendanceRecorder.Client.Views {
     public class IntervalsSelectorViewModel : ViewModel {
-        private readonly IEnumerable<Interval> _modelIntervals;
+        private IEnumerable<Interval> _modelIntervals;
 
         public IntervalsSelectorViewModel() {
-            _modelIntervals = new[] {
-                new Interval { Date = DateTime.Today, Start = TimeSpan.FromHours(8), End = TimeSpan.FromHours(9.5) },
-                new Interval { Date = DateTime.Today, Start = TimeSpan.FromHours(9.75), End = TimeSpan.FromHours(12) },
-                new Interval { Date = DateTime.Today.AddDays(-1), Start = TimeSpan.FromHours(8), End = TimeSpan.FromHours(9.5) },
-                new Interval { Date = DateTime.Today.AddDays(-1), Start = TimeSpan.FromHours(9.75), End = TimeSpan.FromHours(12) },
-            };
-
-            DatePeriodViewModel = new DatePeriodViewModel(_modelIntervals);
             DatePeriodViewModel.PropertyChanged += OnDatePeriodViewModelPropertyChanged;
         }
 
         public DatePeriodViewModel DatePeriodViewModel {
-            get { return BackingFields.GetValue(() => DatePeriodViewModel); }
-            private set { BackingFields.SetValue(() => DatePeriodViewModel, value); }
+            get { return BackingFields.GetValue(() => DatePeriodViewModel, () => new DatePeriodViewModel()); }
         }
 
         public DaysViewModel DaysViewModel {
             get { return BackingFields.GetValue(() => DaysViewModel, () => new DaysViewModel()); }
+        }
+
+        public void SetIntervals(IEnumerable<Interval> modelIntervals) {
+            _modelIntervals = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
+            DatePeriodViewModel.SetIntervals(_modelIntervals);
+            SetDays();
         }
 
         private void OnDatePeriodViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -37,6 +34,10 @@ namespace Alsolos.AttendanceRecorder.Client.Views {
         }
 
         private void SetDays() {
+            if (DatePeriodViewModel.SelectedPeriod == null) {
+                DaysViewModel.Days = Enumerable.Empty<DayViewModel>();
+                return;
+            }
             var selectedIntervals = _modelIntervals.Where(interval => interval.Date >= DatePeriodViewModel.SelectedPeriod.Start && interval.Date <= DatePeriodViewModel.SelectedPeriod.End);
             var dayGroupings = selectedIntervals.GroupBy(interval => interval.Date.Date);
             DaysViewModel.Days = dayGroupings.Select(grouping => new DayViewModel(grouping.Key, grouping));

@@ -7,12 +7,12 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DatePeriodViewModel}">
 
-    <TabControl>
+    <TabControl HorizontalAlignment="Stretch">
         <TabItem Header="Years">
             <ListBox ItemsSource="{Binding Years}" SelectedItem="{Binding SelectedYear}" HorizontalAlignment="Stretch" DisplayMemberPath="Name"/>
         </TabItem>
 
-        <TabItem Header="Months">
+        <TabItem Header="Months" IsSelected="True">
             <ListBox ItemsSource="{Binding Months}" SelectedItem="{Binding SelectedMonth}" HorizontalAlignment="Stretch" DisplayMemberPath="Name"/>
         </TabItem>
 

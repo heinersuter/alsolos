@@ -13,9 +13,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <views:DatePeriodView DataContext="{Binding DatePeriodViewModel}"/>
+        <views:DatePeriodView Grid.Column="0" DataContext="{Binding DatePeriodViewModel}"/>
 
-        <GridSplitter Grid.Column="2" Width="8" VerticalAlignment="Stretch"/>
+        <GridSplitter Grid.Column="1" Width="8"/>
 
         <views:DaysView Grid.Column="2" DataContext="{Binding DaysViewModel}"/>
 

@@ -7,13 +7,6 @@ using Alsolos.Commons.Mvvm;
 
 namespace Alsolos.AttendanceRecorder.Client.Views {
     public class DatePeriodViewModel : ViewModel {
-        public DatePeriodViewModel(IEnumerable<Interval> modelIntervals) {
-            var intervalList = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
-            InitYears(intervalList);
-            InitMonths(intervalList);
-            InitWeeks(intervalList);
-        }
-
         public IEnumerable<DatePeriod> Years {
             get { return BackingFields.GetValue(() => Years); }
             private set { BackingFields.SetValue(() => Years, value); }
@@ -47,6 +40,16 @@ namespace Alsolos.AttendanceRecorder.Client.Views {
         public DatePeriod SelectedPeriod {
             get { return BackingFields.GetValue(() => SelectedPeriod); }
             private set { BackingFields.SetValue(() => SelectedPeriod, value); }
+        }
+
+        public void SetIntervals(IEnumerable<Interval> modelIntervals) {
+            var intervalList = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
+            InitYears(intervalList);
+            InitMonths(intervalList);
+            InitWeeks(intervalList);
+            if (Months != null) {
+                SelectedMonth = Months.FirstOrDefault();
+            }
         }
 
         private void UpdateSelection(DatePeriod selectedPeriod) {
