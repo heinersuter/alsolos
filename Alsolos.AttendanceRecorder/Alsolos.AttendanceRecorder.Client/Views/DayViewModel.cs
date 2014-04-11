@@ -7,8 +7,14 @@ using Alsolos.Commons.Mvvm;
 
 namespace Alsolos.AttendanceRecorder.Client.Views {
     public class DayViewModel : BackingFieldsHolder {
-        public DayViewModel(IEnumerable<Interval> intervals) {
-            Intervals = new ObservableCollection<IntervalViewModel>(CreateIntervalAdapters(intervals));
+        public DayViewModel(DateTime date, IEnumerable<Interval> modelIntervals) {
+            Date = date.Date;
+            Init(modelIntervals);
+        }
+
+        public DateTime Date {
+            get { return BackingFields.GetValue(() => Date); }
+            private set { BackingFields.SetValue(() => Date, value); }
         }
 
         public ObservableCollection<IntervalViewModel> Intervals {
@@ -16,23 +22,23 @@ namespace Alsolos.AttendanceRecorder.Client.Views {
             private set { BackingFields.SetValue(() => Intervals, value); }
         }
 
-        private static IEnumerable<IntervalViewModel> CreateIntervalAdapters(IEnumerable<Interval> intervals) {
-            var intervalList = intervals as IList<Interval> ?? intervals.ToList();
-            if (intervals == null || !intervalList.Any()) {
-                return Enumerable.Empty<IntervalViewModel>();
+        private void Init(IEnumerable<Interval> modelIntervals) {
+            var intervalList = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
+            if (modelIntervals == null || !intervalList.Any()) {
+                Intervals = new ObservableCollection<IntervalViewModel>();
+                return;
             }
-            var date = intervalList.First().Date.Date;
+
             var lastTime = TimeSpan.Zero;
-            var result = new List<IntervalViewModel>();
-            foreach (var interval in intervalList.Where(interval => interval.Date == date).OrderBy(interval => interval.Start)) {
-                if (interval.Start > lastTime)
-                {
-                    result.Add(new IntervalViewModel { Date = date, Start = lastTime, End = interval.Start, Type = IntervalType.Inactive });
+            var intervals = new List<IntervalViewModel>();
+            foreach (var interval in intervalList.Where(interval => interval.Date == Date).OrderBy(interval => interval.Start)) {
+                if (interval.Start > lastTime) {
+                    intervals.Add(new IntervalViewModel { Date = Date, Start = lastTime, End = interval.Start, Type = IntervalType.Inactive });
                 }
-                result.Add(new IntervalViewModel { Date = date, Start = interval.Start, End = interval.End, Type = IntervalType.Active });
+                intervals.Add(new IntervalViewModel { Date = Date, Start = interval.Start, End = interval.End, Type = IntervalType.Active });
                 lastTime = interval.End;
             }
-            return result;
+            Intervals = new ObservableCollection<IntervalViewModel>(intervals);
         }
     }
 }

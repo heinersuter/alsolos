@@ -6,7 +6,15 @@
              xmlns:views="clr-namespace:Alsolos.AttendanceRecorder.Client.Views"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DayViewModel}">
-    <Grid>
-            
-    </Grid>
+
+    <Expander Header="{Binding Date}">
+        <ListBox ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <views:IntervalView/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Expander>
+
 </UserControl>

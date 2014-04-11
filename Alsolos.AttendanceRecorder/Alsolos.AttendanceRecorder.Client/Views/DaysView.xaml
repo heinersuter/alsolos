@@ -6,7 +6,13 @@
              xmlns:views="clr-namespace:Alsolos.AttendanceRecorder.Client.Views"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DaysViewModel}">
-    <ListView ItemsSource="{Binding Days}">
-            
+
+    <ListView ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <views:DayView/>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
     </ListView>
+
 </UserControl>

@@ -7,6 +7,17 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:IntervalsSelectorViewModel}">
     <Grid>
-        <views:DaysView DataContext="{Binding DaysViewModel}"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <views:DatePeriodView DataContext="{Binding DatePeriodViewModel}"/>
+
+        <GridSplitter Grid.Column="2" Width="8" VerticalAlignment="Stretch"/>
+
+        <views:DaysView Grid.Column="2" DataContext="{Binding DaysViewModel}"/>
+
     </Grid>
 </UserControl>
