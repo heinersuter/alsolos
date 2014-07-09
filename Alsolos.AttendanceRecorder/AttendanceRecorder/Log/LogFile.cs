@@ -12,7 +12,8 @@
 
     public class LogFile
     {
-        private readonly string _filename;
+        private readonly string _workingFilename;
+        private readonly string _backupFilename;
 
         public EventCollection EventCollection { get; private set; }
 
@@ -20,29 +21,31 @@
         {
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()) || Debugger.IsAttached)
             {
-                _filename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\AttendanceRecorder\Events.V1.dev.xml";
+                _workingFilename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\AttendanceRecorder\Events.V1.dev.xml";
+                _backupFilename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\AttendanceRecorder\Events.V1.dev.backup.xml";
             }
             else
             {
-                _filename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\AttendanceRecorder\Events.V1.xml";
+                _workingFilename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\AttendanceRecorder\Events.V1.xml";
+                _backupFilename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\AttendanceRecorder\Events.V1.backup.xml";
             }
 
-            Load(_filename);
+            Load();
             EventCollection.SaveRequested += OnEventCollectionSaveRequested;
         }
 
         private void OnEventCollectionSaveRequested(object sender, EventArgs e)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(_filename));
-            this.Save(_filename);
+            Directory.CreateDirectory(Path.GetDirectoryName(_workingFilename));
+            Save();
         }
 
-        private void Load(string fileName)
+        private void Load()
         {
-            if (File.Exists(fileName))
+            if (File.Exists(_workingFilename))
             {
                 var serializer = new XmlSerializer(typeof(EventCollection));
-                using (var reader = new XmlTextReader(fileName))
+                using (var reader = new XmlTextReader(_workingFilename))
                 {
                     EventCollection = (EventCollection)serializer.Deserialize(reader);
                 }
@@ -53,11 +56,13 @@
             }
         }
 
-        private void Save(string fileName)
+        private void Save()
         {
+            File.Copy(_workingFilename, _backupFilename, true);
+
             var serializer = new XmlSerializer(typeof(EventCollection));
 
-            using (var writer = new XmlTextWriter(fileName, Encoding.UTF8))
+            using (var writer = new XmlTextWriter(_workingFilename, Encoding.UTF8))
             {
                 writer.Formatting = Formatting.Indented;
                 serializer.Serialize(writer, EventCollection);
