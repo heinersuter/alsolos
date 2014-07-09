@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FD101E74-2A60-483F-B381-88E4BF1AAFE7}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AttendanceRecorder</RootNamespace>
+    <AssemblyName>AttendanceRecorder</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AttendanceRecorder.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Log\LogFile.cs" />
+    <Compile Include="Model\Day.cs" />
+    <Compile Include="Model\EventItem.cs" />
+    <Compile Include="Model\EventCollection.cs" />
+    <Compile Include="Model\SystemState.cs" />
+    <Compile Include="Recorder\EventListener.cs" />
+    <Compile Include="Recorder\EventRecorder.cs" />
+    <Compile Include="Recorder\StateChangedEventArgs.cs" />
+    <Compile Include="View\About\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CloseDialog.xaml.cs">
+      <DependentUpon>CloseDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Commons\GoldenRatioConverter.cs" />
+    <Compile Include="View\Commons\PropertyHelper.cs" />
+    <Compile Include="View\CurrentDayConverter.cs" />
+    <Compile Include="View\Commons\DelegateCommand.cs" />
+    <Compile Include="View\EventTextConverter.cs" />
+    <Compile Include="View\EventToImageConverter.cs" />
+    <Compile Include="View\MainWindowViewModel.cs" />
+    <Compile Include="View\SystemTray.cs" />
+    <Compile Include="View\TotalTimeConverter.cs" />
+    <Compile Include="View\Commons\ViewModel.cs" />
+    <Page Include="View\About\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CloseDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Commons\HeaderedContentControlStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="View\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\DeleteHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\DownOrange16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\DownOrange24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\DownGray16.png" />
+    <Resource Include="View\images\DownGray24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\UpBlue16.png" />
+    <Resource Include="View\images\UpBlue24.png" />
+    <Resource Include="View\images\UpGreen16.png" />
+    <Resource Include="View\images\UpGreen24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="AttendanceRecorder.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\Annotate_Help.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\MinusGreen16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\MinusGreen24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\history.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\images\1380_wall_clockFINAL.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
