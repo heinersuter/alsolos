@@ -10,6 +10,7 @@
 
     public class EventRecorder : DispatcherObject, IDisposable
     {
+        private static TimeSpan _timeout = new TimeSpan(0, 1, 0);
         private readonly BackgroundWorker _todaysTotalTimeRefreshWorker;
 
         public LogFile LogFile { get; private set; }
@@ -41,7 +42,7 @@
                     Application.Current.Dispatcher.Invoke(new Action(UpdateNowEntry));
                 }
 
-                Thread.Sleep(10000);
+                Thread.Sleep(_timeout);
             }
         }
 
