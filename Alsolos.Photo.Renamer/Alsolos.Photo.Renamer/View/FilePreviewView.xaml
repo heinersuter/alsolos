@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
+             xmlns:i18N="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
              xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View"
              xmlns:simpleStretchPanel="clr-namespace:Alsolos.Commons.Controls.SimpleStretchPanel;assembly=Alsolos.Commons"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance view:FilePreviewViewModel}">
@@ -11,13 +11,19 @@
 
         <StackPanel>
 
-            <HeaderedContentControl Header="{i18n:Translate Preview_CreatedTime}" Margin="8 8 8 0">
+            <HeaderedContentControl Header="{i18N:Translate Preview_CreatedTime}" Margin="8 8 8 0">
                 <Border Height="22" BorderBrush="LightGray" BorderThickness="0" Background="LightGray">
                     <TextBlock Text="{Binding CreatedTime}" Margin="3 3 0 3" TextTrimming="CharacterEllipsis" />
                 </Border>
             </HeaderedContentControl>
 
-            <HeaderedContentControl Header="{i18n:Translate Preview_FileName}" Margin="8 8 8 0">
+            <HeaderedContentControl Header="{i18N:Translate Preview_AdjustedTime}" Margin="8 8 8 0">
+                <Border Height="22" BorderBrush="LightGray" BorderThickness="0" Background="LightGray">
+                    <TextBlock Text="{Binding AdjustedTime}" Margin="3 3 0 3" TextTrimming="CharacterEllipsis" />
+                </Border>
+            </HeaderedContentControl>
+
+            <HeaderedContentControl Header="{i18N:Translate Preview_FileName}" Margin="8 8 8 0">
                 <Border Height="22" BorderBrush="LightGray" BorderThickness="0" Background="LightGray">
                     <TextBlock Text="{Binding PreviewFileName}" Margin="3 3 0 3" TextTrimming="CharacterEllipsis" />
                 </Border>

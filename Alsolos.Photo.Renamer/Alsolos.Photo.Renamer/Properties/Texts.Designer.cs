@@ -205,6 +205,15 @@ namespace Alsolos.Photo.Renamer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adjusted Time.
+        /// </summary>
+        public static string Preview_AdjustedTime {
+            get {
+                return ResourceManager.GetString("Preview_AdjustedTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date and Time from File.
         /// </summary>
         public static string Preview_CreatedTime {

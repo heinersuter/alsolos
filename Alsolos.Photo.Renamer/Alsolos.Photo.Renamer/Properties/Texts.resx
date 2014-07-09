@@ -165,6 +165,9 @@
   <data name="Param_OffsetSeconds" xml:space="preserve">
     <value>Offset Seconds</value>
   </data>
+  <data name="Preview_AdjustedTime" xml:space="preserve">
+    <value>Adjusted Time</value>
+  </data>
   <data name="Preview_CreatedTime" xml:space="preserve">
     <value>Date and Time from File</value>
   </data>
