@@ -14,8 +14,7 @@
     {
         private readonly string _workingFilename;
         private readonly string _backupFilename;
-
-        public EventCollection EventCollection { get; private set; }
+        private bool _errorWhenReadingFile;
 
         public LogFile()
         {
@@ -34,14 +33,22 @@
             EventCollection.SaveRequested += OnEventCollectionSaveRequested;
         }
 
+        public EventCollection EventCollection { get; private set; }
+
         private void OnEventCollectionSaveRequested(object sender, EventArgs e)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(_workingFilename));
+            var directoryName = Path.GetDirectoryName(_workingFilename);
+            if (directoryName == null)
+            {
+                return;
+            }
+            Directory.CreateDirectory(directoryName);
             Save();
         }
 
         private void Load()
         {
+            _errorWhenReadingFile = true;
             if (File.Exists(_workingFilename))
             {
                 var serializer = new XmlSerializer(typeof(EventCollection));
@@ -54,11 +61,20 @@
             {
                 EventCollection = new EventCollection();
             }
+            _errorWhenReadingFile = false;
         }
 
         private void Save()
         {
-            File.Copy(_workingFilename, _backupFilename, true);
+            if (_errorWhenReadingFile)
+            {
+                return;
+            }
+
+            if (File.Exists(_workingFilename))
+            {
+                File.Copy(_workingFilename, _backupFilename, true);
+            }
 
             var serializer = new XmlSerializer(typeof(EventCollection));
 
