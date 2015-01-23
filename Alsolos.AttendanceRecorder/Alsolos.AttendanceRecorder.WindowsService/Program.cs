@@ -2,7 +2,6 @@
 {
     using System;
     using System.ServiceProcess;
-    using Alsolos.AttendanceRecorder.LocalService;
 
     public static class Program
     {
@@ -17,7 +16,7 @@
             {
                 Console.WriteLine("Test");
 
-                var worker = new Worker(new AttendanceRecorderService());
+                var worker = new Worker(Environment.UserDomainName + "\\" + Environment.UserName);
                 worker.Start();
 
                 var key = (char)Console.Read();

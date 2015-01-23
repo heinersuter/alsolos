@@ -11,10 +11,12 @@
         private readonly ManualResetEvent _runEvent = new ManualResetEvent(false);
         private readonly BackgroundWorker _backgroundWorker = new BackgroundWorker();
         private readonly AttendanceRecorderService _service;
+        private readonly string _timeAccountname;
 
-        public Worker(AttendanceRecorderService service)
+        public Worker(string timeAccountname)
         {
-            _service = service;
+            _timeAccountname = timeAccountname;
+            _service = new AttendanceRecorderService();
             _backgroundWorker.DoWork += BackgroundWorkerOnDoWork;
             _backgroundWorker.RunWorkerAsync();
         }
@@ -35,9 +37,9 @@
             {
                 if (_runEvent.WaitOne())
                 {
-                    _service.KeepAlive("Attendance Recorder", _intervalDuration);
-                    Thread.Sleep(_intervalDuration);
+                    _service.KeepAlive(_timeAccountname, _intervalDuration);
                 }
+                Thread.Sleep(_intervalDuration);
             }
         }
     }
