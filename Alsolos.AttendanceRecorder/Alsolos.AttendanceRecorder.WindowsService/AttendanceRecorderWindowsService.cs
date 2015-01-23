@@ -1,8 +1,15 @@
-﻿using System.ServiceProcess;
+﻿namespace Alsolos.AttendanceRecorder.WindowsService
+{
+    using System;
+    using System.ServiceProcess;
+    using Alsolos.AttendanceRecorder.LocalService;
 
-namespace Alsolos.AttendanceRecorder.WindowsService {
-    public class AttendanceRecorderWindowsService : ServiceBase {
-        public AttendanceRecorderWindowsService() {
+    public class AttendanceRecorderWindowsService : ServiceBase
+    {
+        private Worker _worker;
+
+        public AttendanceRecorderWindowsService()
+        {
             ServiceName = "Attendance Recorder Service";
 
             CanHandlePowerEvent = true;
@@ -10,33 +17,46 @@ namespace Alsolos.AttendanceRecorder.WindowsService {
             CanPauseAndContinue = true;
             CanShutdown = true;
             CanStop = true;
+            _worker = new Worker(new AttendanceRecorderService());
         }
 
-        protected override void OnStart(string[] args) {
+        protected override void OnStart(string[] args)
+        {
             base.OnStart(args);
+            _worker.Start();
         }
 
-        protected override void OnStop() {
+        protected override void OnStop()
+        {
+            _worker.Stop();
             base.OnStop();
         }
 
-        protected override void OnPause() {
+        protected override void OnPause()
+        {
+            _worker.Stop();
             base.OnPause();
         }
 
-        protected override void OnContinue() {
+        protected override void OnContinue()
+        {
             base.OnContinue();
+            _worker.Start();
         }
 
-        protected override void OnShutdown() {
+        protected override void OnShutdown()
+        {
+            _worker.Stop();
             base.OnShutdown();
         }
 
-        protected override bool OnPowerEvent(PowerBroadcastStatus powerStatus) {
+        protected override bool OnPowerEvent(PowerBroadcastStatus powerStatus)
+        {
             return base.OnPowerEvent(powerStatus);
         }
 
-        protected override void OnSessionChange(SessionChangeDescription changeDescription) {
+        protected override void OnSessionChange(SessionChangeDescription changeDescription)
+        {
             base.OnSessionChange(changeDescription);
         }
     }

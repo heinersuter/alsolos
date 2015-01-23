@@ -1,16 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿namespace Alsolos.AttendanceRecorder.LocalService
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
-namespace Alsolos.AttendanceRecorder.LocalService {
-    public class AttendanceRecorderService {
-        private readonly List<Interval> _intervals = new List<Interval>();
+    public class AttendanceRecorderService
+    {
+        private readonly List<Interval> _intervals;
+        private readonly TempStore _tempStore = new TempStore();
 
-        public void KeepAlive(string timeAccountName, TimeSpan intervalDuration) {
+        public AttendanceRecorderService()
+        {
+            _intervals = _tempStore.Load();
+        }
+
+        public void KeepAlive(string timeAccountName, TimeSpan intervalDuration)
+        {
+            Console.WriteLine("Keep Alive {0}", DateTime.Now);
             AddOrUpdateInterval(timeAccountName, intervalDuration);
         }
 
-        private void AddOrUpdateInterval(string timeAccountName, TimeSpan intervalDuration) {
+        private void AddOrUpdateInterval(string timeAccountName, TimeSpan intervalDuration)
+        {
             var currentTime = DateTime.Now;
 
             var currentInterval = _intervals.SingleOrDefault(
@@ -18,21 +29,27 @@ namespace Alsolos.AttendanceRecorder.LocalService {
                 && interval.Date.Date == currentTime.Date
                 && interval.Date + interval.End + intervalDuration + intervalDuration > currentTime);
 
-            if (currentInterval != null) {
+            if (currentInterval != null)
+            {
                 currentInterval.State = IntervalState.Dirty;
                 currentInterval.End = currentTime.TimeOfDay;
-            } else {
-                currentInterval = new Interval {
+                currentInterval.LastModified = DateTime.Now;
+            }
+            else
+            {
+                currentInterval = new Interval
+                {
                     State = IntervalState.New,
                     Date = currentTime.Date,
                     Start = currentTime.TimeOfDay,
                     End = currentTime.TimeOfDay,
                     TimeAccountName = timeAccountName,
+                    LastModified = DateTime.Now,
                 };
                 _intervals.Add(currentInterval);
             }
 
-            // TODO: Save current interval on server
+            _tempStore.Save(_intervals.Where(interval => interval.State != IntervalState.Persisted).ToList());
         }
     }
 }

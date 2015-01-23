@@ -1,11 +1,14 @@
-﻿using System.ComponentModel;
-using System.Configuration.Install;
-using System.ServiceProcess;
+﻿namespace Alsolos.AttendanceRecorder.WindowsService
+{
+    using System.ComponentModel;
+    using System.Configuration.Install;
+    using System.ServiceProcess;
 
-namespace Alsolos.AttendanceRecorder.WindowsService {
     [RunInstaller(true)]
-    public class WindowsServiceInstaller : Installer {
-        public WindowsServiceInstaller() {
+    public class WindowsServiceInstaller : Installer
+    {
+        public WindowsServiceInstaller()
+        {
             var serviceProcessInstaller = new ServiceProcessInstaller();
             var serviceInstaller = new ServiceInstaller();
 

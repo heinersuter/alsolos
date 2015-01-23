@@ -1,5 +1,7 @@
-﻿namespace Alsolos.AttendanceRecorder.LocalService {
-    public enum IntervalState {
+﻿namespace Alsolos.AttendanceRecorder.LocalService
+{
+    public enum IntervalState
+    {
         New,
         Dirty,
         Persisted,
