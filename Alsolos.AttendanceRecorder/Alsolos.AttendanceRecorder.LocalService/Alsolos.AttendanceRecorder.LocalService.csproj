@@ -41,9 +41,15 @@
   <ItemGroup>
     <Compile Include="AttendanceRecorderService.cs" />
     <Compile Include="Interval.cs" />
-    <Compile Include="IntervalState.cs" />
+    <Compile Include="IntervalAggregator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TempStore.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Alsolos.AttendanceRecorder.WebApi\Alsolos.AttendanceRecorder.WebApi.csproj">
+      <Project>{3cb90043-46a2-46ed-9806-40d7ec205134}</Project>
+      <Name>Alsolos.AttendanceRecorder.WebApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

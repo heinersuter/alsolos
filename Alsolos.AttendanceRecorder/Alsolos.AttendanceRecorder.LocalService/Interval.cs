@@ -4,9 +4,10 @@
     using System.ComponentModel;
     using System.Xml;
     using System.Xml.Serialization;
+    using Alsolos.AttendanceRecorder.WebApi.Controllers;
 
     [Serializable]
-    public class Interval
+    public class Interval : IInterval
     {
         public int Id { get; set; }
 

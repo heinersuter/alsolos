@@ -1,22 +1,33 @@
 ﻿namespace Alsolos.AttendanceRecorder.LocalService
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
+    using Alsolos.AttendanceRecorder.WebApi;
+    using Alsolos.AttendanceRecorder.WebApi.Controllers;
 
-    public class AttendanceRecorderService
+    public class AttendanceRecorderService : IDisposable
     {
-        private readonly List<Interval> _intervals;
-        private readonly TempStore _tempStore = new TempStore();
+        private readonly IntervalAggregator _aggregator;
+        private readonly WebApiStarter _webApiStarter;
 
         public AttendanceRecorderService()
         {
-            _intervals = _tempStore.Load();
+            _aggregator = new IntervalAggregator();
+            _webApiStarter = new WebApiStarter();
+            _webApiStarter.Start();
         }
 
         public void KeepAlive(string timeAccountName, TimeSpan intervalDuration)
         {
             AddOrUpdateInterval(timeAccountName, intervalDuration, DateTime.Now);
+        }
+
+        public void Dispose()
+        {
+            if (_webApiStarter != null)
+            {
+                _webApiStarter.Dispose();
+            }
         }
 
         private void AddOrUpdateInterval(string timeAccountName, TimeSpan intervalDuration, DateTime currentDateTime)
@@ -26,19 +37,18 @@
             if (currentInterval != null)
             {
                 UpdateExistingIntervall(currentInterval, currentDateTime);
+                _aggregator.TrackUpdate(currentInterval);
             }
             else
             {
-                _intervals.Add(CreateNewIntervall(timeAccountName, currentDateTime));
+                _aggregator.Add(CreateNewIntervall(timeAccountName, currentDateTime));
             }
-
-            _tempStore.Save(_intervals.Where(interval => interval.State != IntervalState.Persisted).ToList());
         }
 
-        private Interval FindIntervallToUpdate(string timeAccountName, TimeSpan intervalDuration, DateTime currentTime)
+        private IInterval FindIntervallToUpdate(string timeAccountName, TimeSpan intervalDuration, DateTime currentTime)
         {
             var currentInterval =
-                _intervals.SingleOrDefault(
+                _aggregator.Intervals.SingleOrDefault(
                     interval => interval.TimeAccountName == timeAccountName
                         && interval.Date.Date == currentTime.Date
                         && interval.Date + interval.End + intervalDuration + intervalDuration > currentTime);
@@ -60,7 +70,7 @@
             return currentInterval;
         }
 
-        private static void UpdateExistingIntervall(Interval currentInterval, DateTime currentTime)
+        private static void UpdateExistingIntervall(IInterval currentInterval, DateTime currentTime)
         {
             currentInterval.State = IntervalState.Dirty;
             currentInterval.End = GetTimeOfDay(currentTime);

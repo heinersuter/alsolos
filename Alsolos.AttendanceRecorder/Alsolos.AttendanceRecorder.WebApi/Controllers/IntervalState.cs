@@ -1,4 +1,4 @@
-﻿namespace Alsolos.AttendanceRecorder.LocalService
+﻿namespace Alsolos.AttendanceRecorder.WebApi.Controllers
 {
     public enum IntervalState
     {

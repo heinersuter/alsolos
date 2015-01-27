@@ -110,10 +110,6 @@
       <Project>{b0d4d546-6a3e-42bf-be7d-cde59ac33d44}</Project>
       <Name>Alsolos.Commons</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Alsolos.AttendanceRecorder.WebApi\Alsolos.AttendanceRecorder.WebApi.csproj">
-      <Project>{4d6ba107-2a05-4eb9-9a70-a4ec0e87fd60}</Project>
-      <Name>Alsolos.AttendanceRecorder.WebApi</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

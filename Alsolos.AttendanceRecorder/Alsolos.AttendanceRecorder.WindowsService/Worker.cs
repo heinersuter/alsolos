@@ -5,7 +5,7 @@
     using System.Threading;
     using Alsolos.AttendanceRecorder.LocalService;
 
-    public class Worker
+    public class Worker : IDisposable
     {
         private readonly TimeSpan _intervalDuration = new TimeSpan(0, 0, 10);
         private readonly ManualResetEvent _runEvent = new ManualResetEvent(false);
@@ -29,6 +29,14 @@
         public void Stop()
         {
             _runEvent.Reset();
+        }
+
+        public void Dispose()
+        {
+            if (_service != null)
+            {
+                _service.Dispose();
+            }
         }
 
         private void BackgroundWorkerOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)
