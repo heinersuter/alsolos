@@ -1,7 +1,9 @@
-﻿using System;
+﻿namespace Alsolos.AttendanceRecorder.Client.Models
+{
+    using System;
 
-namespace Alsolos.AttendanceRecorder.Client.Models {
-    public class Interval {
+    public class Interval
+    {
         public DateTime Date { get; set; }
 
         public TimeSpan Start { get; set; }

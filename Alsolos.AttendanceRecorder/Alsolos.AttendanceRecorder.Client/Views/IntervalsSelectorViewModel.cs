@@ -1,40 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using Alsolos.AttendanceRecorder.Client.Models;
-using Alsolos.Commons.Mvvm;
+﻿namespace Alsolos.AttendanceRecorder.Client.Views
+{
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
+    using Alsolos.AttendanceRecorder.Client.Models;
+    using Alsolos.Commons.Mvvm;
 
-namespace Alsolos.AttendanceRecorder.Client.Views {
-    public class IntervalsSelectorViewModel : ViewModel {
+    public class IntervalsSelectorViewModel : ViewModel
+    {
         private IEnumerable<Interval> _modelIntervals;
 
-        public IntervalsSelectorViewModel() {
+        public IntervalsSelectorViewModel()
+        {
             DatePeriodViewModel.PropertyChanged += OnDatePeriodViewModelPropertyChanged;
         }
 
-        public DatePeriodViewModel DatePeriodViewModel {
+        public DatePeriodViewModel DatePeriodViewModel
+        {
             get { return BackingFields.GetValue(() => DatePeriodViewModel, () => new DatePeriodViewModel()); }
         }
 
-        public DaysViewModel DaysViewModel {
+        public DaysViewModel DaysViewModel
+        {
             get { return BackingFields.GetValue(() => DaysViewModel, () => new DaysViewModel()); }
         }
 
-        public void SetIntervals(IEnumerable<Interval> modelIntervals) {
+        public void SetIntervals(IEnumerable<Interval> modelIntervals)
+        {
             _modelIntervals = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
             DatePeriodViewModel.SetIntervals(_modelIntervals);
             SetDays();
         }
 
-        private void OnDatePeriodViewModelPropertyChanged(object sender, PropertyChangedEventArgs e) {
-            if (e.PropertyName == GetPropertyName(() => DatePeriodViewModel.SelectedPeriod)) {
+        private void OnDatePeriodViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == GetPropertyName(() => DatePeriodViewModel.SelectedPeriod))
+            {
                 SetDays();
             }
         }
 
-        private void SetDays() {
-            if (DatePeriodViewModel.SelectedPeriod == null) {
+        private void SetDays()
+        {
+            if (DatePeriodViewModel.SelectedPeriod == null)
+            {
                 DaysViewModel.Days = Enumerable.Empty<DayViewModel>();
                 return;
             }

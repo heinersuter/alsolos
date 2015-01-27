@@ -6,9 +6,10 @@
     public class IntervalsController : ApiController
     {
         // GET api/intervals 
-        public IEnumerable<string> Get()
+        public IEnumerable<IInterval> Get()
         {
-            return new[] { "interval", "interval2" };
+            var intervals = WebApiStarter.Intervals;
+            return intervals.Intervals;
         }
 
         // GET api/values/5 

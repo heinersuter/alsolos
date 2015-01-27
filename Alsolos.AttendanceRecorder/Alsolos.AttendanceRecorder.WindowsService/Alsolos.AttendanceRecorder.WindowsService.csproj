@@ -93,7 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="install.bat" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Alsolos.AttendanceRecorder.LocalService\Alsolos.AttendanceRecorder.LocalService.csproj">

@@ -2,20 +2,26 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Runtime.Serialization;
     using System.Xml;
     using System.Xml.Serialization;
     using Alsolos.AttendanceRecorder.WebApi.Controllers;
 
     [Serializable]
+    [DataContract]
     public class Interval : IInterval
     {
+        [DataMember]
         public int Id { get; set; }
 
+        [DataMember]
         public IntervalState State { get; set; }
 
+        [DataMember]
         public DateTime Date { get; set; }
 
         [XmlIgnore]
+        [DataMember]
         public TimeSpan Start { get; set; }
 
         [Browsable(false)]
@@ -34,6 +40,7 @@
         }
 
         [XmlIgnore]
+        [DataMember]
         public TimeSpan End { get; set; }
 
         [Browsable(false)]
@@ -51,8 +58,10 @@
             }
         }
 
+        [DataMember]
         public string TimeAccountName { get; set; }
 
+        [DataMember]
         public DateTime LastModified { get; set; }
 
         public override string ToString()

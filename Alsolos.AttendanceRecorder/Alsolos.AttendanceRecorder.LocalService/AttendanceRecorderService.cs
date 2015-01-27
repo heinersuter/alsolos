@@ -13,7 +13,7 @@
         public AttendanceRecorderService()
         {
             _aggregator = new IntervalAggregator();
-            _webApiStarter = new WebApiStarter();
+            _webApiStarter = new WebApiStarter(_aggregator);
             _webApiStarter.Start();
         }
 

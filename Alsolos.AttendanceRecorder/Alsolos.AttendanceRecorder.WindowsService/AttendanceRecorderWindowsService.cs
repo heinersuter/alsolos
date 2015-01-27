@@ -21,13 +21,13 @@
         protected override void OnStart(string[] args)
         {
             base.OnStart(args);
-            //_worker.Start();
+            _worker.Start();
         }
 
         protected override void OnStop()
         {
             base.OnStop();
-            //_worker.Stop();
+            _worker.Stop();
         }
 
         protected override void OnPause()
@@ -45,7 +45,7 @@
         protected override void OnShutdown()
         {
             base.OnShutdown();
-            //_worker.Stop();
+            _worker.Stop();
         }
 
         protected override void OnSessionChange(SessionChangeDescription changeDescription)

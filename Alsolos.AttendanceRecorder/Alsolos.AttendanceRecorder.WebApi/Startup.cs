@@ -1,5 +1,6 @@
 ﻿namespace Alsolos.AttendanceRecorder.WebApi
 {
+    using System.Net.Http.Headers;
     using System.Web.Http;
     using Owin;
 
@@ -13,6 +14,7 @@
             // Configure Web API for self-host. 
             var config = new HttpConfiguration();
             config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new { id = RouteParameter.Optional });
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             appBuilder.UseWebApi(config);
         }
     }
