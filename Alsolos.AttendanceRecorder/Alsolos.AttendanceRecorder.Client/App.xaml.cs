@@ -1,15 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿namespace Alsolos.AttendanceRecorder.Client
+{
+    using System.Globalization;
+    using System.Windows;
+    using System.Windows.Markup;
 
-namespace Alsolos.AttendanceRecorder.Client {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application {
+    public partial class App
+    {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            FrameworkElement.LanguageProperty.OverrideMetadata(
+                typeof(FrameworkElement),
+                new FrameworkPropertyMetadata(
+                    XmlLanguage.GetLanguage(
+                    CultureInfo.CurrentCulture.IetfLanguageTag)));
+            base.OnStartup(e);
+        }
     }
 }

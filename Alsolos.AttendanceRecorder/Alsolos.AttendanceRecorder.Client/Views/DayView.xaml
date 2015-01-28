@@ -7,7 +7,13 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DayViewModel}">
 
-    <Expander Header="{Binding Date}">
+    <Expander>
+        <Expander.Header>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Date, StringFormat=D}"/>
+                <TextBlock Text="{Binding TotalTime}" Margin="16 0 0 0"/>
+            </StackPanel>
+        </Expander.Header>
         <ListBox ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch">
             <ListBox.ItemTemplate>
                 <DataTemplate>

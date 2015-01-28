@@ -27,6 +27,16 @@
             private set { BackingFields.SetValue(() => Intervals, value); }
         }
 
+        public TimeSpan TotalTime
+        {
+            get
+            {
+                return Intervals
+                    .Where(viewModel => viewModel.Type == IntervalType.Active)
+                    .Aggregate(TimeSpan.Zero, (total, currentViewModel) => total + currentViewModel.Duration);
+            }
+        }
+
         private void Init(IEnumerable<Interval> modelIntervals)
         {
             var intervalList = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
@@ -38,7 +48,7 @@
 
             var lastTime = TimeSpan.Zero;
             var intervals = new List<IntervalViewModel>();
-            foreach (var interval in intervalList.Where(interval => interval.Date == Date).OrderBy(interval => interval.Start))
+            foreach (var interval in intervalList.Where(interval => interval.Date.Date == Date).OrderBy(interval => interval.Start))
             {
                 if (interval.Start > lastTime)
                 {
