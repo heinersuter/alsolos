@@ -16,7 +16,7 @@
             {
                 Console.WriteLine("Test");
 
-                var worker = new Worker(Environment.UserDomainName + "\\" + Environment.UserName);
+                var worker = new LifeSignSender();
                 worker.Start();
 
                 var key = (char)Console.Read();

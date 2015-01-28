@@ -11,6 +11,7 @@
     [DataContract]
     public class Interval : IInterval
     {
+        [XmlIgnore]
         [DataMember]
         public int Id { get; set; }
 

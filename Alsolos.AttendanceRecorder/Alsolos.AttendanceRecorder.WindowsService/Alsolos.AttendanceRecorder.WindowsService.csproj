@@ -84,12 +84,13 @@
     <Compile Include="AttendanceRecorderWindowsService.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="InteractiveUser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="WindowsServiceInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Worker.cs" />
+    <Compile Include="LifeSignSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="install.bat" />

@@ -5,17 +5,16 @@
     using System.Threading;
     using Alsolos.AttendanceRecorder.LocalService;
 
-    public class Worker : IDisposable
+    public class LifeSignSender : IDisposable
     {
         private readonly TimeSpan _intervalDuration = new TimeSpan(0, 0, 10);
         private readonly ManualResetEvent _runEvent = new ManualResetEvent(false);
         private readonly BackgroundWorker _backgroundWorker = new BackgroundWorker();
         private readonly AttendanceRecorderService _service;
-        private readonly string _timeAccountname;
+        private string _timeAccountname;
 
-        public Worker(string timeAccountname)
+        public LifeSignSender()
         {
-            _timeAccountname = timeAccountname;
             _service = new AttendanceRecorderService();
             _backgroundWorker.DoWork += BackgroundWorkerOnDoWork;
             _backgroundWorker.RunWorkerAsync();
@@ -23,7 +22,14 @@
 
         public void Start()
         {
-            _runEvent.Set();
+            if (_timeAccountname == null)
+            {
+                _timeAccountname = InteractiveUser.GetInteractiveUser() + "@" + Environment.MachineName;
+            }
+            if (_timeAccountname != null)
+            {
+                _runEvent.Set();
+            }
         }
 
         public void Stop()
@@ -41,7 +47,7 @@
 
         private void BackgroundWorkerOnDoWork(object sender, DoWorkEventArgs doWorkEventArgs)
         {
-            while (true)
+            while (_backgroundWorker.IsBusy)
             {
                 if (_runEvent.WaitOne())
                 {
