@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 
 namespace Alsolos.Commons.Resources {
+	// https://github.com/indexzero/bruce-wayne/blob/master/wpf-samples/WpfSamples/Controls/SharedResourceDictionary.cs
     public class SharedResourceDictionary : ResourceDictionary {
         private static readonly Dictionary<Uri, ResourceDictionary> _sharedDictionaries = new Dictionary<Uri, ResourceDictionary>();
 
