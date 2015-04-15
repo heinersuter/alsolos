@@ -8,7 +8,7 @@
 
     public class IntervalsSelectorViewModel : ViewModel
     {
-        private IEnumerable<Interval> _modelIntervals;
+        private IList<Interval> _modelIntervals;
 
         public IntervalsSelectorViewModel()
         {
@@ -25,9 +25,9 @@
             get { return BackingFields.GetValue(() => new DaysViewModel()); }
         }
 
-        public void SetIntervals(IEnumerable<Interval> modelIntervals)
+        public void SetIntervals(IList<Interval> modelIntervals)
         {
-            _modelIntervals = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
+            _modelIntervals = modelIntervals;
             DatePeriodViewModel.SetIntervals(_modelIntervals);
             SetDays();
         }
@@ -46,12 +46,12 @@
 
             if (DatePeriodViewModel.SelectedPeriod == null)
             {
-                DaysViewModel.Days = Enumerable.Empty<DayViewModel>();
+                DaysViewModel.Days = new List<DayViewModel>();
                 return;
             }
             var selectedIntervals = _modelIntervals.Where(interval => interval.Date >= DatePeriodViewModel.SelectedPeriod.Start && interval.Date <= DatePeriodViewModel.SelectedPeriod.End);
             var dayGroupings = selectedIntervals.GroupBy(interval => interval.Date.Date);
-            DaysViewModel.Days = dayGroupings.Select(grouping => new DayViewModel(grouping.Key, grouping));
+            DaysViewModel.Days = dayGroupings.Select(grouping => new DayViewModel(grouping.Key, grouping.ToList())).OrderByDescending(dayViewModel => dayViewModel.Date).ToList();
         }
     }
 }

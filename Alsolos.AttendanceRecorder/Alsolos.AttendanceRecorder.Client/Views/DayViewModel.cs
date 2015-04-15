@@ -5,16 +5,17 @@
     using System.Collections.ObjectModel;
     using System.Linq;
     using Alsolos.AttendanceRecorder.Client.Models;
+    using Alsolos.AttendanceRecorder.Client.Views.Model;
     using Alsolos.Commons.Mvvm;
 
     public class DayViewModel : BackingFieldsHolder
     {
         private readonly TimeSpan _midnight = new TimeSpan(23, 59, 59);
 
-        public DayViewModel(DateTime date, IEnumerable<Interval> modelIntervals)
+        public DayViewModel(DateTime date, IList<Interval> modelIntervals)
         {
             Date = date.Date;
-            Init(modelIntervals.Where(interval => interval.Date.Date == Date).OrderBy(interval => interval.Start));
+            Init(modelIntervals.Where(interval => interval.Date.Date == Date).OrderBy(interval => interval.Start).ToList());
         }
 
         public DateTime Date
@@ -39,10 +40,15 @@
             }
         }
 
-        private void Init(IEnumerable<Interval> modelIntervals)
+        public bool IsExpanded
         {
-            var intervalList = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
-            if (modelIntervals == null || !intervalList.Any())
+            get { return BackingFields.GetValue<bool>(); }
+            set { BackingFields.SetValue(value); }
+        }
+
+        private void Init(IList<Interval> modelIntervals)
+        {
+            if (modelIntervals == null || !modelIntervals.Any())
             {
                 Intervals = new ObservableCollection<IntervalViewModel>();
                 return;
@@ -50,7 +56,7 @@
 
             var lastTime = TimeSpan.Zero;
             var intervals = new List<IntervalViewModel>();
-            foreach (var interval in intervalList)
+            foreach (var interval in modelIntervals)
             {
                 if (interval.Start > lastTime)
                 {

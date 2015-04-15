@@ -1,5 +1,6 @@
 ﻿namespace Alsolos.AttendanceRecorder.Client.Views
 {
+    using System.Linq;
     using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.Commons.Mvvm;
 
@@ -19,7 +20,7 @@
         {
             var intervalService = new IntervalService();
             var modelIntervals = await intervalService.GetIntervals();
-            IntervalsSelectorViewModel.SetIntervals(modelIntervals);
+            IntervalsSelectorViewModel.SetIntervals(modelIntervals.ToList());
         }
     }
 }

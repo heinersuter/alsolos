@@ -1,6 +1,7 @@
 ﻿namespace Alsolos.AttendanceRecorder.Client.Views
 {
     using System;
+    using Alsolos.AttendanceRecorder.Client.Views.Model;
     using Alsolos.Commons.Mvvm;
 
     public class IntervalViewModel : BackingFieldsHolder

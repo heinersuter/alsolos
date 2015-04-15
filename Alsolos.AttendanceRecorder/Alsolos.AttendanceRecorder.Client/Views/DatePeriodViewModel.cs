@@ -5,50 +5,27 @@
     using System.Globalization;
     using System.Linq;
     using Alsolos.AttendanceRecorder.Client.Models;
+    using Alsolos.AttendanceRecorder.Client.Views.Model;
     using Alsolos.Commons.Mvvm;
 
     public class DatePeriodViewModel : ViewModel
     {
-        public IEnumerable<DatePeriod> Years
+        public IList<DatePeriod> Years
         {
-            get { return BackingFields.GetValue<IEnumerable<DatePeriod>>(); }
+            get { return BackingFields.GetValue<IList<DatePeriod>>(); }
             private set { BackingFields.SetValue(value); }
         }
 
-        public IEnumerable<DatePeriod> Months
+        public IList<DatePeriod> Months
         {
-            get { return BackingFields.GetValue<IEnumerable<DatePeriod>>(); }
+            get { return BackingFields.GetValue<IList<DatePeriod>>(); }
             private set { BackingFields.SetValue(value); }
         }
 
-        public IEnumerable<DatePeriod> Weeks
+        public IList<DatePeriod> Weeks
         {
-            get { return BackingFields.GetValue<IEnumerable<DatePeriod>>(); }
+            get { return BackingFields.GetValue<IList<DatePeriod>>(); }
             private set { BackingFields.SetValue(value); }
-        }
-
-        public int SelectedTabIndex
-        {
-            get { return BackingFields.GetValue<int>(); }
-            set { BackingFields.SetValue(value, SelectedTabIndexChanged); }
-        }
-
-        public int SelectedWeekIndex
-        {
-            get { return BackingFields.GetValue<int>(); }
-            set { BackingFields.SetValue(value); }
-        }
-
-        public int SelectedMonthIndex
-        {
-            get { return BackingFields.GetValue<int>(); }
-            set { BackingFields.SetValue(value); }
-        }
-
-        public int SelectedYearIndex
-        {
-            get { return BackingFields.GetValue<int>(); }
-            set { BackingFields.SetValue(value); }
         }
 
         public DatePeriod SelectedYear
@@ -75,41 +52,12 @@
             private set { BackingFields.SetValue(value); }
         }
 
-        public void SetIntervals(IEnumerable<Interval> modelIntervals)
+        public void SetIntervals(IList<Interval> modelIntervals)
         {
-            var intervalList = modelIntervals as IList<Interval> ?? modelIntervals.ToList();
-            InitYears(intervalList);
-            InitMonths(intervalList);
-            InitWeeks(intervalList);
-            SelectedTabIndex = 1;
-        }
-
-        private void SelectedTabIndexChanged(int index)
-        {
-            switch (index)
-            {
-                case 0:
-                    if (Years != null)
-                    {
-                        SelectedYear = Years.FirstOrDefault();
-                        SelectedYearIndex = 0;
-                    }
-                    break;
-                case 2:
-                    if (Weeks != null)
-                    {
-                        SelectedWeek = Weeks.FirstOrDefault();
-                        SelectedWeekIndex = 0;
-                    }
-                    break;
-                default:
-                    if (Months != null)
-                    {
-                        SelectedMonth = Months.FirstOrDefault();
-                        SelectedMonthIndex = 0;
-                    }
-                    break;
-            }
+            InitYears(modelIntervals);
+            InitMonths(modelIntervals);
+            InitWeeks(modelIntervals);
+            SelectedWeek = Weeks.FirstOrDefault();
         }
 
         private void UpdateSelection(DatePeriod selectedPeriod)
@@ -117,30 +65,30 @@
             SelectedPeriod = selectedPeriod;
         }
 
-        private void InitYears(IEnumerable<Interval> modelIntervals)
+        private void InitYears(IList<Interval> modelIntervals)
         {
             var groupings = modelIntervals.GroupBy(interval => interval.Date.Year)
                 .OrderBy(grouping => grouping.Key);
             Years = groupings.Select(grouping => new DatePeriod(
                 grouping.Key.ToString(CultureInfo.InvariantCulture),
                 new DateTime(grouping.Key, 1, 1),
-                new DateTime(grouping.Key, 12, 31))).OrderByDescending(period => period.Start);
+                new DateTime(grouping.Key, 12, 31))).OrderByDescending(period => period.Start).ToList();
         }
 
-        private void InitMonths(IEnumerable<Interval> modelIntervals)
+        private void InitMonths(IList<Interval> modelIntervals)
         {
             var groupings = modelIntervals.GroupBy(interval => new YearMonth(interval.Date))
                 .OrderBy(grouping => grouping.Key.Year)
                 .ThenBy(grouping => grouping.Key.Month);
-            Months = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start);
+            Months = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start).ToList();
         }
 
-        private void InitWeeks(IEnumerable<Interval> modelIntervals)
+        private void InitWeeks(IList<Interval> modelIntervals)
         {
             var groupings = modelIntervals.GroupBy(interval => new YearWeek(interval.Date))
                 .OrderBy(grouping => grouping.Key.Year)
                 .ThenBy(grouping => grouping.Key.Week);
-            Weeks = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start);
+            Weeks = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start).ToList();
         }
     }
 }

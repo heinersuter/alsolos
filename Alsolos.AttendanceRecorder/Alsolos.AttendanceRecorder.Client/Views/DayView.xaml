@@ -4,23 +4,53 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Alsolos.AttendanceRecorder.Client.Views"
+             xmlns:converters="http://alsolos.ch/Commons"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DayViewModel}">
 
-    <Expander>
-        <Expander.Header>
-            <StackPanel Orientation="Horizontal" Height="32">
-                <TextBlock Text="{Binding Date, StringFormat=D}" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding TotalTime}" Margin="16 0 0 0" VerticalAlignment="Center"/>
+    <StackPanel>
+
+        <ItemsControl Style="{StaticResource PairControlFillLeftStyle}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Date, StringFormat=D}" Margin="8" FontSize="18" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding TotalTime, StringFormat={}{0:hh\\:mm} hours}" Margin="8" VerticalAlignment="Center"/>
             </StackPanel>
-        </Expander.Header>
-        <ItemsControl ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True" Margin="4">
+            <ToggleButton IsChecked="{Binding IsExpanded}" Width="18" Height="18" Margin="8" Background="Transparent" BorderThickness="0">
+                <ToggleButton.Template>
+                    <ControlTemplate>
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CheckStates">
+                                    <VisualState x:Name="Checked">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Image" Storyboard.TargetProperty="(Image.Source)">
+                                                <DiscreteObjectKeyFrame KeyTime="00:00:00">
+                                                    <DiscreteObjectKeyFrame.Value>
+                                                        <BitmapImage UriSource="/Images/Minus.png" />
+                                                    </DiscreteObjectKeyFrame.Value>
+                                                </DiscreteObjectKeyFrame>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unchecked"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Image x:Name="Image" Source="/Images/Plus.png"/>
+                        </Grid>
+                    </ControlTemplate>
+                </ToggleButton.Template>
+            </ToggleButton>
+        </ItemsControl>
+
+        <ItemsControl ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True"
+            Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <views:IntervalView/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </Expander>
+
+    </StackPanel>
 
 </UserControl>

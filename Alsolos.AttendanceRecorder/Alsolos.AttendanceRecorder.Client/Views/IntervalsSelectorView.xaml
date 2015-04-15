@@ -17,7 +17,9 @@
 
         <GridSplitter Grid.Column="1" Width="8"/>
 
-        <views:DaysView Grid.Column="2" DataContext="{Binding DaysViewModel}"/>
+        <ScrollViewer Grid.Column="2">
+            <views:DaysView DataContext="{Binding DaysViewModel}"/>
+        </ScrollViewer>
 
     </Grid>
 </UserControl>

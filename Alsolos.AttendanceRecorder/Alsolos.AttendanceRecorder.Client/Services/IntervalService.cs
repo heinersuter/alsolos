@@ -20,7 +20,6 @@
 
         public async Task<IEnumerable<Interval>> GetIntervals()
         {
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://localhost:30515/");

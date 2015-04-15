@@ -11,7 +11,6 @@
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Type}" Value="Active">
                     <Setter Property="Background" Value="#C3FF9A"/>
-                    <!--<Setter Property="TextBlock.FontSize" Value="16"/>-->
                     <Setter Property="Height" Value="32"/>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Type}" Value="Inactive">
@@ -22,21 +21,6 @@
         </Style>
     </UserControl.Style>
     <Grid VerticalAlignment="Center">
-        <!--<Grid.Style>
-            <Style TargetType="{x:Type Grid}">
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Type}" Value="Active">
-                        <Setter Property="Background" Value="Aquamarine"/>
-                        --><!--<Setter Property="TextBlock.FontSize" Value="16"/>--><!--
-                        <Setter Property="Height" Value="32"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Type}" Value="Inactive">
-                        <Setter Property="Background" Value="MistyRose"/>
-                        <Setter Property="TextBlock.Foreground" Value="DimGray"/>
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
-        </Grid.Style>-->
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" SharedSizeGroup="StartGroup"/>
@@ -52,7 +36,7 @@
         <TextBlock Grid.Column="2" Text="{Binding End}" Margin="0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="3" Text="{Binding Duration}" Margin="16 0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="4" Text="{Binding Type}" VerticalAlignment="Center"/>
-        <Button Grid.Column="5" Width="20" Height="20" Margin="2">
+        <Button Grid.Column="5" Width="20" Height="20" Margin="2" Background="Transparent" BorderThickness="0">
             <Image Source="/Images/Delete.png"/>
         </Button>
 

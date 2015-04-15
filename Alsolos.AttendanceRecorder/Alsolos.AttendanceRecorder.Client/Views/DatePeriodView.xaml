@@ -7,23 +7,23 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DatePeriodViewModel}">
 
-    <TabControl HorizontalAlignment="Stretch" SelectedIndex="{Binding SelectedTabIndex}">
+    <TabControl HorizontalAlignment="Stretch">
         <TabItem Header="Years">
             <ListBox ItemsSource="{Binding Years}" 
-                SelectedItem="{Binding SelectedYear}" HorizontalAlignment="Stretch"
-                SelectedIndex="{Binding SelectedYearIndex}" DisplayMemberPath="Name"/>
+                SelectedItem="{Binding SelectedYear}" HorizontalAlignment="Stretch" 
+                DisplayMemberPath="Name"/>
         </TabItem>
 
         <TabItem Header="Months">
             <ListBox ItemsSource="{Binding Months}" 
                 SelectedItem="{Binding SelectedMonth}" HorizontalAlignment="Stretch" 
-                SelectedIndex="{Binding SelectedMonthIndex}" DisplayMemberPath="Name"/>
+                DisplayMemberPath="Name"/>
         </TabItem>
 
-        <TabItem Header="Weeks">
+        <TabItem Header="Weeks" IsSelected="True">
             <ListBox ItemsSource="{Binding Weeks}" 
                 SelectedItem="{Binding SelectedWeek}" HorizontalAlignment="Stretch" 
-                SelectedIndex="{Binding SelectedWeekIndex}" DisplayMemberPath="Name"/>
+                DisplayMemberPath="Name"/>
         </TabItem>
     </TabControl>
 

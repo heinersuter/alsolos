@@ -66,7 +66,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\IntervalService.cs" />
-    <Compile Include="Views\DatePeriod.cs" />
     <Compile Include="Views\DayView.xaml.cs">
       <DependentUpon>DayView.xaml</DependentUpon>
     </Compile>
@@ -75,7 +74,6 @@
       <DependentUpon>IntervalView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\IntervalViewModel.cs" />
-    <Compile Include="Views\IntervalType.cs" />
     <Compile Include="Models\Interval.cs" />
     <Compile Include="Views\DaysView.xaml.cs">
       <DependentUpon>DaysView.xaml</DependentUpon>
@@ -90,8 +88,10 @@
       <DependentUpon>DatePeriodView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DatePeriodViewModel.cs" />
-    <Compile Include="Views\YearMonth.cs" />
-    <Compile Include="Views\YearWeek.cs" />
+    <Compile Include="Views\Model\DatePeriod.cs" />
+    <Compile Include="Views\Model\IntervalType.cs" />
+    <Compile Include="Views\Model\YearMonth.cs" />
+    <Compile Include="Views\Model\YearWeek.cs" />
     <Page Include="Views\DaysView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -159,9 +159,14 @@
       <Name>Alsolos.Commons</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Minus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
