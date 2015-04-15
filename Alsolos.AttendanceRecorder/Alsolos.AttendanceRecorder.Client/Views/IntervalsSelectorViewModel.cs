@@ -42,6 +42,8 @@
 
         private void SetDays()
         {
+            DaysViewModel.DatePeriod = DatePeriodViewModel.SelectedPeriod;
+
             if (DatePeriodViewModel.SelectedPeriod == null)
             {
                 DaysViewModel.Days = Enumerable.Empty<DayViewModel>();

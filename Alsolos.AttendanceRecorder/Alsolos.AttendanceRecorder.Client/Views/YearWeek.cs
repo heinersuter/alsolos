@@ -36,7 +36,7 @@ namespace Alsolos.AttendanceRecorder.Client.Views
             return new DatePeriod(
                 string.Format(CultureInfo.InvariantCulture, "{0:D4} - KW-{1:D2}", Year, Week),
                 firstDayOfWeek,
-                firstDayOfWeek.AddDays(7));
+                firstDayOfWeek.AddDays(6));
         }
 
         private static int GetWeekNumber(DateTime date)

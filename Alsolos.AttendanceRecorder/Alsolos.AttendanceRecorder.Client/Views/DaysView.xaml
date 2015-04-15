@@ -7,12 +7,20 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DaysViewModel}">
 
-    <ItemsControl ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <views:DayView/>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <ItemsControl Style="{StaticResource PairControlFillBottomStyle}">
 
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Title}" Margin="8" FontSize="24" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding TotalTime, StringFormat={}{0:hh\\:mm} hours}" Margin="8" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <ItemsControl ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <views:DayView/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </ItemsControl>
 </UserControl>

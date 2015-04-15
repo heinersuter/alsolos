@@ -51,5 +51,39 @@
             </Setter.Value>
         </Setter>
     </Style>
-    
+
+    <Style x:Key="PairControlFillBottomStyle" TargetType="ItemsControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Grid.Row="0" Content="{Binding Items[0], RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ContentControl Grid.Row="1" Content="{Binding Items[1], RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PairControlFillTopStyle" TargetType="ItemsControl">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ContentControl Grid.Row="0" Content="{Binding Items[0], RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ContentControl Grid.Row="1" Content="{Binding Items[1], RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
