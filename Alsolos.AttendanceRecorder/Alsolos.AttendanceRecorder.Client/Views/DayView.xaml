@@ -9,18 +9,18 @@
 
     <Expander>
         <Expander.Header>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Date, StringFormat=D}"/>
-                <TextBlock Text="{Binding TotalTime}" Margin="16 0 0 0"/>
+            <StackPanel Orientation="Horizontal" Height="32">
+                <TextBlock Text="{Binding Date, StringFormat=D}" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding TotalTime}" Margin="16 0 0 0" VerticalAlignment="Center"/>
             </StackPanel>
         </Expander.Header>
-        <ListBox ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch">
-            <ListBox.ItemTemplate>
+        <ItemsControl ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True" Margin="4">
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <views:IntervalView/>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Expander>
 
 </UserControl>

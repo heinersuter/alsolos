@@ -7,12 +7,12 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DaysViewModel}">
 
-    <ListView ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch">
-        <ListBox.ItemTemplate>
+    <ItemsControl ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch">
+        <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <views:DayView/>
             </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListView>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 
 </UserControl>
