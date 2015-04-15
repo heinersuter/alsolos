@@ -9,10 +9,12 @@
 
     public class DayViewModel : BackingFieldsHolder
     {
+        private readonly TimeSpan _midnight = new TimeSpan(23, 59, 59);
+
         public DayViewModel(DateTime date, IEnumerable<Interval> modelIntervals)
         {
             Date = date.Date;
-            Init(modelIntervals);
+            Init(modelIntervals.Where(interval => interval.Date.Date == Date).OrderBy(interval => interval.Start));
         }
 
         public DateTime Date
@@ -48,14 +50,22 @@
 
             var lastTime = TimeSpan.Zero;
             var intervals = new List<IntervalViewModel>();
-            foreach (var interval in intervalList.Where(interval => interval.Date.Date == Date).OrderBy(interval => interval.Start))
+            foreach (var interval in intervalList)
             {
                 if (interval.Start > lastTime)
                 {
+                    // Add inactive intervall
                     intervals.Add(new IntervalViewModel { Date = Date, Start = lastTime, End = interval.Start, Type = IntervalType.Inactive });
                 }
+
+                // Add active intervall
                 intervals.Add(new IntervalViewModel { Date = Date, Start = interval.Start, End = interval.End, Type = IntervalType.Active });
                 lastTime = interval.End;
+            }
+            if (lastTime < _midnight)
+            {
+                // Add last inactive interval to midnight
+                intervals.Add(new IntervalViewModel { Date = Date, Start = lastTime, End = _midnight, Type = IntervalType.Inactive });
             }
             Intervals = new ObservableCollection<IntervalViewModel>(intervals);
         }
