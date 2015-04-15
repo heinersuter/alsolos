@@ -14,13 +14,13 @@
         public TimeSpan Start
         {
             get { return BackingFields.GetValue(() => Start); }
-            set { BackingFields.SetValue(() => Start, value); }
+            set { BackingFields.SetValue(() => Start, value, x => UpdateDuration()); }
         }
 
         public TimeSpan End
         {
             get { return BackingFields.GetValue(() => End); }
-            set { BackingFields.SetValue(() => End, value, span => Duration = End - Start); }
+            set { BackingFields.SetValue(() => End, value, x => UpdateDuration()); }
         }
 
         public IntervalType Type
@@ -33,6 +33,11 @@
         {
             get { return BackingFields.GetValue(() => Duration); }
             private set { BackingFields.SetValue(() => Duration, value); }
+        }
+
+        private TimeSpan UpdateDuration()
+        {
+            return Duration = End - Start;
         }
     }
 }
