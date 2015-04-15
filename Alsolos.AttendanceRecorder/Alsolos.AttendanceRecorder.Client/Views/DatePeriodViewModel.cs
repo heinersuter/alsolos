@@ -11,68 +11,68 @@
     {
         public IEnumerable<DatePeriod> Years
         {
-            get { return BackingFields.GetValue(() => Years); }
-            private set { BackingFields.SetValue(() => Years, value); }
+            get { return BackingFields.GetValue<IEnumerable<DatePeriod>>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public IEnumerable<DatePeriod> Months
         {
-            get { return BackingFields.GetValue(() => Months); }
-            private set { BackingFields.SetValue(() => Months, value); }
+            get { return BackingFields.GetValue<IEnumerable<DatePeriod>>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public IEnumerable<DatePeriod> Weeks
         {
-            get { return BackingFields.GetValue(() => Weeks); }
-            private set { BackingFields.SetValue(() => Weeks, value); }
+            get { return BackingFields.GetValue<IEnumerable<DatePeriod>>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public int SelectedTabIndex
         {
-            get { return BackingFields.GetValue(() => SelectedTabIndex); }
-            set { BackingFields.SetValue(() => SelectedTabIndex, value, SelectedTabIndexChanged); }
+            get { return BackingFields.GetValue<int>(); }
+            set { BackingFields.SetValue(value, SelectedTabIndexChanged); }
         }
 
         public int SelectedWeekIndex
         {
-            get { return BackingFields.GetValue(() => SelectedWeekIndex); }
-            set { BackingFields.SetValue(() => SelectedWeekIndex, value); }
+            get { return BackingFields.GetValue<int>(); }
+            set { BackingFields.SetValue(value); }
         }
 
         public int SelectedMonthIndex
         {
-            get { return BackingFields.GetValue(() => SelectedMonthIndex); }
-            set { BackingFields.SetValue(() => SelectedMonthIndex, value); }
+            get { return BackingFields.GetValue<int>(); }
+            set { BackingFields.SetValue(value); }
         }
 
         public int SelectedYearIndex
         {
-            get { return BackingFields.GetValue(() => SelectedYearIndex); }
-            set { BackingFields.SetValue(() => SelectedYearIndex, value); }
+            get { return BackingFields.GetValue<int>(); }
+            set { BackingFields.SetValue(value); }
         }
 
         public DatePeriod SelectedYear
         {
-            get { return BackingFields.GetValue(() => SelectedYear); }
-            set { BackingFields.SetValue(() => SelectedYear, value, UpdateSelection); }
+            get { return BackingFields.GetValue<DatePeriod>(); }
+            set { BackingFields.SetValue(value, UpdateSelection); }
         }
 
         public DatePeriod SelectedMonth
         {
-            get { return BackingFields.GetValue(() => SelectedMonth); }
-            set { BackingFields.SetValue(() => SelectedMonth, value, UpdateSelection); }
+            get { return BackingFields.GetValue<DatePeriod>(); }
+            set { BackingFields.SetValue(value, UpdateSelection); }
         }
 
         public DatePeriod SelectedWeek
         {
-            get { return BackingFields.GetValue(() => SelectedWeek); }
-            set { BackingFields.SetValue(() => SelectedWeek, value, UpdateSelection); }
+            get { return BackingFields.GetValue<DatePeriod>(); }
+            set { BackingFields.SetValue(value, UpdateSelection); }
         }
 
         public DatePeriod SelectedPeriod
         {
-            get { return BackingFields.GetValue(() => SelectedPeriod); }
-            private set { BackingFields.SetValue(() => SelectedPeriod, value); }
+            get { return BackingFields.GetValue<DatePeriod>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public void SetIntervals(IEnumerable<Interval> modelIntervals)

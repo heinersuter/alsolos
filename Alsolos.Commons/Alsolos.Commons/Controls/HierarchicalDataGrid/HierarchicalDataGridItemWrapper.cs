@@ -1,11 +1,14 @@
-﻿using System.Collections.ObjectModel;
-using System.Diagnostics;
-using Alsolos.Commons.Mvvm;
+﻿namespace Alsolos.Commons.Controls.HierarchicalDataGrid
+{
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using Alsolos.Commons.Mvvm;
 
-namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
     [DebuggerDisplay("{Value}")]
-    public class HierarchicalDataGridItemWrapper : BackingFieldsHolder {
-        private HierarchicalDataGridItemWrapper(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent) {
+    public class HierarchicalDataGridItemWrapper : BackingFieldsHolder
+    {
+        private HierarchicalDataGridItemWrapper(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent)
+        {
             Value = item;
             Parent = parent;
             Level = Parent != null ? Parent.Level + 1 : 0;
@@ -14,13 +17,16 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
             Children = new ObservableCollection<HierarchicalDataGridItemWrapper>();
         }
 
-        public static HierarchicalDataGridItemWrapper CreateRecursively(IHierarchicalDataGridItem item) {
+        public static HierarchicalDataGridItemWrapper CreateRecursively(IHierarchicalDataGridItem item)
+        {
             return CreateRecursively(item, null);
         }
 
-        public static HierarchicalDataGridItemWrapper CreateRecursively(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent) {
+        public static HierarchicalDataGridItemWrapper CreateRecursively(IHierarchicalDataGridItem item, HierarchicalDataGridItemWrapper parent)
+        {
             var wrapper = new HierarchicalDataGridItemWrapper(item, parent);
-            foreach (var childItem in item.Children) {
+            foreach (var childItem in item.Children)
+            {
                 var childWrapper = CreateRecursively(childItem, wrapper);
                 wrapper.Children.Add(childWrapper);
             }
@@ -35,40 +41,53 @@ namespace Alsolos.Commons.Controls.HierarchicalDataGrid {
 
         public ObservableCollection<HierarchicalDataGridItemWrapper> Children { get; private set; }
 
-        public bool IsExpanded {
-            get { return BackingFields.GetValue(() => IsExpanded); }
-            set {
-                if (BackingFields.SetValue(() => IsExpanded, value)) {
+        public bool IsExpanded
+        {
+            get { return BackingFields.GetValue<bool>(); }
+            set
+            {
+                if (BackingFields.SetValue(value))
+                {
                     SetIsParentExpandedToAllSubItemsRecursively(value);
                 }
             }
         }
 
-        public bool IsParentExpanded {
-            get { return BackingFields.GetValue(() => IsParentExpanded); }
-            set { BackingFields.SetValue(() => IsParentExpanded, value); }
+        public bool IsParentExpanded
+        {
+            get { return BackingFields.GetValue<bool>(); }
+            set { BackingFields.SetValue(value); }
         }
 
-        public void ExpandRecursively() {
+        public void ExpandRecursively()
+        {
             IsExpanded = true;
-            foreach (var child in Children) {
+            foreach (var child in Children)
+            {
                 child.ExpandRecursively();
             }
         }
 
-        public void CollapseRecursively() {
+        public void CollapseRecursively()
+        {
             IsExpanded = false;
-            foreach (var child in Children) {
+            foreach (var child in Children)
+            {
                 child.CollapseRecursively();
             }
         }
 
-        private void SetIsParentExpandedToAllSubItemsRecursively(bool isExpanded) {
-            foreach (var child in Children) {
+        private void SetIsParentExpandedToAllSubItemsRecursively(bool isExpanded)
+        {
+            foreach (var child in Children)
+            {
                 child.IsParentExpanded = isExpanded;
-                if (isExpanded) {
+                if (isExpanded)
+                {
                     child.SetIsParentExpandedToAllSubItemsRecursively(child.IsExpanded);
-                } else {
+                }
+                else
+                {
                     child.SetIsParentExpandedToAllSubItemsRecursively(false);
                 }
             }

@@ -12,7 +12,7 @@
 
         public IntervalsSelectorViewModel IntervalsSelectorViewModel
         {
-            get { return BackingFields.GetValue(() => IntervalsSelectorViewModel, () => new IntervalsSelectorViewModel()); }
+            get { return BackingFields.GetValue(() => new IntervalsSelectorViewModel()); }
         }
 
         private async void LoadIntervals()

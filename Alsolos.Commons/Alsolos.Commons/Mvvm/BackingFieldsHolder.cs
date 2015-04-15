@@ -1,23 +1,17 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq.Expressions;
-
-namespace Alsolos.Commons.Mvvm
+﻿namespace Alsolos.Commons.Mvvm
 {
+    using System;
+    using System.ComponentModel;
+    using System.Linq.Expressions;
+    using System.Runtime.CompilerServices;
+
     public abstract class BackingFieldsHolder : INotifyPropertyChanged
     {
-        private static BackingFields _staticBackingFields;
-
         private BackingFields _backingFields;
 
         protected BackingFieldsHolder()
         {
             PropertyChanged += OnPropertyChanged;
-        }
-
-        public static BackingFields StaticBackingFields
-        {
-            get { return PropertyHelper.CreateIfNeeded(ref _staticBackingFields, () => new BackingFields(null)); }
         }
 
         public BackingFields BackingFields
@@ -27,20 +21,20 @@ namespace Alsolos.Commons.Mvvm
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        public T CreateIfNeeded<T>(Expression<Func<T>> propertyExpression, Func<T> newInstanceCreateMethod)
+        public T CreateIfNeeded<T>(Func<T> newInstanceCreateMethod, [CallerMemberName] string propertyName = null)
         {
             if (newInstanceCreateMethod == null)
             {
                 return default(T);
             }
-            if (Equals(BackingFields.GetValue(propertyExpression), default(T)))
+            if (Equals(BackingFields.GetValue<T>(propertyName, null), default(T)))
             {
-                BackingFields.SetValue(propertyExpression, newInstanceCreateMethod.Invoke());
+                BackingFields.SetValue(propertyName, newInstanceCreateMethod.Invoke(), null);
             }
-            return BackingFields.GetValue(propertyExpression);
+            return BackingFields.GetValue<T>(propertyName, null);
         }
 
-        protected static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
+        protected string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
         {
             return PropertyHelper.GetName(propertyExpression);
         }
@@ -52,18 +46,15 @@ namespace Alsolos.Commons.Mvvm
         protected void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
         {
             var propertyName = GetPropertyName(propertyExpression);
+            RaisePropertyChanged(propertyName);
+        }
+
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        {
             var copy = PropertyChanged;
             if (copy != null)
             {
                 copy.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

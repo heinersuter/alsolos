@@ -19,14 +19,14 @@
 
         public DateTime Date
         {
-            get { return BackingFields.GetValue(() => Date); }
-            private set { BackingFields.SetValue(() => Date, value); }
+            get { return BackingFields.GetValue<DateTime>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public ObservableCollection<IntervalViewModel> Intervals
         {
-            get { return BackingFields.GetValue(() => Intervals); }
-            private set { BackingFields.SetValue(() => Intervals, value); }
+            get { return BackingFields.GetValue<ObservableCollection<IntervalViewModel>>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public TimeSpan TotalTime

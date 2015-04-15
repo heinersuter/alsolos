@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Linq.Expressions;
+    using System.Runtime.CompilerServices;
 
     public class BackingFields
     {
@@ -19,31 +19,46 @@
             _propertyChangedEventHandler = propertyChangedEventHandler;
         }
 
-        public T GetValue<T>(Expression<Func<T>> propertyExpression)
+        public T GetValue<T>([CallerMemberName] string propertyName = null)
         {
-            return GetValue(propertyExpression, null);
+            return GetValue<T>(propertyName, null);
         }
 
-        public T GetValue<T>(Expression<Func<T>> propertyExpression, Func<T> initializeFunction)
+        public T GetValue<T>(Func<T> initializeFunction, [CallerMemberName] string propertyName = null)
+        {
+            return GetValue(propertyName, initializeFunction);
+        }
+
+        public T GetValue<T>(string propertyName, Func<T> initializeFunction)
         {
             object value;
-            if (_properties.TryGetValue(GetPropertyName(propertyExpression), out value))
+            if (_properties.TryGetValue(propertyName, out value))
             {
                 return (T)value;
             }
             if (initializeFunction != null)
             {
                 var initialValue = initializeFunction.Invoke();
-                _properties[GetPropertyName(propertyExpression)] = initialValue;
+                _properties[propertyName] = initialValue;
                 return initialValue;
             }
             return default(T);
         }
 
-        public T GetValueAndObserve<T>(Expression<Func<T>> propertyExpression, Func<T> initializeFunction, PropertyChangedEventHandler observer) where T : class, INotifyPropertyChanged
+        public T GetValueAndObserve<T>(Func<T> initializeFunction, PropertyChangedEventHandler observer, [CallerMemberName] string propertyName = null) where T : class, INotifyPropertyChanged
+        {
+            return GetValueAndObserve(propertyName, initializeFunction, observer);
+        }
+
+        public T GetValueAndObserve<T>(Func<T> initializeFunction, [CallerMemberName] string propertyName = null) where T : class, INotifyPropertyChanged
+        {
+            return GetValueAndObserve(propertyName, initializeFunction, GetObserver(propertyName));
+        }
+
+        private T GetValueAndObserve<T>(string propertyName, Func<T> initializeFunction, PropertyChangedEventHandler observer) where T : class, INotifyPropertyChanged
         {
             object value;
-            if (_properties.TryGetValue(GetPropertyName(propertyExpression), out value))
+            if (_properties.TryGetValue(propertyName, out value))
             {
                 return (T)value;
             }
@@ -54,44 +69,68 @@
                 {
                     initialValue.PropertyChanged += observer;
                 }
-                _properties[GetPropertyName(propertyExpression)] = initialValue;
+                _properties[propertyName] = initialValue;
                 return initialValue;
             }
             return default(T);
         }
 
-        public T GetValueAndObserve<T>(Expression<Func<T>> propertyExpression, Func<T> initializeFunction) where T : class, INotifyPropertyChanged
+        public DelegateCommand GetCommand(Action executeMethod, [CallerMemberName] string propertyName = null)
         {
-            return GetValueAndObserve(propertyExpression, initializeFunction, GetObserver(propertyExpression));
+            return GetCommand(propertyName, executeMethod, null);
         }
 
-        public DelegateCommand GetCommand(Expression<Func<DelegateCommand>> propertyExpression, Action executeMethod)
+        public DelegateCommand GetCommand(Action executeMethod, Func<bool> canExecuteMethod, [CallerMemberName] string propertyName = null)
         {
-            return GetCommand(propertyExpression, executeMethod, null);
+            return GetCommand(propertyName, executeMethod, canExecuteMethod);
         }
 
-        public DelegateCommand GetCommand(Expression<Func<DelegateCommand>> propertyExpression, Action executeMethod, Func<bool> canExecuteMethod)
+        private DelegateCommand GetCommand(string propertyName, Action executeMethod, Func<bool> canExecuteMethod)
         {
             if (canExecuteMethod == null)
             {
                 canExecuteMethod = () => true;
             }
-            return GetValue(propertyExpression, () => new DelegateCommand(executeMethod, canExecuteMethod));
+            return GetValue(propertyName, () => new DelegateCommand(executeMethod, canExecuteMethod));
         }
 
-        public bool SetValue<T>(Expression<Func<T>> propertyExpression, T value)
+        public DelegateCommand<T> GetCommand<T>(Action<T> executeMethod, [CallerMemberName] string propertyName = null)
         {
-            return SetValue(propertyExpression, value, null);
+            return GetCommand(propertyName, executeMethod, null);
         }
 
-        public bool SetValue<T>(Expression<Func<T>> propertyExpression, T value, Action<T> propertyChangedCallback)
+        public DelegateCommand<T> GetCommand<T>(Action<T> executeMethod, Func<T, bool> canExecuteMethod, [CallerMemberName] string propertyName = null)
         {
-            var previousValue = GetValue(propertyExpression);
+            return GetCommand(propertyName, executeMethod, canExecuteMethod);
+        }
+
+        private DelegateCommand<T> GetCommand<T>(string propertyName, Action<T> executeMethod, Func<T, bool> canExecuteMethod)
+        {
+            if (canExecuteMethod == null)
+            {
+                canExecuteMethod = value => true;
+            }
+            return GetValue(propertyName, () => new DelegateCommand<T>(executeMethod, canExecuteMethod));
+        }
+
+        public bool SetValue<T>(T value, [CallerMemberName] string propertyName = null)
+        {
+            return SetValue(propertyName, value, null);
+        }
+
+        public bool SetValue<T>(T value, Action<T> propertyChangedCallback, [CallerMemberName] string propertyName = null)
+        {
+            return SetValue(propertyName, value, propertyChangedCallback);
+        }
+
+        public bool SetValue<T>(string propertyName, T value, Action<T> propertyChangedCallback)
+        {
+            var previousValue = GetValue<T>(propertyName, null);
 
             if (!Equals(previousValue, value))
             {
-                _properties[GetPropertyName(propertyExpression)] = value;
-                RaisePropertyChanged(propertyExpression);
+                _properties[propertyName] = value;
+                RaisePropertyChanged(propertyName);
                 if (propertyChangedCallback != null)
                 {
                     propertyChangedCallback.Invoke(value);
@@ -101,9 +140,19 @@
             return false;
         }
 
-        public bool SetValueAndObserve<T>(Expression<Func<T>> propertyExpression, T value, PropertyChangedEventHandler observer) where T : class, INotifyPropertyChanged
+        public bool SetValueAndObserve<T>(T value, PropertyChangedEventHandler observer, [CallerMemberName] string propertyName = null) where T : class, INotifyPropertyChanged
         {
-            var previousValue = GetValue(propertyExpression);
+            return SetValueAndObserve(propertyName, value, observer);
+        }
+
+        public bool SetValueAndObserve<T>(T value, [CallerMemberName] string propertyName = null) where T : class, INotifyPropertyChanged
+        {
+            return SetValueAndObserve(propertyName, value, GetObserver(propertyName));
+        }
+
+        private bool SetValueAndObserve<T>(string propertyName, T value, PropertyChangedEventHandler observer) where T : class, INotifyPropertyChanged
+        {
+            var previousValue = GetValue<T>(propertyName, null);
 
             if (previousValue != value)
             {
@@ -118,44 +167,34 @@
                         value.PropertyChanged += observer;
                     }
                 }
-                _properties[GetPropertyName(propertyExpression)] = value;
-                RaisePropertyChanged(propertyExpression);
+                _properties[propertyName] = value;
+                RaisePropertyChanged(propertyName);
                 return true;
             }
             return false;
         }
 
-        public bool SetValueAndObserve<T>(Expression<Func<T>> propertyExpression, T value) where T : class, INotifyPropertyChanged
+        private PropertyChangedEventHandler GetObserver(string propertyName)
         {
-            return SetValueAndObserve(propertyExpression, value, GetObserver(propertyExpression));
+            return GetObserver(propertyName, (sender, args) => RaisePropertyChanged(propertyName));
         }
 
-        private PropertyChangedEventHandler GetObserver<T>(Expression<Func<T>> propertyExpression)
-        {
-            return GetObserver(propertyExpression, (sender, args) => RaisePropertyChanged(propertyExpression));
-        }
-
-        private PropertyChangedEventHandler GetObserver<T>(Expression<Func<T>> propertyExpression, PropertyChangedEventHandler initialObserver)
+        private PropertyChangedEventHandler GetObserver(string propertyName, PropertyChangedEventHandler initialObserver)
         {
             PropertyChangedEventHandler observer;
-            if (_observers.TryGetValue(GetPropertyName(propertyExpression), out observer))
+            if (_observers.TryGetValue(propertyName, out observer))
             {
                 return observer;
             }
-            _observers[GetPropertyName(propertyExpression)] = initialObserver;
+            _observers[propertyName] = initialObserver;
             return initialObserver;
         }
 
-        private static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
-        {
-            return PropertyHelper.GetName(propertyExpression);
-        }
-
-        private void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression)
+        private void RaisePropertyChanged(string propertyName)
         {
             if (_propertyChangedEventHandler != null)
             {
-                _propertyChangedEventHandler.Invoke(GetPropertyName(propertyExpression));
+                _propertyChangedEventHandler.Invoke(propertyName);
             }
         }
     }

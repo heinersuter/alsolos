@@ -7,8 +7,8 @@
         public event ValueEventHandler<bool> IsBusyChanged;
 
         public bool IsBusy {
-            get { return BackingFields.GetValue(() => IsBusy); }
-            set { BackingFields.SetValue(() => IsBusy, value, OnIsBusyChanged); }
+            get { return BackingFields.GetValue<bool>(); }
+            set { BackingFields.SetValue(value, OnIsBusyChanged); }
         }
 
         public void ConnectIsBusy(ViewModel parentViewModel) {

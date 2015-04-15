@@ -17,12 +17,12 @@
 
         public DatePeriodViewModel DatePeriodViewModel
         {
-            get { return BackingFields.GetValue(() => DatePeriodViewModel, () => new DatePeriodViewModel()); }
+            get { return BackingFields.GetValue(() => new DatePeriodViewModel()); }
         }
 
         public DaysViewModel DaysViewModel
         {
-            get { return BackingFields.GetValue(() => DaysViewModel, () => new DaysViewModel()); }
+            get { return BackingFields.GetValue(() => new DaysViewModel()); }
         }
 
         public void SetIntervals(IEnumerable<Interval> modelIntervals)
