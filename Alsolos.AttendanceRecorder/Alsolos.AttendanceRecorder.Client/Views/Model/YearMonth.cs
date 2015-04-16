@@ -33,6 +33,7 @@ namespace Alsolos.AttendanceRecorder.Client.Views.Model
         public DatePeriod ToDatePeriod()
         {
             return new DatePeriod(
+                DatePeriodType.Month,
                 string.Format(CultureInfo.CurrentCulture, "{0:D4} - {1}", Year, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Month)),
                 new DateTime(Year, Month, 1),
                 new DateTime(Year, Month, DateTime.DaysInMonth(Year, Month)));

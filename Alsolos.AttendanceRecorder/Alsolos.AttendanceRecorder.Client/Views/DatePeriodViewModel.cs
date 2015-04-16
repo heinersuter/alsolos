@@ -28,22 +28,22 @@
             private set { BackingFields.SetValue(value); }
         }
 
-        public DatePeriod SelectedYear
+        public int SelectedYearIndex
         {
-            get { return BackingFields.GetValue<DatePeriod>(); }
-            set { BackingFields.SetValue(value, UpdateSelection); }
+            get { return BackingFields.GetValue<int>(); }
+            set { BackingFields.SetValue(value, x => UpdateSelection(DatePeriodType.Year)); }
         }
 
-        public DatePeriod SelectedMonth
+        public int SelectedMonthIndex
         {
-            get { return BackingFields.GetValue<DatePeriod>(); }
-            set { BackingFields.SetValue(value, UpdateSelection); }
+            get { return BackingFields.GetValue<int>(); }
+            set { BackingFields.SetValue(value, x => UpdateSelection(DatePeriodType.Month)); }
         }
 
-        public DatePeriod SelectedWeek
+        public int SelectedWeekIndex
         {
-            get { return BackingFields.GetValue<DatePeriod>(); }
-            set { BackingFields.SetValue(value, UpdateSelection); }
+            get { return BackingFields.GetValue<int>(); }
+            set { BackingFields.SetValue(value, x => UpdateSelection(DatePeriodType.Week)); }
         }
 
         public DatePeriod SelectedPeriod
@@ -57,12 +57,42 @@
             InitYears(modelIntervals);
             InitMonths(modelIntervals);
             InitWeeks(modelIntervals);
-            SelectedWeek = Weeks.FirstOrDefault();
+            SelectedYearIndex = -1;
+            SelectedMonthIndex = -1;
+            SelectedWeekIndex = Weeks.Count > 0 ? 0 : -1;
         }
 
-        private void UpdateSelection(DatePeriod selectedPeriod)
+        private void UpdateSelection(DatePeriodType type)
         {
-            SelectedPeriod = selectedPeriod;
+            switch (type)
+            {
+                case DatePeriodType.Year:
+                    if (SelectedYearIndex >= 0)
+                    {
+                        SelectedMonthIndex = -1;
+                        SelectedWeekIndex = -1;
+                        SelectedPeriod = Years[SelectedYearIndex];
+                    }
+                    break;
+                case DatePeriodType.Month:
+                    if (SelectedMonthIndex >= 0)
+                    {
+                        SelectedYearIndex = -1;
+                        SelectedWeekIndex = -1;
+                        SelectedPeriod = Months[SelectedMonthIndex];
+                    }
+                    break;
+                case DatePeriodType.Week:
+                    if (SelectedWeekIndex >= 0)
+                    {
+                        SelectedYearIndex = -1;
+                        SelectedMonthIndex = -1;
+                        SelectedPeriod = Weeks[SelectedWeekIndex];
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("type");
+            }
         }
 
         private void InitYears(IList<Interval> modelIntervals)
@@ -70,6 +100,7 @@
             var groupings = modelIntervals.GroupBy(interval => interval.Date.Year)
                 .OrderBy(grouping => grouping.Key);
             Years = groupings.Select(grouping => new DatePeriod(
+                DatePeriodType.Year,
                 grouping.Key.ToString(CultureInfo.InvariantCulture),
                 new DateTime(grouping.Key, 1, 1),
                 new DateTime(grouping.Key, 12, 31))).OrderByDescending(period => period.Start).ToList();

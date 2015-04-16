@@ -4,31 +4,21 @@
 
     public class DatePeriod
     {
-        private readonly string _name;
-        private readonly DateTime _start;
-        private readonly DateTime _end;
-
-        public DatePeriod(string name, DateTime start, DateTime end)
+        public DatePeriod(DatePeriodType type, string name, DateTime start, DateTime end)
         {
-            _name = name;
-            _start = start.Date;
-            _end = end.Date;
+            Type = type;
+            Name = name;
+            Start = start.Date;
+            End = end.Date;
         }
 
-        public string Name
-        {
-            get { return _name; }
-        }
+        public DatePeriodType Type { get; private set; }
 
-        public DateTime Start
-        {
-            get { return _start; }
-        }
+        public string Name { get; private set; }
 
-        public DateTime End
-        {
-            get { return _end; }
-        }
+        public DateTime Start { get; private set; }
+
+        public DateTime End { get; private set; }
 
         public override string ToString()
         {

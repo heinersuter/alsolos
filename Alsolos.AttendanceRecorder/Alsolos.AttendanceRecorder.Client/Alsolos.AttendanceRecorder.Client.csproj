@@ -89,6 +89,7 @@
     </Compile>
     <Compile Include="Views\DatePeriodViewModel.cs" />
     <Compile Include="Views\Model\DatePeriod.cs" />
+    <Compile Include="Views\Model\DatePeriodType.cs" />
     <Compile Include="Views\Model\IntervalType.cs" />
     <Compile Include="Views\Model\YearMonth.cs" />
     <Compile Include="Views\Model\YearWeek.cs" />

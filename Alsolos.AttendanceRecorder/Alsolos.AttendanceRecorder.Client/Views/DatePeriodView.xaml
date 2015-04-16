@@ -9,21 +9,18 @@
 
     <TabControl HorizontalAlignment="Stretch">
         <TabItem Header="Years">
-            <ListBox ItemsSource="{Binding Years}" 
-                SelectedItem="{Binding SelectedYear}" HorizontalAlignment="Stretch" 
-                DisplayMemberPath="Name"/>
+            <ListBox ItemsSource="{Binding Years}" SelectedIndex="{Binding SelectedYearIndex}"
+                HorizontalAlignment="Stretch" DisplayMemberPath="Name"/>
         </TabItem>
 
         <TabItem Header="Months">
-            <ListBox ItemsSource="{Binding Months}" 
-                SelectedItem="{Binding SelectedMonth}" HorizontalAlignment="Stretch" 
-                DisplayMemberPath="Name"/>
+            <ListBox ItemsSource="{Binding Months}" SelectedIndex="{Binding SelectedMonthIndex}"
+                HorizontalAlignment="Stretch" DisplayMemberPath="Name"/>
         </TabItem>
 
         <TabItem Header="Weeks" IsSelected="True">
-            <ListBox ItemsSource="{Binding Weeks}" 
-                SelectedItem="{Binding SelectedWeek}" HorizontalAlignment="Stretch" 
-                DisplayMemberPath="Name"/>
+            <ListBox ItemsSource="{Binding Weeks}" SelectedIndex="{Binding SelectedWeekIndex}"
+                HorizontalAlignment="Stretch" DisplayMemberPath="Name"/>
         </TabItem>
     </TabControl>
 

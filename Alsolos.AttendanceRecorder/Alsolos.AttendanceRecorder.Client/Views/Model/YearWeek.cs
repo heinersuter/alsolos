@@ -34,6 +34,7 @@ namespace Alsolos.AttendanceRecorder.Client.Views.Model
         {
             var firstDayOfWeek = FirstDateOfWeek();
             return new DatePeriod(
+                DatePeriodType.Week,
                 string.Format(CultureInfo.InvariantCulture, "{0:D4} - Week {1:D2}", Year, Week),
                 firstDayOfWeek,
                 firstDayOfWeek.AddDays(6));
