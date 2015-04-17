@@ -7,7 +7,7 @@
 
     public class LifeSignSender : IDisposable
     {
-        private readonly TimeSpan _intervalDuration = new TimeSpan(0, 0, 10);
+        private readonly TimeSpan _updatePeriod = new TimeSpan(0, 0, 10);
         private readonly ManualResetEvent _runEvent = new ManualResetEvent(false);
         private readonly BackgroundWorker _backgroundWorker = new BackgroundWorker();
         private readonly AttendanceRecorderService _service;
@@ -51,9 +51,9 @@
             {
                 if (_runEvent.WaitOne())
                 {
-                    _service.KeepAlive(_timeAccountname, _intervalDuration);
+                    _service.KeepAlive(_timeAccountname, _updatePeriod);
                 }
-                Thread.Sleep(_intervalDuration);
+                Thread.Sleep(_updatePeriod);
             }
         }
     }

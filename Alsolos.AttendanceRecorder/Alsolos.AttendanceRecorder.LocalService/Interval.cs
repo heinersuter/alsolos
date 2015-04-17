@@ -33,7 +33,6 @@
             {
                 return XmlConvert.ToString(Start);
             }
-
             set
             {
                 Start = string.IsNullOrEmpty(value) ? TimeSpan.Zero : XmlConvert.ToTimeSpan(value);
@@ -52,7 +51,6 @@
             {
                 return XmlConvert.ToString(End);
             }
-
             set
             {
                 End = string.IsNullOrEmpty(value) ? TimeSpan.Zero : XmlConvert.ToTimeSpan(value);

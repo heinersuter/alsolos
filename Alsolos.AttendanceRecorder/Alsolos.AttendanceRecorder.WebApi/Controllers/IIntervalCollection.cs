@@ -5,5 +5,7 @@
     public interface IIntervalCollection
     {
         IEnumerable<IInterval> Intervals { get; }
+
+        bool Remove(IInterval interval);
     }
 }

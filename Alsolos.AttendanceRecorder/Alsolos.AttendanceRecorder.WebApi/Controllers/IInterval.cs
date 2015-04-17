@@ -1,7 +1,6 @@
 ﻿namespace Alsolos.AttendanceRecorder.WebApi.Controllers
 {
     using System;
-    using System.Xml.Serialization;
 
     public interface IInterval
     {
@@ -11,7 +10,8 @@
 
         DateTime Date { get; set; }
 
-        [XmlIgnore]
+        TimeSpan Start { get; set; }
+
         TimeSpan End { get; set; }
 
         DateTime LastModified { get; set; }

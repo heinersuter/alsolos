@@ -10,7 +10,7 @@
 
         public ValueEventArgs(T value)
         {
-            this.Value = value;
+            Value = value;
         }
 
         public T Value { get; set; }

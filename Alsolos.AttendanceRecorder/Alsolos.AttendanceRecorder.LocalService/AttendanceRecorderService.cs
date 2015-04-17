@@ -17,9 +17,9 @@
             _webApiStarter.Start();
         }
 
-        public void KeepAlive(string timeAccountName, TimeSpan intervalDuration)
+        public void KeepAlive(string timeAccountName, TimeSpan updatePeriod)
         {
-            AddOrUpdateInterval(timeAccountName, intervalDuration, DateTime.Now);
+            AddOrUpdateInterval(timeAccountName, updatePeriod, DateTime.Now);
         }
 
         public void Dispose()
@@ -30,14 +30,14 @@
             }
         }
 
-        private void AddOrUpdateInterval(string timeAccountName, TimeSpan intervalDuration, DateTime currentDateTime)
+        private void AddOrUpdateInterval(string timeAccountName, TimeSpan updatePeriod, DateTime currentDateTime)
         {
-            var currentInterval = FindIntervallToUpdate(timeAccountName, intervalDuration, currentDateTime);
+            var currentInterval = FindIntervallToUpdate(timeAccountName, updatePeriod, currentDateTime);
 
             if (currentInterval != null)
             {
                 UpdateExistingIntervall(currentInterval, currentDateTime);
-                _aggregator.TrackUpdate(currentInterval);
+                _aggregator.SaveIntervals();
             }
             else
             {
@@ -45,13 +45,13 @@
             }
         }
 
-        private IInterval FindIntervallToUpdate(string timeAccountName, TimeSpan intervalDuration, DateTime currentTime)
+        private IInterval FindIntervallToUpdate(string timeAccountName, TimeSpan updatePeriod, DateTime currentTime)
         {
             var currentInterval =
                 _aggregator.Intervals.SingleOrDefault(
                     interval => interval.TimeAccountName == timeAccountName
                         && interval.Date.Date == currentTime.Date
-                        && interval.Date + interval.End + intervalDuration + intervalDuration > currentTime);
+                        && interval.Date + interval.End + updatePeriod + updatePeriod > currentTime);
             return currentInterval;
         }
 

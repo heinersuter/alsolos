@@ -6,12 +6,12 @@
 
     public class IntervalAggregator : IIntervalCollection
     {
-        private readonly List<Interval> _intervals;
-        private readonly TempStore _tempStore = new TempStore();
+        private readonly IList<Interval> _intervals;
+        private readonly LocalFileSystemStore _localFileSystemStore = new LocalFileSystemStore();
 
         public IntervalAggregator()
         {
-            _intervals = _tempStore.Load();
+            _intervals = _localFileSystemStore.Load();
         }
 
         public IEnumerable<IInterval> Intervals
@@ -22,12 +22,32 @@
         public void Add(Interval interval)
         {
             _intervals.Add(interval);
-            _tempStore.Save(_intervals.Where(i => i.State != IntervalState.Persisted).ToList());
+            SaveUnpersistedValues();
         }
 
-        public void TrackUpdate(IInterval currentInterval)
+        private void SaveUnpersistedValues()
         {
-            _tempStore.Save(_intervals.Where(i => i.State != IntervalState.Persisted).ToList());
+            _localFileSystemStore.Save(_intervals.Where(i => i.State != IntervalState.Persisted).ToList());
+        }
+
+        public bool Remove(IInterval interval)
+        {
+            var intervalToRemove = _intervals.SingleOrDefault(inner => inner.Date == interval.Date && inner.Start == interval.Start);
+            if (intervalToRemove != null)
+            {
+                var result = _intervals.Remove(intervalToRemove);
+                if (result)
+                {
+                    SaveUnpersistedValues();
+                }
+                return result;
+            }
+            return false;
+        }
+
+        public void SaveIntervals()
+        {
+            SaveUnpersistedValues();
         }
     }
 }
