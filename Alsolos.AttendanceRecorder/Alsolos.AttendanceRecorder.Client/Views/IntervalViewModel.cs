@@ -1,6 +1,7 @@
 ﻿namespace Alsolos.AttendanceRecorder.Client.Views
 {
     using System;
+    using Alsolos.AttendanceRecorder.Client.Models;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
     using Alsolos.Commons.Mvvm;
 
@@ -39,6 +40,11 @@
         private TimeSpan UpdateDuration()
         {
             return Duration = End - Start;
+        }
+
+        public Interval AsInterval()
+        {
+            return new Interval { Date = Date, Start = Start, End = End };
         }
     }
 }

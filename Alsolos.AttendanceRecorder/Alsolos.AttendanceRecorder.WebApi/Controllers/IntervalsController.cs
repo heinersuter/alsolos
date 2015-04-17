@@ -2,35 +2,41 @@
 {
     using System.Collections.Generic;
     using System.Web.Http;
+    using Alsolos.AttendanceRecorder.WebApi.Model;
 
+    [RoutePrefix("api/intervals")]
     public class IntervalsController : ApiController
     {
-        // GET api/intervals 
+        private readonly IIntervalCollection _intervalCollection;
+
+        public IntervalsController()
+        {
+            _intervalCollection = WebApiStarter.IntervalCollection;
+        }
+
+        [Route("")]
+        [HttpGet]
         public IEnumerable<IInterval> Get()
         {
-            var intervals = WebApiStarter.Intervals;
-            return intervals.Intervals;
+            return _intervalCollection.Intervals;
         }
 
-        // GET api/values/5 
-        public string Get(int id)
+        [Route("remove")]
+        [HttpPost]
+        public bool Remove([FromBody]ReceivedInterval interval)
         {
-            return "value";
+            if (interval == null)
+            {
+                return false;
+            }
+            return _intervalCollection.Remove(interval);
         }
 
-        // POST api/values 
-        public void Post([FromBody]string value)
+        [Route("merge")]
+        [HttpPost]
+        public bool Merge(IIntervalPair intervalPair)
         {
-        }
-
-        // PUT api/values/5 
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/values/5 
-        public void Delete(int id)
-        {
+            return _intervalCollection.Merge(intervalPair);
         }
     }
 }

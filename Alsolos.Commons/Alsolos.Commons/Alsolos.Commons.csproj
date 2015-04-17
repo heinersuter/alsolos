@@ -74,6 +74,10 @@
     <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanel.cs" />
     <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanelMode.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Log\ILogEvent.cs" />
+    <Compile Include="Log\ILogEventProvider.cs" />
+    <Compile Include="Log\LogEventList.cs" />
+    <Compile Include="Log\LogLevel.cs" />
     <Compile Include="Mvvm\Converters\BoolToValueConverter.cs" />
     <Compile Include="Mvvm\Converters\EqualityToBoolConverter.cs" />
     <Compile Include="Mvvm\Converters\EqualityToValueConverter.cs" />

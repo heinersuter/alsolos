@@ -5,7 +5,7 @@
     using System.Runtime.Serialization;
     using System.Xml;
     using System.Xml.Serialization;
-    using Alsolos.AttendanceRecorder.WebApi.Controllers;
+    using Alsolos.AttendanceRecorder.WebApi.Model;
 
     [Serializable]
     [DataContract]

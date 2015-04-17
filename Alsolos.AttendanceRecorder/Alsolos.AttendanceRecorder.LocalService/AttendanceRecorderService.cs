@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using Alsolos.AttendanceRecorder.WebApi;
-    using Alsolos.AttendanceRecorder.WebApi.Controllers;
+    using Alsolos.AttendanceRecorder.WebApi.Model;
 
     public class AttendanceRecorderService : IDisposable
     {

@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Alsolos.AttendanceRecorder.WebApi.Controllers;
+    using Alsolos.AttendanceRecorder.WebApi.Model;
 
     public class IntervalAggregator : IIntervalCollection
     {
@@ -32,7 +32,7 @@
 
         public bool Remove(IInterval interval)
         {
-            var intervalToRemove = _intervals.SingleOrDefault(inner => inner.Date == interval.Date && inner.Start == interval.Start);
+            var intervalToRemove = _intervals.SingleOrDefault(inner => AreEqual(inner, interval));
             if (intervalToRemove != null)
             {
                 var result = _intervals.Remove(intervalToRemove);
@@ -45,9 +45,29 @@
             return false;
         }
 
+        public bool Merge(IIntervalPair intervalPair)
+        {
+            var intervalToExtend = _intervals.SingleOrDefault(inner => AreEqual(inner, intervalPair.Interval1));
+            var intervalToRemove = _intervals.SingleOrDefault(inner => AreEqual(inner, intervalPair.Interval2));
+            if (intervalToExtend != null &&
+                intervalToRemove != null &&
+                intervalToExtend.Date.Date == intervalToRemove.Date.Date &&
+                intervalToExtend.Start < intervalToRemove.Start)
+            {
+                intervalToExtend.End = intervalToRemove.End;
+                return Remove(intervalToRemove);
+            }
+            return false;
+        }
+
         public void SaveIntervals()
         {
             SaveUnpersistedValues();
+        }
+
+        private bool AreEqual(Interval localInterval, IInterval otherInterval)
+        {
+            return localInterval.Date.Date == otherInterval.Date.Date && localInterval.Start == otherInterval.Start;
         }
     }
 }

@@ -61,10 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\IInterval.cs" />
-    <Compile Include="Controllers\IIntervalCollection.cs" />
     <Compile Include="Controllers\IntervalsController.cs" />
-    <Compile Include="Controllers\IntervalState.cs" />
+    <Compile Include="Model\IInterval.cs" />
+    <Compile Include="Model\IIntervalCollection.cs" />
+    <Compile Include="Model\IIntervalPair.cs" />
+    <Compile Include="Model\IntervalState.cs" />
+    <Compile Include="Model\ReceivedInterval.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="WebApiStarter.cs" />

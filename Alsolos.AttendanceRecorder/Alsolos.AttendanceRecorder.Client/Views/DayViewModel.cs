@@ -5,12 +5,14 @@
     using System.Collections.ObjectModel;
     using System.Linq;
     using Alsolos.AttendanceRecorder.Client.Models;
+    using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
     using Alsolos.Commons.Mvvm;
 
     public class DayViewModel : BackingFieldsHolder
     {
         private readonly TimeSpan _midnight = new TimeSpan(23, 59, 59);
+        private readonly IntervalService _intervalService = new IntervalService();
 
         public DayViewModel(DateTime date, IList<Interval> modelIntervals)
         {
@@ -44,6 +46,19 @@
         {
             get { return BackingFields.GetValue<bool>(); }
             set { BackingFields.SetValue(value); }
+        }
+
+        public DelegateCommand<IntervalViewModel> DeleteCommand
+        {
+            get { return BackingFields.GetCommand<IntervalViewModel>(Delete); }
+        }
+
+        private async void Delete(IntervalViewModel interval)
+        {
+            if (interval.Type == IntervalType.Active)
+            {
+                await _intervalService.RemoveInterval(interval.AsInterval());
+            }
         }
 
         private void Init(IList<Interval> modelIntervals)

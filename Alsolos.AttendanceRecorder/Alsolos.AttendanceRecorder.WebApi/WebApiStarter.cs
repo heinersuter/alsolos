@@ -1,19 +1,19 @@
 ﻿namespace Alsolos.AttendanceRecorder.WebApi
 {
     using System;
-    using Alsolos.AttendanceRecorder.WebApi.Controllers;
+    using Alsolos.AttendanceRecorder.WebApi.Model;
     using Microsoft.Owin.Hosting;
 
     public class WebApiStarter : IDisposable
     {
         private IDisposable _webApiService;
 
-        public WebApiStarter(IIntervalCollection intervals)
+        public WebApiStarter(IIntervalCollection intervalCollection)
         {
-            Intervals = intervals;
+            IntervalCollection = intervalCollection;
         }
 
-        public static IIntervalCollection Intervals { get; private set; }
+        public static IIntervalCollection IntervalCollection { get; private set; }
 
         public void Start()
         {

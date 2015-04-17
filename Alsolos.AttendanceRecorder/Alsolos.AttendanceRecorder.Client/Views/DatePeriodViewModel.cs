@@ -30,19 +30,19 @@
 
         public int SelectedYearIndex
         {
-            get { return BackingFields.GetValue<int>(); }
+            get { return BackingFields.GetValue(() => -1); }
             set { BackingFields.SetValue(value, x => UpdateSelection(DatePeriodType.Year)); }
         }
 
         public int SelectedMonthIndex
         {
-            get { return BackingFields.GetValue<int>(); }
+            get { return BackingFields.GetValue(() => -1); }
             set { BackingFields.SetValue(value, x => UpdateSelection(DatePeriodType.Month)); }
         }
 
         public int SelectedWeekIndex
         {
-            get { return BackingFields.GetValue<int>(); }
+            get { return BackingFields.GetValue(() => -1); }
             set { BackingFields.SetValue(value, x => UpdateSelection(DatePeriodType.Week)); }
         }
 
@@ -57,8 +57,6 @@
             InitYears(modelIntervals);
             InitMonths(modelIntervals);
             InitWeeks(modelIntervals);
-            SelectedYearIndex = -1;
-            SelectedMonthIndex = -1;
             SelectedWeekIndex = Weeks.Count > 0 ? 0 : -1;
         }
 
