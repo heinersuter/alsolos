@@ -4,12 +4,16 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Alsolos.AttendanceRecorder.Client.Models;
+    using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
+    using Alsolos.AttendanceRecorder.WebApiModel;
     using Alsolos.Commons.Mvvm;
+    using NLog;
 
     public class DatePeriodViewModel : ViewModel
     {
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
         public IList<DatePeriod> Years
         {
             get { return BackingFields.GetValue<IList<DatePeriod>>(); }
@@ -52,12 +56,57 @@
             private set { BackingFields.SetValue(value); }
         }
 
-        public void SetIntervals(IList<Interval> modelIntervals)
+        public async void Load()
         {
-            InitYears(modelIntervals);
-            InitMonths(modelIntervals);
-            InitWeeks(modelIntervals);
+            var intervalService = new IntervalService();
+            IEnumerable<Date> dates = null;
+            try
+            {
+                dates = await intervalService.GetDates();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+            }
+            if (dates != null)
+            {
+                Init(dates.ToList());
+            }
+        }
+
+        public void Init(IList<Date> dates)
+        {
+            InitYears(dates);
+            InitMonths(dates);
+            InitWeeks(dates);
             SelectedWeekIndex = Weeks.Count > 0 ? 0 : -1;
+        }
+
+        private void InitYears(IEnumerable<Date> dates)
+        {
+            var groupings = dates.GroupBy(date => date.Year)
+                .OrderBy(grouping => grouping.Key);
+            Years = groupings.Select(grouping => new DatePeriod(
+                DatePeriodType.Year,
+                grouping.Key.ToString(CultureInfo.InvariantCulture),
+                new Date(grouping.Key, 1, 1),
+                new Date(grouping.Key, 12, 31))).OrderByDescending(period => period.Start).ToList();
+        }
+
+        private void InitMonths(IEnumerable<Date> dates)
+        {
+            var groupings = dates.GroupBy(date => new YearMonth(date.Year, date.Month))
+                .OrderBy(grouping => grouping.Key.Year)
+                .ThenBy(grouping => grouping.Key.Month);
+            Months = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start).ToList();
+        }
+
+        private void InitWeeks(IEnumerable<Date> dates)
+        {
+            var groupings = dates.GroupBy(date => new YearWeek(date.GetDateTime()))
+                .OrderBy(grouping => grouping.Key.Year)
+                .ThenBy(grouping => grouping.Key.Week);
+            Weeks = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start).ToList();
         }
 
         private void UpdateSelection(DatePeriodType type)
@@ -91,33 +140,6 @@
                 default:
                     throw new ArgumentOutOfRangeException("type");
             }
-        }
-
-        private void InitYears(IList<Interval> modelIntervals)
-        {
-            var groupings = modelIntervals.GroupBy(interval => interval.Date.Year)
-                .OrderBy(grouping => grouping.Key);
-            Years = groupings.Select(grouping => new DatePeriod(
-                DatePeriodType.Year,
-                grouping.Key.ToString(CultureInfo.InvariantCulture),
-                new DateTime(grouping.Key, 1, 1),
-                new DateTime(grouping.Key, 12, 31))).OrderByDescending(period => period.Start).ToList();
-        }
-
-        private void InitMonths(IList<Interval> modelIntervals)
-        {
-            var groupings = modelIntervals.GroupBy(interval => new YearMonth(interval.Date))
-                .OrderBy(grouping => grouping.Key.Year)
-                .ThenBy(grouping => grouping.Key.Month);
-            Months = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start).ToList();
-        }
-
-        private void InitWeeks(IList<Interval> modelIntervals)
-        {
-            var groupings = modelIntervals.GroupBy(interval => new YearWeek(interval.Date))
-                .OrderBy(grouping => grouping.Key.Year)
-                .ThenBy(grouping => grouping.Key.Week);
-            Weeks = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start).ToList();
         }
     }
 }

@@ -159,6 +159,10 @@
       <Project>{b0d4d546-6a3e-42bf-be7d-cde59ac33d44}</Project>
       <Name>Alsolos.Commons</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Alsolos.AttendanceRecorder.WebApiModel\Alsolos.AttendanceRecorder.WebApiModel.csproj">
+      <Project>{61B15EA5-F90C-40A7-94C7-DBCE46D89DBD}</Project>
+      <Name>Alsolos.AttendanceRecorder.WebApiModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Delete.png" />

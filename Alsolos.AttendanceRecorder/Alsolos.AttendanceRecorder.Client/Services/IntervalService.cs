@@ -7,6 +7,7 @@
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using Alsolos.AttendanceRecorder.Client.Models;
+    using Alsolos.AttendanceRecorder.WebApiModel;
     using NLog;
 
     public class IntervalService
@@ -14,11 +15,12 @@
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly Uri _baseAddress = new Uri("http://localhost:30515/");
 
-        public async Task<IEnumerable<Interval>> GetIntervals()
+        public async Task<IEnumerable<Interval>> GetIntervalsInRange(Date from, Date to)
         {
             using (var client = InitClient())
             {
-                var response = await client.GetAsync("api/intervals");
+                var requestUri = string.Format("api/intervals/range/{0}/{1}", DateConverter.DateToString(from), DateConverter.DateToString(to));
+                var response = await client.GetAsync(requestUri);
                 if (response.IsSuccessStatusCode)
                 {
                     var intervals = await response.Content.ReadAsAsync<IEnumerable<Interval>>();
@@ -27,6 +29,21 @@
                 _logger.Error("Getting intervals failed. {0} - {1}", response.StatusCode, response.ReasonPhrase);
             }
             return Enumerable.Empty<Interval>();
+        }
+
+        public async Task<IEnumerable<Date>> GetDates()
+        {
+            using (var client = InitClient())
+            {
+                var response = await client.GetAsync("api/intervals/dates");
+                if (response.IsSuccessStatusCode)
+                {
+                    var dates = await response.Content.ReadAsAsync<IEnumerable<Date>>();
+                    return dates;
+                }
+                _logger.Error("Getting dates failed. {0} - {1}", response.StatusCode, response.ReasonPhrase);
+            }
+            return Enumerable.Empty<Date>();
         }
 
         public async Task RemoveInterval(Interval interval)

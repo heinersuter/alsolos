@@ -2,6 +2,7 @@ namespace Alsolos.AttendanceRecorder.Client.Views.Model
 {
     using System;
     using System.Globalization;
+    using Alsolos.AttendanceRecorder.WebApiModel;
 
     public struct YearMonth
     {
@@ -35,8 +36,8 @@ namespace Alsolos.AttendanceRecorder.Client.Views.Model
             return new DatePeriod(
                 DatePeriodType.Month,
                 string.Format(CultureInfo.CurrentCulture, "{0:D4} - {1}", Year, CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(Month)),
-                new DateTime(Year, Month, 1),
-                new DateTime(Year, Month, DateTime.DaysInMonth(Year, Month)));
+                new Date(Year, Month, 1),
+                new Date(Year, Month, DateTime.DaysInMonth(Year, Month)));
         }
     }
 }

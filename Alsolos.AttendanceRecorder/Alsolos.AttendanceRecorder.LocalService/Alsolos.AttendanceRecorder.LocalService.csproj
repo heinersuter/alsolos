@@ -47,6 +47,10 @@
     <Compile Include="LocalFileSystemStore.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Alsolos.AttendanceRecorder.WebApiModel\Alsolos.AttendanceRecorder.WebApiModel.csproj">
+      <Project>{61B15EA5-F90C-40A7-94C7-DBCE46D89DBD}</Project>
+      <Name>Alsolos.AttendanceRecorder.WebApiModel</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Alsolos.AttendanceRecorder.WebApi\Alsolos.AttendanceRecorder.WebApi.csproj">
       <Project>{3cb90043-46a2-46ed-9806-40d7ec205134}</Project>
       <Name>Alsolos.AttendanceRecorder.WebApi</Name>

@@ -22,12 +22,7 @@
         public void Add(Interval interval)
         {
             _intervals.Add(interval);
-            SaveUnpersistedValues();
-        }
-
-        private void SaveUnpersistedValues()
-        {
-            _localFileSystemStore.Save(_intervals.Where(i => i.State != IntervalState.Persisted).ToList());
+            SaveIntervals();
         }
 
         public bool Remove(IInterval interval)
@@ -38,7 +33,7 @@
                 var result = _intervals.Remove(intervalToRemove);
                 if (result)
                 {
-                    SaveUnpersistedValues();
+                    SaveIntervals();
                 }
                 return result;
             }
@@ -51,7 +46,7 @@
             var intervalToRemove = _intervals.SingleOrDefault(inner => AreEqual(inner, intervalPair.Interval2));
             if (intervalToExtend != null &&
                 intervalToRemove != null &&
-                intervalToExtend.Date.Date == intervalToRemove.Date.Date &&
+                intervalToExtend.Date == intervalToRemove.Date &&
                 intervalToExtend.Start < intervalToRemove.Start)
             {
                 intervalToExtend.End = intervalToRemove.End;
@@ -62,12 +57,12 @@
 
         public void SaveIntervals()
         {
-            SaveUnpersistedValues();
+            _localFileSystemStore.Save(_intervals.Where(i => i.State != IntervalState.Persisted).ToList());
         }
 
         private bool AreEqual(Interval localInterval, IInterval otherInterval)
         {
-            return localInterval.Date.Date == otherInterval.Date.Date && localInterval.Start == otherInterval.Start;
+            return localInterval.Date == otherInterval.Date && localInterval.Start == otherInterval.Start;
         }
     }
 }

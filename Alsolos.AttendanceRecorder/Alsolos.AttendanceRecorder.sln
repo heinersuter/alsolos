@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alsolos.AttendanceRecorder.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alsolos.AttendanceRecorder.WebApi", "Alsolos.AttendanceRecorder.WebApi\Alsolos.AttendanceRecorder.WebApi.csproj", "{3CB90043-46A2-46ED-9806-40D7EC205134}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alsolos.AttendanceRecorder.WebApiModel", "Alsolos.AttendanceRecorder.WebApiModel\Alsolos.AttendanceRecorder.WebApiModel.csproj", "{61B15EA5-F90C-40A7-94C7-DBCE46D89DBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3CB90043-46A2-46ED-9806-40D7EC205134}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3CB90043-46A2-46ED-9806-40D7EC205134}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3CB90043-46A2-46ED-9806-40D7EC205134}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61B15EA5-F90C-40A7-94C7-DBCE46D89DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61B15EA5-F90C-40A7-94C7-DBCE46D89DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61B15EA5-F90C-40A7-94C7-DBCE46D89DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61B15EA5-F90C-40A7-94C7-DBCE46D89DBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

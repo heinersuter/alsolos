@@ -4,6 +4,7 @@
     using System.Linq;
     using Alsolos.AttendanceRecorder.WebApi;
     using Alsolos.AttendanceRecorder.WebApi.Model;
+    using Alsolos.AttendanceRecorder.WebApiModel;
 
     public class AttendanceRecorderService : IDisposable
     {
@@ -50,8 +51,8 @@
             var currentInterval =
                 _aggregator.Intervals.SingleOrDefault(
                     interval => interval.TimeAccountName == timeAccountName
-                        && interval.Date.Date == currentTime.Date
-                        && interval.Date + interval.End + updatePeriod + updatePeriod > currentTime);
+                        && interval.Date == new Date(currentTime.Date)
+                        && currentTime.Date + interval.End + updatePeriod + updatePeriod > currentTime);
             return currentInterval;
         }
 
@@ -60,7 +61,7 @@
             var currentInterval = new Interval
             {
                 State = IntervalState.New,
-                Date = currentTime.Date,
+                Date = new Date(currentTime.Date),
                 Start = GetTimeOfDay(currentTime),
                 End = GetTimeOfDay(currentTime),
                 TimeAccountName = timeAccountName,

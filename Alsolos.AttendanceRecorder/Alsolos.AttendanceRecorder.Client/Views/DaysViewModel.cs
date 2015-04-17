@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
     using Alsolos.Commons.Mvvm;
 
@@ -11,7 +12,7 @@
         public DatePeriod DatePeriod
         {
             get { return BackingFields.GetValue<DatePeriod>(); }
-            set { BackingFields.SetValue(value, x => SetTitle()); }
+            set { BackingFields.SetValue(value, Load); }
         }
 
         public string Title
@@ -29,22 +30,42 @@
         public IList<DayViewModel> Days
         {
             get { return BackingFields.GetValue<IList<DayViewModel>>(); }
-            set { BackingFields.SetValue(value, x => Refresh()); }
+            private set { BackingFields.SetValue(value); }
         }
 
-        private void SetTitle()
+        private async void Load(DatePeriod period)
         {
-            Title = DatePeriod != null ? DatePeriod.Name : null;
+            if (period == null)
+            {
+                Title = "---";
+                Days = new List<DayViewModel>();
+            }
+            else
+            {
+                Title = period.Name;
+
+                var intervalService = new IntervalService();
+                var intervals = await intervalService.GetIntervalsInRange(period.Start, period.End);
+
+                var dayGroupings = intervals.GroupBy(interval => interval.Date.Date);
+                Days = dayGroupings.Select(grouping => new DayViewModel(grouping.Key, grouping.ToList())).OrderByDescending(dayViewModel => dayViewModel.Date).ToList();
+            }
+
+            ExpandFirstDay();
+            CalculateTotalTime();
         }
 
-        private void Refresh()
+        private void ExpandFirstDay()
         {
             var firstDay = Days.FirstOrDefault();
             if (firstDay != null)
             {
                 firstDay.IsExpanded = true;
             }
+        }
 
+        private void CalculateTotalTime()
+        {
             if (Days != null)
             {
                 TotalTime = Days.Aggregate(TimeSpan.Zero, (total, currentViewModel) => total + currentViewModel.TotalTime);

@@ -2,10 +2,12 @@
 {
     using System;
     using System.ComponentModel;
+    using System.Globalization;
     using System.Runtime.Serialization;
     using System.Xml;
     using System.Xml.Serialization;
     using Alsolos.AttendanceRecorder.WebApi.Model;
+    using Alsolos.AttendanceRecorder.WebApiModel;
 
     [Serializable]
     [DataContract]
@@ -18,8 +20,23 @@
         [DataMember]
         public IntervalState State { get; set; }
 
+        [XmlIgnore]
         [DataMember]
-        public DateTime Date { get; set; }
+        public Date Date { get; set; }
+
+        [Browsable(false)]
+        [XmlElement(ElementName = "Date")]
+        public string DateXmlString
+        {
+            get
+            {
+                return string.Format("{0:D4}-{1:D2}-{2:D2}", Date.Year, Date.Month, Date.Day);
+            }
+            set
+            {
+                Date = new Date(DateTime.Parse(value, CultureInfo.InvariantCulture));
+            }
+        }
 
         [XmlIgnore]
         [DataMember]

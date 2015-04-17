@@ -1,6 +1,7 @@
 ﻿namespace Alsolos.AttendanceRecorder.WebApi.Model
 {
     using System;
+    using Alsolos.AttendanceRecorder.WebApiModel;
 
     public class ReceivedInterval : IInterval
     {
@@ -8,7 +9,7 @@
 
         public IntervalState State { get; set; }
 
-        public DateTime Date { get; set; }
+        public Date Date { get; set; }
 
         public TimeSpan Start { get; set; }
 

@@ -2,6 +2,7 @@ namespace Alsolos.AttendanceRecorder.Client.Views.Model
 {
     using System;
     using System.Globalization;
+    using Alsolos.AttendanceRecorder.WebApiModel;
 
     public struct YearWeek
     {
@@ -36,8 +37,8 @@ namespace Alsolos.AttendanceRecorder.Client.Views.Model
             return new DatePeriod(
                 DatePeriodType.Week,
                 string.Format(CultureInfo.InvariantCulture, "{0:D4} - Week {1:D2}", Year, Week),
-                firstDayOfWeek,
-                firstDayOfWeek.AddDays(6));
+                new Date(firstDayOfWeek),
+                new Date(firstDayOfWeek.AddDays(6)));
         }
 
         private static int GetWeekNumber(DateTime date)
