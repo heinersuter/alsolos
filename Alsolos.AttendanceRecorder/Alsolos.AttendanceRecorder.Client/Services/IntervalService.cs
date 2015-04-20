@@ -38,8 +38,8 @@
                 var response = await client.GetAsync("api/intervals/dates");
                 if (response.IsSuccessStatusCode)
                 {
-                    var dates = await response.Content.ReadAsAsync<IEnumerable<Date>>();
-                    return dates;
+                    var dates = await response.Content.ReadAsAsync<IEnumerable<string>>();
+                    return dates.Select(DateConverter.StringToDate);
                 }
                 _logger.Error("Getting dates failed. {0} - {1}", response.StatusCode, response.ReasonPhrase);
             }
