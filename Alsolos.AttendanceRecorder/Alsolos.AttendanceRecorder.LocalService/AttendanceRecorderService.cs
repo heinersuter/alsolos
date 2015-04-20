@@ -67,7 +67,6 @@
                 TimeAccountName = timeAccountName,
                 LastModified = DateTime.Now,
             };
-            Console.WriteLine("Interval created: {0}", currentInterval.End);
             return currentInterval;
         }
 
@@ -76,7 +75,6 @@
             currentInterval.State = IntervalState.Dirty;
             currentInterval.End = GetTimeOfDay(currentTime);
             currentInterval.LastModified = DateTime.Now;
-            Console.WriteLine("Interval updated: {0}", currentInterval.End);
         }
 
         private static TimeSpan GetTimeOfDay(DateTime currentTime)

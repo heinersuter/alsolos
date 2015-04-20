@@ -12,7 +12,7 @@
 
         <ItemsControl Style="{StaticResource PairControlFillLeftStyle}">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Date, StringFormat=D}" Margin="8" FontSize="18" VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding Date.DateTime, StringFormat=D}" Margin="8" FontSize="18" VerticalAlignment="Center"/>
                 <TextBlock Text="{Binding TotalTime, StringFormat={}{0:hh\\:mm} hours}" Margin="8" VerticalAlignment="Center"/>
             </StackPanel>
             <ToggleButton IsChecked="{Binding IsExpanded}" Width="18" Height="18" Margin="8" Background="Transparent" BorderThickness="0">

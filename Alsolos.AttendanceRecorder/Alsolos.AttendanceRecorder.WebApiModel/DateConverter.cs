@@ -13,8 +13,7 @@
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var s = reader.ReadAsString();
-            return StringToDate(s);
+            return StringToDate((string)reader.Value);
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

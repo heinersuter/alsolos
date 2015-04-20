@@ -7,6 +7,7 @@
     using Alsolos.AttendanceRecorder.Client.Models;
     using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
+    using Alsolos.AttendanceRecorder.WebApiModel;
     using Alsolos.Commons.Mvvm;
 
     public class DayViewModel : BackingFieldsHolder
@@ -14,15 +15,15 @@
         private readonly TimeSpan _midnight = new TimeSpan(23, 59, 59);
         private readonly IntervalService _intervalService = new IntervalService();
 
-        public DayViewModel(DateTime date, IList<Interval> modelIntervals)
+        public DayViewModel(Date date, IList<Interval> modelIntervals)
         {
-            Date = date.Date;
-            Init(modelIntervals.Where(interval => interval.Date.Date == Date).OrderBy(interval => interval.Start).ToList());
+            Date = date;
+            Init(modelIntervals.Where(interval => interval.Date == Date).OrderBy(interval => interval.Start).ToList());
         }
 
-        public DateTime Date
+        public Date Date
         {
-            get { return BackingFields.GetValue<DateTime>(); }
+            get { return BackingFields.GetValue<Date>(); }
             private set { BackingFields.SetValue(value); }
         }
 
@@ -58,6 +59,8 @@
             if (interval.Type == IntervalType.Active)
             {
                 await _intervalService.RemoveInterval(interval.AsInterval());
+                var intervals = await _intervalService.GetIntervalsInRange(Date, Date);
+                Init(intervals.ToList());
             }
         }
 

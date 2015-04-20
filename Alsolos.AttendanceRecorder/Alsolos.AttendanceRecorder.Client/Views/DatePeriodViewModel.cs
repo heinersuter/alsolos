@@ -103,7 +103,7 @@
 
         private void InitWeeks(IEnumerable<Date> dates)
         {
-            var groupings = dates.GroupBy(date => new YearWeek(date.GetDateTime()))
+            var groupings = dates.GroupBy(date => new YearWeek(date.DateTime))
                 .OrderBy(grouping => grouping.Key.Year)
                 .ThenBy(grouping => grouping.Key.Week);
             Weeks = groupings.Select(grouping => grouping.Key.ToDatePeriod()).OrderByDescending(period => period.Start).ToList();

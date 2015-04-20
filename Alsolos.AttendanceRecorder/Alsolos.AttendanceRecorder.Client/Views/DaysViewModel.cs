@@ -9,10 +9,12 @@
 
     public class DaysViewModel : ViewModel
     {
+        private readonly IntervalService _intervalService = new IntervalService();
+
         public DatePeriod DatePeriod
         {
             get { return BackingFields.GetValue<DatePeriod>(); }
-            set { BackingFields.SetValue(value, Load); }
+            set { BackingFields.SetValue(value, period => Load()); }
         }
 
         public string Title
@@ -33,21 +35,20 @@
             private set { BackingFields.SetValue(value); }
         }
 
-        private async void Load(DatePeriod period)
+        private async void Load()
         {
-            if (period == null)
+            if (DatePeriod == null)
             {
                 Title = "---";
                 Days = new List<DayViewModel>();
             }
             else
             {
-                Title = period.Name;
+                Title = DatePeriod.Name;
 
-                var intervalService = new IntervalService();
-                var intervals = await intervalService.GetIntervalsInRange(period.Start, period.End);
+                var intervals = await _intervalService.GetIntervalsInRange(DatePeriod.Start, DatePeriod.End);
 
-                var dayGroupings = intervals.GroupBy(interval => interval.Date.Date);
+                var dayGroupings = intervals.GroupBy(interval => interval.Date);
                 Days = dayGroupings.Select(grouping => new DayViewModel(grouping.Key, grouping.ToList())).OrderByDescending(dayViewModel => dayViewModel.Date).ToList();
             }
 

@@ -6,11 +6,9 @@
     [JsonConverter(typeof(DateConverter))]
     public class Date : IComparable<Date>
     {
-        private readonly DateTime _dateTime;
-
         public Date(DateTime date)
         {
-            _dateTime = date;
+            DateTime = date;
             Year = date.Year;
             Month = date.Month;
             Day = date.Day;
@@ -18,10 +16,10 @@
 
         public Date(int year, int month, int day)
         {
-            _dateTime = new DateTime(year, month, day);
-            Year = _dateTime.Year;
-            Month = _dateTime.Month;
-            Day = _dateTime.Day;
+            DateTime = new DateTime(year, month, day);
+            Year = DateTime.Year;
+            Month = DateTime.Month;
+            Day = DateTime.Day;
         }
 
         public int Year { get; private set; }
@@ -30,15 +28,7 @@
 
         public int Day { get; private set; }
 
-        public DateTime GetDateTime()
-        {
-            return _dateTime;
-        }
-
-        protected bool Equals(Date other)
-        {
-            return Year == other.Year && Month == other.Month && Day == other.Day;
-        }
+        public DateTime DateTime { get; private set; }
 
         public int CompareTo(Date other)
         {
@@ -56,6 +46,11 @@
         public int CompareTo(object obj)
         {
             return CompareTo((Date)obj);
+        }
+
+        protected bool Equals(Date other)
+        {
+            return Year == other.Year && Month == other.Month && Day == other.Day;
         }
 
         public override bool Equals(object obj)

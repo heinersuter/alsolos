@@ -1,10 +1,11 @@
 ﻿namespace Alsolos.AttendanceRecorder.Client.Models
 {
     using System;
+    using Alsolos.AttendanceRecorder.WebApiModel;
 
     public class Interval
     {
-        public DateTime Date { get; set; }
+        public Date Date { get; set; }
 
         public TimeSpan Start { get; set; }
 

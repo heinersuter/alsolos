@@ -3,13 +3,14 @@
     using System;
     using Alsolos.AttendanceRecorder.Client.Models;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
+    using Alsolos.AttendanceRecorder.WebApiModel;
     using Alsolos.Commons.Mvvm;
 
     public class IntervalViewModel : BackingFieldsHolder
     {
-        public DateTime Date
+        public Date Date
         {
-            get { return BackingFields.GetValue<DateTime>(); }
+            get { return BackingFields.GetValue<Date>(); }
             set { BackingFields.SetValue(value); }
         }
 

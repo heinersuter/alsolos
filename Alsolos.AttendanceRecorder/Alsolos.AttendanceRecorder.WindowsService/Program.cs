@@ -14,8 +14,6 @@
             }
             else
             {
-                Console.WriteLine("Test");
-
                 var worker = new LifeSignSender();
                 worker.Start();
 
