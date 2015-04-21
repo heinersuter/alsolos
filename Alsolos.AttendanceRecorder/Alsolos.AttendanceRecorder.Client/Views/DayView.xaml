@@ -9,41 +9,26 @@
              d:DataContext="{d:DesignInstance views:DayViewModel}">
 
     <StackPanel>
-
-        <ItemsControl Style="{StaticResource PairControlFillLeftStyle}">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Date.DateTime, StringFormat=D}" Margin="8" FontSize="18" VerticalAlignment="Center"/>
-                <TextBlock Text="{Binding TotalTime, StringFormat={}{0:hh\\:mm} hours}" Margin="8" VerticalAlignment="Center"/>
-            </StackPanel>
-            <ToggleButton IsChecked="{Binding IsExpanded}" Width="18" Height="18" Margin="8" Background="Transparent" BorderThickness="0">
-                <ToggleButton.Template>
-                    <ControlTemplate>
-                        <Grid>
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CheckStates">
-                                    <VisualState x:Name="Checked">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Image" Storyboard.TargetProperty="(Image.Source)">
-                                                <DiscreteObjectKeyFrame KeyTime="00:00:00">
-                                                    <DiscreteObjectKeyFrame.Value>
-                                                        <BitmapImage UriSource="/Images/Minus.png" />
-                                                    </DiscreteObjectKeyFrame.Value>
-                                                </DiscreteObjectKeyFrame>
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                    <VisualState x:Name="Unchecked"/>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Image x:Name="Image" Source="/Images/Plus.png"/>
-                        </Grid>
-                    </ControlTemplate>
-                </ToggleButton.Template>
+        <Grid>
+            <ItemsControl Style="{StaticResource PairControlFillLeftStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Date.DateTime, StringFormat=D}" Margin="8" FontSize="18" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding TotalTime, StringFormat={}{0:hh\\:mm} hours}" Margin="8" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Grid Margin="10 8">
+                    <Image Source="/Images/Plus.png" Width="18" Height="18" 
+                        Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}, ConverterParameter=True}"/>
+                    <Image Source="/Images/Minus.png" Width="18" Height="18" 
+                        Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}}"/>
+                </Grid>
+            </ItemsControl>
+            <ToggleButton IsChecked="{Binding IsExpanded}" Opacity="0"
+                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             </ToggleButton>
-        </ItemsControl>
+        </Grid>
 
         <ItemsControl ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True"
-            Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}}">
+            Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}}" Margin="8 0">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <views:IntervalView/>

@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Alsolos.AttendanceRecorder.Client.Views"
+             xmlns:converters="http://alsolos.ch/Commons"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:IntervalViewModel}">
     <UserControl.Style>
@@ -37,7 +38,8 @@
         <TextBlock Grid.Column="3" Text="{Binding Duration}" Margin="16 0" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="4" Text="{Binding Type}" VerticalAlignment="Center"/>
         <Button Grid.Column="5" Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type views:DayView}}}" 
-            CommandParameter="{Binding}" Width="20" Height="20" Margin="2" Background="Transparent" BorderThickness="0">
+            CommandParameter="{Binding}" Width="20" Height="20" Margin="2" Background="Transparent" BorderThickness="0"
+            Visibility="{Binding IsDeletePossible, Converter={converters:BoolToVisibilityConverter}}">
             <Image Source="/Images/Delete.png"/>
         </Button>
 

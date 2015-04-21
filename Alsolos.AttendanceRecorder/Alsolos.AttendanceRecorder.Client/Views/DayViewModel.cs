@@ -12,7 +12,7 @@
 
     public class DayViewModel : BackingFieldsHolder
     {
-        private readonly TimeSpan _midnight = new TimeSpan(23, 59, 59);
+        public static readonly TimeSpan Midnight = new TimeSpan(23, 59, 59);
         private readonly IntervalService _intervalService = new IntervalService();
 
         public DayViewModel(Date date, IList<Interval> modelIntervals)
@@ -95,10 +95,10 @@
                 intervals.Add(new IntervalViewModel { Date = Date, Start = interval.Start, End = interval.End, Type = IntervalType.Active });
                 lastTime = interval.End;
             }
-            if (lastTime < _midnight)
+            if (lastTime < Midnight)
             {
                 // Add last inactive interval to midnight
-                intervals.Add(new IntervalViewModel { Date = Date, Start = lastTime, End = _midnight, Type = IntervalType.Inactive });
+                intervals.Add(new IntervalViewModel { Date = Date, Start = lastTime, End = Midnight, Type = IntervalType.Inactive });
             }
             Intervals = new ObservableCollection<IntervalViewModel>(intervals);
         }

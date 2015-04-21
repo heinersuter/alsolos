@@ -47,5 +47,10 @@
         {
             return new Interval { Date = Date, Start = Start, End = End };
         }
+
+        public bool IsDeletePossible
+        {
+            get { return Start != TimeSpan.Zero && End != DayViewModel.Midnight; }
+        }
     }
 }
