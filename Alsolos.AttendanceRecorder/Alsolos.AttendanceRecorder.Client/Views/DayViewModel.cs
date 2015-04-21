@@ -62,6 +62,15 @@
                 var intervals = await _intervalService.GetIntervalsInRange(Date, Date);
                 Init(intervals.ToList());
             }
+            else if (interval.Type == IntervalType.Inactive)
+            {
+                var currentIndex = Intervals.IndexOf(interval);
+                var previous = Intervals[currentIndex - 1];
+                var next = Intervals[currentIndex + 1];
+                await _intervalService.MergeIntervals(previous.AsInterval(), next.AsInterval());
+                var intervals = await _intervalService.GetIntervalsInRange(Date, Date);
+                Init(intervals.ToList());
+            }
         }
 
         private void Init(IList<Interval> modelIntervals)

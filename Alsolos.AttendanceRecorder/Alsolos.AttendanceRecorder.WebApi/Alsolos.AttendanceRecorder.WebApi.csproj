@@ -64,7 +64,7 @@
     <Compile Include="Controllers\IntervalsController.cs" />
     <Compile Include="Model\IInterval.cs" />
     <Compile Include="Model\IIntervalCollection.cs" />
-    <Compile Include="Model\IIntervalPair.cs" />
+    <Compile Include="Model\IntervalPair.cs" />
     <Compile Include="Model\IntervalState.cs" />
     <Compile Include="Model\ReceivedInterval.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

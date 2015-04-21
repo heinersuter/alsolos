@@ -63,6 +63,23 @@
             }
         }
 
+        public async Task MergeIntervals(Interval interval1, Interval interval2)
+        {
+            using (var client = InitClient())
+            {
+                var response = await client.PostAsJsonAsync("api/intervals/merge", new IntervalPair { Interval1 = interval1, Interval2 = interval2 });
+                if (response.IsSuccessStatusCode)
+                {
+                    var isSuccessful = await response.Content.ReadAsAsync<bool>();
+                    if (isSuccessful)
+                    {
+                        _logger.Error("Removing interval not possible.");
+                    }
+                }
+                _logger.Error("Removing interval failed. {0} - {1}", response.StatusCode, response.ReasonPhrase);
+            }
+        }
+
         private HttpClient InitClient()
         {
             var client = new HttpClient { BaseAddress = _baseAddress };

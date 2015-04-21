@@ -40,7 +40,7 @@
             return false;
         }
 
-        public bool Merge(IIntervalPair intervalPair)
+        public bool Merge(IntervalPair intervalPair)
         {
             var intervalToExtend = _intervals.SingleOrDefault(inner => AreEqual(inner, intervalPair.Interval1));
             var intervalToRemove = _intervals.SingleOrDefault(inner => AreEqual(inner, intervalPair.Interval2));
@@ -60,7 +60,7 @@
             _localFileSystemStore.Save(_intervals.Where(i => i.State != IntervalState.Persisted).ToList());
         }
 
-        private bool AreEqual(Interval localInterval, IInterval otherInterval)
+        private bool AreEqual(IInterval localInterval, IInterval otherInterval)
         {
             return localInterval.Date == otherInterval.Date && localInterval.Start == otherInterval.Start;
         }

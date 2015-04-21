@@ -8,6 +8,6 @@
 
         bool Remove(IInterval interval);
 
-        bool Merge(IIntervalPair intervalPair);
+        bool Merge(IntervalPair intervalPair);
     }
 }

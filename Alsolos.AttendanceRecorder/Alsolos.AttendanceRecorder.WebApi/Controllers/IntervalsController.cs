@@ -53,7 +53,7 @@
 
         [Route("merge")]
         [HttpPost]
-        public bool Merge(IIntervalPair intervalPair)
+        public bool Merge([FromBody]IntervalPair intervalPair)
         {
             return _intervalCollection.Merge(intervalPair);
         }
