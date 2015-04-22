@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
@@ -15,12 +16,6 @@
         {
             get { return BackingFields.GetValue<DatePeriod>(); }
             set { BackingFields.SetValue(value, period => Load()); }
-        }
-
-        public string Title
-        {
-            get { return BackingFields.GetValue<string>(); }
-            private set { BackingFields.SetValue(value); }
         }
 
         public TimeSpan TotalTime
@@ -37,23 +32,39 @@
 
         private async void Load()
         {
-            if (DatePeriod == null)
-            {
-                Title = "---";
-                Days = new List<DayViewModel>();
-            }
-            else
-            {
-                Title = DatePeriod.Name;
+            DetachPropertyChangedEventHandler();
 
-                var intervals = await _intervalService.GetIntervalsInRange(DatePeriod.Start, DatePeriod.End);
+            var intervals = await _intervalService.GetIntervalsInRange(DatePeriod.Start, DatePeriod.End);
 
-                var dayGroupings = intervals.GroupBy(interval => interval.Date);
-                Days = dayGroupings.Select(grouping => new DayViewModel(grouping.Key, grouping.ToList())).OrderByDescending(dayViewModel => dayViewModel.Date).ToList();
-            }
+            var dayGroupings = intervals.GroupBy(interval => interval.Date);
+            Days = dayGroupings.Select(grouping =>
+            {
+                var dayViewModel = new DayViewModel(grouping.Key, grouping.ToList());
+                dayViewModel.PropertyChanged += OnDayViewModelPropertyChanged;
+                return dayViewModel;
+            }).OrderByDescending(dayViewModel => dayViewModel.Date).ToList();
 
             ExpandFirstDay();
             CalculateTotalTime();
+        }
+
+        private void DetachPropertyChangedEventHandler()
+        {
+            if (Days != null)
+            {
+                foreach (var dayViewModel in Days)
+                {
+                    dayViewModel.PropertyChanged -= OnDayViewModelPropertyChanged;
+                }
+            }
+        }
+
+        private void OnDayViewModelPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == GetPropertyName(() => ((DayViewModel)sender).TotalTime))
+            {
+                CalculateTotalTime();
+            }
         }
 
         private void ExpandFirstDay()

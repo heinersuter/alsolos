@@ -9,11 +9,13 @@
              d:DataContext="{d:DesignInstance views:DayViewModel}">
 
     <StackPanel>
+
         <Grid>
             <ItemsControl Style="{StaticResource PairControlFillLeftStyle}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Date.DateTime, StringFormat=D}" Margin="8" FontSize="18" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding TotalTime, StringFormat={}{0:hh\\:mm} hours}" Margin="8" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" Margin="8">
+                    <TextBlock Text="{Binding Date.DateTime, StringFormat={}{0:d}}" FontSize="18"/>
+                    <TextBlock Text="{Binding Date.DateTime, StringFormat={}({0:dddd})}" Margin="8 0" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding TotalTime}" Margin="16 0" VerticalAlignment="Center"/>
                 </StackPanel>
                 <Grid Margin="10 8">
                     <Image Source="/Images/Plus.png" Width="18" Height="18" 
