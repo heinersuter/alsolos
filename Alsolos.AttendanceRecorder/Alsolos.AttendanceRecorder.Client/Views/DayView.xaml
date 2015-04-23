@@ -8,36 +8,38 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DayViewModel}">
 
-    <StackPanel>
+    <converters:BusyContentControl IsBusy="{Binding BusyHelper.IsBusy}" Message="{Binding BusyHelper.Message}">
+        <StackPanel>
 
-        <Grid>
-            <ItemsControl Style="{StaticResource PairControlFillLeftStyle}">
-                <StackPanel Orientation="Horizontal" Margin="8">
-                    <TextBlock Text="{Binding Date.DateTime, StringFormat={}{0:d}}" FontSize="18"/>
-                    <TextBlock Text="{Binding Date.DateTime, StringFormat={}({0:dddd})}" Margin="8 0" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding TotalTime}" Margin="16 0" VerticalAlignment="Center"/>
-                </StackPanel>
-                <Grid Margin="10 8">
-                    <Image Source="/Images/Plus.png" Width="18" Height="18" 
-                        Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}, ConverterParameter=True}"/>
-                    <Image Source="/Images/Minus.png" Width="18" Height="18" 
-                        Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}}"/>
-                </Grid>
+            <Grid>
+                <ItemsControl Style="{StaticResource PairControlFillLeftStyle}">
+                    <StackPanel Orientation="Horizontal" Margin="8">
+                        <TextBlock Text="{Binding Date.DateTime, StringFormat={}{0:d}}" FontSize="18"/>
+                        <TextBlock Text="{Binding Date.DateTime, StringFormat={}({0:dddd})}" Margin="8 0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{Binding TotalTime}" Margin="16 0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Grid Margin="10 8">
+                        <Image Source="/Images/Plus.png" Width="18" Height="18" 
+                            Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}, ConverterParameter=True}"/>
+                        <Image Source="/Images/Minus.png" Width="18" Height="18" 
+                            Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}}"/>
+                    </Grid>
+                </ItemsControl>
+                <ToggleButton IsChecked="{Binding IsExpanded}" Opacity="0"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                </ToggleButton>
+            </Grid>
+
+            <ItemsControl ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True"
+                Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}}" Margin="8 0">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <views:IntervalView/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <ToggleButton IsChecked="{Binding IsExpanded}" Opacity="0"
-                HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            </ToggleButton>
-        </Grid>
 
-        <ItemsControl ItemsSource="{Binding Intervals}" HorizontalContentAlignment="Stretch" Grid.IsSharedSizeScope="True"
-            Visibility="{Binding IsExpanded, Converter={converters:BoolToVisibilityConverter}}" Margin="8 0">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <views:IntervalView/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
-    </StackPanel>
+        </StackPanel>
+    </converters:BusyContentControl>
 
 </UserControl>

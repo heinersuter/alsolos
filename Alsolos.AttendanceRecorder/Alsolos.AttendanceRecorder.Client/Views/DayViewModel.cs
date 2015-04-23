@@ -2,36 +2,35 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Timers;
     using Alsolos.AttendanceRecorder.Client.Models;
     using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
     using Alsolos.AttendanceRecorder.WebApiModel;
+    using Alsolos.Commons.Controls.Progress;
     using Alsolos.Commons.Mvvm;
 
-    public class DayViewModel : BackingFieldsHolder
+    public class DayViewModel : BusyViewModel, IDisposable
     {
         public static readonly TimeSpan Midnight = new TimeSpan(23, 59, 59);
+        private readonly TimeSpan _refreshTimerInterval = TimeSpan.FromSeconds(10);
         private readonly IntervalService _intervalService = new IntervalService();
+        private readonly Timer _timer;
 
-        public DayViewModel(Date date, IEnumerable<Interval> modelIntervals)
+        public DayViewModel(Date date, IList<Interval> modelIntervals)
         {
             Date = date;
             Init(modelIntervals.Where(interval => interval.Date == Date).OrderBy(interval => interval.Start).ToList());
 
             if (Date.DateTime == DateTime.Now.Date)
             {
-                var timer = new Timer(5000);
-                timer.Elapsed += (sender, args) =>
+                _timer = new Timer(_refreshTimerInterval.TotalMilliseconds);
+                _timer.Elapsed += (sender, args) =>
                 {
-                    if (IsExpanded)
-                    {
-                        ReloadIntervals();
-                    }
+                    ReloadIntervals();
                 };
-                timer.Start();
+                _timer.Start();
             }
         }
 
@@ -41,9 +40,9 @@
             private set { BackingFields.SetValue(value); }
         }
 
-        public ObservableCollection<IntervalViewModel> Intervals
+        public IList<IntervalViewModel> Intervals
         {
-            get { return BackingFields.GetValue<ObservableCollection<IntervalViewModel>>(); }
+            get { return BackingFields.GetValue<IList<IntervalViewModel>>(); }
             private set { BackingFields.SetValue(value); }
         }
 
@@ -70,32 +69,38 @@
 
         private async void Delete(IntervalViewModel interval)
         {
-            if (interval.Type == IntervalType.Active)
+            using (BusyHelper.Enter("Removing intervals..."))
             {
-                await _intervalService.RemoveIntervalAsync(interval.AsInterval());
-                ReloadIntervals();
-            }
-            else if (interval.Type == IntervalType.Inactive)
-            {
-                var currentIndex = Intervals.IndexOf(interval);
-                var previous = Intervals[currentIndex - 1];
-                var next = Intervals[currentIndex + 1];
-                await _intervalService.MergeIntervalsAsync(previous.AsInterval(), next.AsInterval());
-                ReloadIntervals();
+                if (interval.Type == IntervalType.Active)
+                {
+                    await _intervalService.RemoveIntervalAsync(interval.AsInterval());
+                    ReloadIntervals();
+                }
+                else if (interval.Type == IntervalType.Inactive)
+                {
+                    var currentIndex = Intervals.IndexOf(interval);
+                    var previous = Intervals[currentIndex - 1];
+                    var next = Intervals[currentIndex + 1];
+                    await _intervalService.MergeIntervalsAsync(previous.AsInterval(), next.AsInterval());
+                    ReloadIntervals();
+                }
             }
         }
 
         private async void ReloadIntervals()
         {
-            var intervals = await _intervalService.GetIntervalsInRangeAsync(Date, Date);
-            Init(intervals.ToList());
+            using (BusyHelper.Enter("Loading intervals..."))
+            {
+                var intervals = await _intervalService.GetIntervalsInRangeAsync(Date, Date);
+                Init(intervals.ToList());
+            }
         }
 
         private void Init(IList<Interval> modelIntervals)
         {
             if (modelIntervals == null || !modelIntervals.Any())
             {
-                Intervals = new ObservableCollection<IntervalViewModel>();
+                Intervals = new List<IntervalViewModel>();
                 return;
             }
 
@@ -118,8 +123,16 @@
                 // Add last inactive interval to midnight
                 intervals.Add(new IntervalViewModel { Date = Date, Start = lastTime + TimeSpan.FromSeconds(1), End = Midnight, Type = IntervalType.Inactive });
             }
-            Intervals = new ObservableCollection<IntervalViewModel>(intervals);
+            Intervals = new List<IntervalViewModel>(intervals);
             RaisePropertyChanged(() => TotalTime);
+        }
+
+        public void Dispose()
+        {
+            if (_timer != null)
+            {
+                _timer.Dispose();
+            }
         }
     }
 }

@@ -10,6 +10,15 @@
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BusyContentControl), new FrameworkPropertyMetadata(typeof(BusyContentControl)));
         }
 
+        public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register(
+            "IsBusy", typeof(bool), typeof(BusyContentControl), new PropertyMetadata(default(bool)));
+
+        public bool IsBusy
+        {
+            get { return (bool)GetValue(IsBusyProperty); }
+            set { SetValue(IsBusyProperty, value); }
+        }
+
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(
             "Message", typeof(string), typeof(BusyContentControl), new PropertyMetadata(default(string)));
 

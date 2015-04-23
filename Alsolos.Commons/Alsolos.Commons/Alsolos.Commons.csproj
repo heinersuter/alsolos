@@ -71,7 +71,10 @@
     <Compile Include="Controls\HierarchicalDataGrid\IHierarchicalDataGridItem.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\LevelToMarginConverter.cs" />
     <Compile Include="Controls\Progress\BusyContentControl.cs" />
+    <Compile Include="Controls\Progress\BusyHelper.cs" />
     <Compile Include="Controls\Progress\BusyIndicator.cs" />
+    <Compile Include="Controls\Progress\BusyState.cs" />
+    <Compile Include="Controls\Progress\BusyViewModel.cs" />
     <Compile Include="Controls\ProportionalColumnsPanel.cs" />
     <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanel.cs" />
     <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanelMode.cs" />

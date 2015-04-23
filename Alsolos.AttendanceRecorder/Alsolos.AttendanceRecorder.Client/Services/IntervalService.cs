@@ -32,18 +32,21 @@
 
         public async Task<IEnumerable<Interval>> GetIntervalsInRangeAsync(Date from, Date to)
         {
-            using (var client = InitClient())
+            return await Task.Run(async () =>
             {
-                var requestUri = string.Format("api/intervals/range/{0}/{1}", DateConverter.DateToString(from), DateConverter.DateToString(to));
-                var response = await client.GetAsync(requestUri);
-                if (response.IsSuccessStatusCode)
+                using (var client = InitClient())
                 {
-                    var intervals = await response.Content.ReadAsAsync<IEnumerable<Interval>>();
-                    return intervals;
+                    var requestUri = string.Format("api/intervals/range/{0}/{1}", DateConverter.DateToString(from), DateConverter.DateToString(to));
+                    var response = await client.GetAsync(requestUri);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var intervals = await response.Content.ReadAsAsync<IEnumerable<Interval>>();
+                        return intervals;
+                    }
+                    _logger.Error("Getting intervals failed. {0} - {1}", response.StatusCode, response.ReasonPhrase);
                 }
-                _logger.Error("Getting intervals failed. {0} - {1}", response.StatusCode, response.ReasonPhrase);
-            }
-            return Enumerable.Empty<Interval>();
+                return Enumerable.Empty<Interval>();
+            });
         }
 
         public async Task RemoveIntervalAsync(Interval interval)

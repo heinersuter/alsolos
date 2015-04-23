@@ -17,10 +17,9 @@
 
         public BusyIndicator()
         {
-            RotateTransform = new RotateTransform(0, 20, 20);
+            Visibility = Visibility.Collapsed;
+            RotateTransform = new RotateTransform(0, 1.25, 1.25);
             CreateDiscreteAngleAnimation();
-
-            IsVisibleChanged += OnIsVisibleChanged;
         }
 
         public static readonly DependencyProperty CircleBrushProperty = DependencyProperty.Register(
@@ -39,6 +38,15 @@
         {
             get { return (RotateTransform)GetValue(RotateTransformProperty); }
             set { SetValue(RotateTransformProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsBusyProperty = DependencyProperty.Register(
+            "IsBusy", typeof(bool), typeof(BusyIndicator), new PropertyMetadata(default(bool), OnIsBusyChanged));
+
+        public bool IsBusy
+        {
+            get { return (bool)GetValue(IsBusyProperty); }
+            set { SetValue(IsBusyProperty, value); }
         }
 
         public static readonly DependencyProperty MessageProperty = DependencyProperty.Register(
@@ -67,16 +75,19 @@
             _animation.Duration = new Duration(TimeSpan.FromSeconds(1));
         }
 
-        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs args)
+        private static void OnIsBusyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
         {
-            if (IsVisible)
+            var indicator = (BusyIndicator)sender;
+            if (indicator.IsBusy)
             {
-                RotateTransform.BeginAnimation(
-                    RotateTransform.AngleProperty, _animation);
+                indicator.Visibility = Visibility.Visible;
+                indicator.RotateTransform.BeginAnimation(
+                    RotateTransform.AngleProperty, indicator._animation);
             }
             else
             {
-                RotateTransform.BeginAnimation(
+                indicator.Visibility = Visibility.Collapsed;
+                indicator.RotateTransform.BeginAnimation(
                     RotateTransform.AngleProperty,
                     new DoubleAnimation(0.0, TimeSpan.FromSeconds(0.0)) { RepeatBehavior = new RepeatBehavior(0) });
             }

@@ -7,13 +7,10 @@
     using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
     using Alsolos.AttendanceRecorder.WebApiModel;
-    using Alsolos.Commons.Mvvm;
-    using NLog;
+    using Alsolos.Commons.Controls.Progress;
 
-    public class DatePeriodViewModel : ViewModel
+    public class DatePeriodViewModel : BusyViewModel
     {
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
         public IList<DatePeriod> Years
         {
             get { return BackingFields.GetValue<IList<DatePeriod>>(); }
@@ -58,19 +55,14 @@
 
         public async void Load()
         {
-            var intervalService = new IntervalService();
-            IEnumerable<Date> dates = null;
-            try
+            using (BusyHelper.Enter("Loading dates..."))
             {
-                dates = await intervalService.GetDatesAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-            }
-            if (dates != null)
-            {
-                Init(dates.ToList());
+                var intervalService = new IntervalService();
+                var dates = await intervalService.GetDatesAsync();
+                if (dates != null)
+                {
+                    Init(dates.ToList());
+                }
             }
         }
 

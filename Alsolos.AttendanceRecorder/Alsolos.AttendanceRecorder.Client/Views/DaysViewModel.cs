@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Threading.Tasks;
+    using Alsolos.AttendanceRecorder.Client.Models;
     using Alsolos.AttendanceRecorder.Client.Services;
     using Alsolos.AttendanceRecorder.Client.Views.Model;
-    using Alsolos.Commons.Mvvm;
+    using Alsolos.Commons.Controls.Progress;
 
-    public class DaysViewModel : ViewModel
+    public class DaysViewModel : BusyViewModel
     {
         private readonly IntervalService _intervalService = new IntervalService();
 
@@ -32,22 +34,37 @@
 
         private async void Load()
         {
-            IsBusy = true;
-            DetachPropertyChangedEventHandler();
-
-            var intervals = await _intervalService.GetIntervalsInRangeAsync(DatePeriod.Start, DatePeriod.End);
-
-            var dayGroupings = intervals.GroupBy(interval => interval.Date);
-            Days = dayGroupings.Select(grouping =>
+            using (BusyHelper.Enter("Loading IntervalService..."))
             {
-                var dayViewModel = new DayViewModel(grouping.Key, grouping.ToList());
-                dayViewModel.PropertyChanged += OnDayViewModelPropertyChanged;
-                return dayViewModel;
-            }).OrderByDescending(dayViewModel => dayViewModel.Date).ToList();
+                DetachPropertyChangedEventHandler();
 
-            ExpandFirstDay();
-            CalculateTotalTime();
-            IsBusy = false;
+                var intervals = await _intervalService.GetIntervalsInRangeAsync(DatePeriod.Start, DatePeriod.End);
+                await SetDayViewModels(intervals);
+                ExpandToday();
+                CalculateTotalTime();
+            }
+        }
+
+        private async Task SetDayViewModels(IEnumerable<Interval> intervals)
+        {
+            await Task.Run(() =>
+            {
+                if (Days != null)
+                {
+                    foreach (var dayViewModel in Days)
+                    {
+                        dayViewModel.Dispose();
+                    }
+                }
+
+                var dayGroupings = intervals.GroupBy(interval => interval.Date);
+                Days = dayGroupings.Select(grouping =>
+                {
+                    var dayViewModel = new DayViewModel(grouping.Key, grouping.ToList());
+                    dayViewModel.PropertyChanged += OnDayViewModelPropertyChanged;
+                    return dayViewModel;
+                }).OrderByDescending(dayViewModel => dayViewModel.Date).ToList();
+            });
         }
 
         private void DetachPropertyChangedEventHandler()
@@ -69,10 +86,10 @@
             }
         }
 
-        private void ExpandFirstDay()
+        private void ExpandToday()
         {
             var firstDay = Days.FirstOrDefault();
-            if (firstDay != null)
+            if (firstDay != null && firstDay.Date.DateTime.Date == DateTime.Now.Date)
             {
                 firstDay.IsExpanded = true;
             }
