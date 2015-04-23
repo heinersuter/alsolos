@@ -19,6 +19,8 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Controls.Enabled")]
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Controls.FindInSelector")]
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Controls.HierarchicalDataGrid")]
+[assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Controls.NoAutoSize")]
+[assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Controls.Progress")]
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Controls.SimpleStretchPanel")]
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Mvvm.Converters")]
 [assembly: XmlnsDefinition("http://alsolos.ch/Commons", "Alsolos.Commons.Resources")]

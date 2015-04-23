@@ -72,7 +72,7 @@
         {
             if (interval.Type == IntervalType.Active)
             {
-                await _intervalService.RemoveInterval(interval.AsInterval());
+                await _intervalService.RemoveIntervalAsync(interval.AsInterval());
                 ReloadIntervals();
             }
             else if (interval.Type == IntervalType.Inactive)
@@ -80,14 +80,14 @@
                 var currentIndex = Intervals.IndexOf(interval);
                 var previous = Intervals[currentIndex - 1];
                 var next = Intervals[currentIndex + 1];
-                await _intervalService.MergeIntervals(previous.AsInterval(), next.AsInterval());
+                await _intervalService.MergeIntervalsAsync(previous.AsInterval(), next.AsInterval());
                 ReloadIntervals();
             }
         }
 
         private async void ReloadIntervals()
         {
-            var intervals = await _intervalService.GetIntervalsInRange(Date, Date);
+            var intervals = await _intervalService.GetIntervalsInRangeAsync(Date, Date);
             Init(intervals.ToList());
         }
 

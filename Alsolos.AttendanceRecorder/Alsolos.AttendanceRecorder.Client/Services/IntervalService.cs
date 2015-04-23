@@ -15,7 +15,22 @@
         private readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly Uri _baseAddress = new Uri("http://localhost:30515/");
 
-        public async Task<IEnumerable<Interval>> GetIntervalsInRange(Date from, Date to)
+        public async Task<IEnumerable<Date>> GetDatesAsync()
+        {
+            using (var client = InitClient())
+            {
+                var response = await client.GetAsync("api/intervals/dates");
+                if (response.IsSuccessStatusCode)
+                {
+                    var dates = await response.Content.ReadAsAsync<IEnumerable<string>>();
+                    return dates.Select(DateConverter.StringToDate);
+                }
+                _logger.Error("Getting dates failed. {0} - {1}", response.StatusCode, response.ReasonPhrase);
+            }
+            return Enumerable.Empty<Date>();
+        }
+
+        public async Task<IEnumerable<Interval>> GetIntervalsInRangeAsync(Date from, Date to)
         {
             using (var client = InitClient())
             {
@@ -31,22 +46,7 @@
             return Enumerable.Empty<Interval>();
         }
 
-        public async Task<IEnumerable<Date>> GetDates()
-        {
-            using (var client = InitClient())
-            {
-                var response = await client.GetAsync("api/intervals/dates");
-                if (response.IsSuccessStatusCode)
-                {
-                    var dates = await response.Content.ReadAsAsync<IEnumerable<string>>();
-                    return dates.Select(DateConverter.StringToDate);
-                }
-                _logger.Error("Getting dates failed. {0} - {1}", response.StatusCode, response.ReasonPhrase);
-            }
-            return Enumerable.Empty<Date>();
-        }
-
-        public async Task RemoveInterval(Interval interval)
+        public async Task RemoveIntervalAsync(Interval interval)
         {
             using (var client = InitClient())
             {
@@ -63,7 +63,7 @@
             }
         }
 
-        public async Task MergeIntervals(Interval interval1, Interval interval2)
+        public async Task MergeIntervalsAsync(Interval interval1, Interval interval2)
         {
             using (var client = InitClient())
             {

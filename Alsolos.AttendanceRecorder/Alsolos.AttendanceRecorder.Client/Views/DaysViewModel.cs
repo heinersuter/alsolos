@@ -32,9 +32,10 @@
 
         private async void Load()
         {
+            IsBusy = true;
             DetachPropertyChangedEventHandler();
 
-            var intervals = await _intervalService.GetIntervalsInRange(DatePeriod.Start, DatePeriod.End);
+            var intervals = await _intervalService.GetIntervalsInRangeAsync(DatePeriod.Start, DatePeriod.End);
 
             var dayGroupings = intervals.GroupBy(interval => interval.Date);
             Days = dayGroupings.Select(grouping =>
@@ -46,6 +47,7 @@
 
             ExpandFirstDay();
             CalculateTotalTime();
+            IsBusy = false;
         }
 
         private void DetachPropertyChangedEventHandler()

@@ -5,37 +5,41 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:views="clr-namespace:Alsolos.AttendanceRecorder.Client.Views"
              xmlns:converters="clr-namespace:Alsolos.AttendanceRecorder.Client.Views.Converters"
+             xmlns:commons="http://alsolos.ch/Commons"
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance views:DaysViewModel}">
 
-    <ItemsControl Style="{StaticResource PairControlFillBottomStyle}">
+    <commons:BusyContentControl Message="Loading Data...">
+        <ItemsControl Style="{StaticResource PairControlFillBottomStyle}">
 
-        <Grid Margin="8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding DatePeriod.Name}" FontSize="24" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding TotalTime, Converter={converters:TimeSpanToTotalHoursConverter}}" 
-                Margin="16 0" VerticalAlignment="Center"/>
-            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
-                <TextBlock Text="{Binding DatePeriod.Start.DateTime, StringFormat=d}"/>
-                <TextBlock Text="..." Margin="3 0"/>
-                <TextBlock Text="{Binding DatePeriod.End.DateTime, StringFormat=d}"/>
-            </StackPanel>
-        </Grid>
+            <Grid Margin="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding DatePeriod.Name}" FontSize="24" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding TotalTime, Converter={converters:TimeSpanToTotalHoursConverter}}" 
+                    Margin="16 0" VerticalAlignment="Center"/>
+                <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <TextBlock Text="{Binding DatePeriod.Start.DateTime, StringFormat=d}"/>
+                    <TextBlock Text="..." Margin="3 0"/>
+                    <TextBlock Text="{Binding DatePeriod.End.DateTime, StringFormat=d}"/>
+                </StackPanel>
+            </Grid>
 
-        <ItemsControl ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <views:DayView/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
+            <ItemsControl ItemsSource="{Binding Days}" HorizontalContentAlignment="Stretch">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <views:DayView/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
         </ItemsControl>
+    </commons:BusyContentControl>
 
-    </ItemsControl>
 </UserControl>

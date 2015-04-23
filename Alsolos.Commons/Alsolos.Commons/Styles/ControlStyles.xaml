@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:noAutoSize="clr-namespace:Alsolos.Commons.Controls.NoAutoSize">
+                    xmlns:noAutoSize="clr-namespace:Alsolos.Commons.Controls.NoAutoSize"
+                    xmlns:converters="clr-namespace:Alsolos.Commons.Mvvm.Converters"
+                    xmlns:progress="clr-namespace:Alsolos.Commons.Controls.Progress">
 
     <Style TargetType="{x:Type ContentControl}">
         <Setter Property="IsTabStop" Value="False" />
@@ -35,19 +37,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-<!-- Sizes
-   2	    	
-   4	   6	
-   8	  12	  18
-  16	  24	  36
-  32	  48	  72
-  64	  96	 144
- 128	 192     288
- 256	 384     576
- 512	 768    1152
-1024    1536	2304
-2048    3072	4608
- -->
 
 </ResourceDictionary>

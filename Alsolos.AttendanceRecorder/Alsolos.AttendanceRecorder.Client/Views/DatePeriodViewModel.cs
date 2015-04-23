@@ -62,7 +62,7 @@
             IEnumerable<Date> dates = null;
             try
             {
-                dates = await intervalService.GetDates();
+                dates = await intervalService.GetDatesAsync();
             }
             catch (Exception ex)
             {

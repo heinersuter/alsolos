@@ -70,6 +70,8 @@
     <Compile Include="Controls\HierarchicalDataGrid\HierarchicalDataGridItemWrapperSorter.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\IHierarchicalDataGridItem.cs" />
     <Compile Include="Controls\HierarchicalDataGrid\LevelToMarginConverter.cs" />
+    <Compile Include="Controls\Progress\BusyContentControl.cs" />
+    <Compile Include="Controls\Progress\BusyIndicator.cs" />
     <Compile Include="Controls\ProportionalColumnsPanel.cs" />
     <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanel.cs" />
     <Compile Include="Controls\SimpleStretchPanel\SimpleStretchPanelMode.cs" />
@@ -123,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\Progress\Templates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SimpleStretchPanel\SimpleStretchPanelStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -154,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Alsolos.Commons.snk" />
+    <None Include="Controls\Progress\PositionCalc.xlsx" />
     <None Include="snippets\bfprop.snippet" />
   </ItemGroup>
   <ItemGroup>
