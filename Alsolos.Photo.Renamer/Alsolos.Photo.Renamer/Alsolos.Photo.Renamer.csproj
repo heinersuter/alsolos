@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Alsolos.Photo.Renamer</RootNamespace>
     <AssemblyName>Alsolos.Photo.Renamer</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -149,9 +149,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Alsolos.Commons\Alsolos.Commons\Alsolos.Commons.csproj">
+    <ProjectReference Include="..\..\..\Alsolos.Commons.Wpf\Alsolos.Commons.Wpf\Alsolos.Commons.Wpf.csproj">
       <Project>{b0d4d546-6a3e-42bf-be7d-cde59ac33d44}</Project>
-      <Name>Alsolos.Commons</Name>
+      <Name>Alsolos.Commons.Wpf</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

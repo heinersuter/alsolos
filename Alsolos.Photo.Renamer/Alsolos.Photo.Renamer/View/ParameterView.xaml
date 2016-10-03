@@ -4,17 +4,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
+             xmlns:i18N="clr-namespace:Alsolos.Commons.Wpf.I18N;assembly=Alsolos.Commons.Wpf"
              xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View" 
              mc:Ignorable="d" d:DataContext="{d:DesignInstance view:ParameterViewModel}">
-    <DockPanel IsEnabled="{Binding FileRenameViewModel.IsBusy, Converter={StaticResource BoolToInverseBoolConverter}}">
+    <DockPanel IsEnabled="{Binding FileRenameViewModel.BusyHelper.IsBusy, Converter={StaticResource BoolToInverseBoolConverter}}">
 
         <UniformGrid DockPanel.Dock="Bottom" Columns="2">
             <FrameworkElement Margin="8" />
-            <Button Command="{Binding ResetCommand}" Margin="0 8 8 8" Content="{i18n:Translate Button_Reset}" />
+            <Button Command="{Binding ResetCommand}" Margin="0 8 8 8" Content="{i18N:Translate Button_Reset}" />
         </UniformGrid>
         <StackPanel>
-            <HeaderedContentControl Header="{i18n:Translate Param_ConstantName}" Margin="8 8 8 0">
+            <HeaderedContentControl Header="{i18N:Translate Param_ConstantName}" Margin="8 8 8 0">
                 <Border Background="White">
                     <TextBox Text="{Binding ConstantName, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
                 </Border>
@@ -22,19 +22,19 @@
 
             <FrameworkElement Height="46" Margin="8 8 8 0" />
 
-            <HeaderedContentControl Header="{i18n:Translate Param_OffsetSeconds}" Margin="8 8 8 0">
+            <HeaderedContentControl Header="{i18N:Translate Param_OffsetSeconds}" Margin="8 8 8 0">
                 <xctk:IntegerUpDown Value="{Binding Seconds, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
             </HeaderedContentControl>
 
-            <HeaderedContentControl Header="{i18n:Translate Param_OffsetMinutes}" Margin="8 8 8 0">
+            <HeaderedContentControl Header="{i18N:Translate Param_OffsetMinutes}" Margin="8 8 8 0">
                 <xctk:IntegerUpDown Value="{Binding Minutes, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
             </HeaderedContentControl>
 
-            <HeaderedContentControl Header="{i18n:Translate Param_OffsetHours}" Margin="8 8 8 0">
+            <HeaderedContentControl Header="{i18N:Translate Param_OffsetHours}" Margin="8 8 8 0">
                 <xctk:IntegerUpDown Value="{Binding Hours, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
             </HeaderedContentControl>
 
-            <HeaderedContentControl Header="{i18n:Translate Param_OffsetDays}" Margin="8 8 8 0">
+            <HeaderedContentControl Header="{i18N:Translate Param_OffsetDays}" Margin="8 8 8 0">
                 <xctk:IntegerUpDown Value="{Binding Days, UpdateSourceTrigger=PropertyChanged}" BorderThickness="0" Height="22" />
             </HeaderedContentControl>
         </StackPanel>

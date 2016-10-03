@@ -1,26 +1,33 @@
-﻿namespace Alsolos.Photo.Renamer.Model {
-    using System;
-    using System.IO;
-    using Alsolos.Commons.Mvvm;
+﻿using System;
+using System.IO;
+using Alsolos.Commons.Wpf.Mvvm;
 
-    public class FileWrapper : BackingFieldsHolder {
-        public string FullName {
+namespace Alsolos.Photo.Renamer.Model
+{
+    public class FileWrapper : BackingFieldsHolder
+    {
+        public string FullName
+        {
             get { return BackingFields.GetValue(() => FullName); }
-            set {
-                if (BackingFields.SetValue(() => FullName, value)) {
+            set
+            {
+                if (BackingFields.SetValue(value))
+                {
                     Name = !string.IsNullOrWhiteSpace(FullName) ? Path.GetFileName(FullName) : string.Empty;
                 }
             }
         }
 
-        public DateTime? CreatedTime {
-            get { return BackingFields.GetValue(() => CreatedTime); }
-            set { BackingFields.SetValue(() => CreatedTime, value); }
+        public DateTime? CreatedTime
+        {
+            get { return BackingFields.GetValue<DateTime?>(); }
+            set { BackingFields.SetValue(value); }
         }
 
-        public string Name {
-            get { return BackingFields.GetValue(() => Name); }
-            private set { BackingFields.SetValue(() => Name, value); }
+        public string Name
+        {
+            get { return BackingFields.GetValue<string>(); }
+            private set { BackingFields.SetValue(value); }
         }
     }
 }

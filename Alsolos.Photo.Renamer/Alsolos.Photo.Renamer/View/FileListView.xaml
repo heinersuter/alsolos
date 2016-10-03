@@ -4,15 +4,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View" 
-             xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
+             xmlns:i18N="clr-namespace:Alsolos.Commons.Wpf.I18N;assembly=Alsolos.Commons.Wpf"
              xmlns:model="clr-namespace:Alsolos.Photo.Renamer.Model"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance view:FileListViewModel}">
 
-    <DockPanel IsEnabled="{Binding IsBusy, Converter={StaticResource BoolToInverseBoolConverter}}">
+    <DockPanel IsEnabled="{Binding BusyHelper.IsBusy, Converter={StaticResource BoolToInverseBoolConverter}}">
 
         <UniformGrid DockPanel.Dock="Top" Columns="2">
-            <Button Command="{Binding SelectFilesCommand}" Margin="8" Content="{i18n:Translate Button_OpenFiles, StringFormat={}{0}...}" />
-            <Button Command="{Binding SelectFolderCommand}" Margin="0 8 8 8" Content="{i18n:Translate Button_OpenFolder, StringFormat={}{0}...}" />
+            <Button Command="{Binding SelectFilesCommand}" Margin="8" Content="{i18N:Translate Button_OpenFiles, StringFormat={}{0}...}" />
+            <Button Command="{Binding SelectFolderCommand}" Margin="0 8 8 8" Content="{i18N:Translate Button_OpenFolder, StringFormat={}{0}...}" />
         </UniformGrid>
 
         <TextBlock DockPanel.Dock="Bottom" Text="{Binding FilesCountText}" Margin="8 0 8 8" />

@@ -1,17 +1,17 @@
-﻿namespace Alsolos.Photo.Renamer.View
-{
-    using System;
-    using System.ComponentModel;
-    using System.Windows.Media.Imaging;
-    using Alsolos.Commons.Mvvm;
-    using Alsolos.Photo.Renamer.Services;
+﻿using System;
+using System.ComponentModel;
+using System.Windows.Media.Imaging;
+using Alsolos.Commons.Wpf.Mvvm;
+using Alsolos.Photo.Renamer.Services;
 
+namespace Alsolos.Photo.Renamer.View
+{
     public class FilePreviewViewModel : ViewModel
     {
         private readonly FileListViewModel _fileListViewModel;
-        private readonly ParameterViewModel _parameterViewModel;
-        private readonly FileRenameService _fileRenameController;
         private readonly FileMetaDataService _fileMetaDataService = new FileMetaDataService();
+        private readonly FileRenameService _fileRenameController;
+        private readonly ParameterViewModel _parameterViewModel;
 
         public FilePreviewViewModel(FileRenameViewModel fileRenameViewModel)
         {
@@ -29,26 +29,26 @@
 
         public string PreviewFileName
         {
-            get { return BackingFields.GetValue(() => PreviewFileName); }
-            private set { BackingFields.SetValue(() => PreviewFileName, value); }
+            get { return BackingFields.GetValue<string>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public BitmapImage BitmapImage
         {
-            get { return BackingFields.GetValue(() => BitmapImage); }
-            private set { BackingFields.SetValue(() => BitmapImage, value); }
+            get { return BackingFields.GetValue<BitmapImage>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public DateTime? CreatedTime
         {
-            get { return BackingFields.GetValue(() => CreatedTime); }
-            private set { BackingFields.SetValue(() => CreatedTime, value); }
+            get { return BackingFields.GetValue<DateTime?>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         public DateTime? AdjustedTime
         {
-            get { return BackingFields.GetValue(() => AdjustedTime); }
-            private set { BackingFields.SetValue(() => AdjustedTime, value); }
+            get { return BackingFields.GetValue<DateTime?>(); }
+            private set { BackingFields.SetValue(value); }
         }
 
         private void OnFileListViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

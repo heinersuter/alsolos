@@ -1,16 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Threading.Tasks;
+using Alsolos.Photo.Renamer.Model;
+
 namespace Alsolos.Photo.Renamer.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Threading.Tasks;
-    using Alsolos.Photo.Renamer.Model;
-
     public class FileRenameService
     {
-        private readonly FileSystemService _fileSystemService;
         private readonly FileMetaDataService _fileMetaDataService;
+        private readonly FileSystemService _fileSystemService;
 
         public FileRenameService()
         {
@@ -24,7 +24,7 @@ namespace Alsolos.Photo.Renamer.Services
         {
             DoAbort = false;
 
-            for (var i = 0; i < files.Count && !DoAbort; i++)
+            for (var i = 0; (i < files.Count) && !DoAbort; i++)
             {
                 var file = files[i];
                 var directory = Path.GetDirectoryName(file.FullName);
@@ -35,10 +35,7 @@ namespace Alsolos.Photo.Renamer.Services
                 var newFileName = CalculateNewFileName(file.CreatedTime, i, files.Count, timeOffset, constantName);
                 var newFullName = Path.Combine(directory ?? string.Empty, newFileName);
                 _fileSystemService.RenameFile(file, newFullName, files);
-                if (progress != null)
-                {
-                    progress.Report((i + 1.0) / files.Count);
-                }
+                progress?.Report((i + 1.0) / files.Count);
             }
         }
 

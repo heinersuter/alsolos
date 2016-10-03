@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:View="clr-namespace:Alsolos.Photo.Renamer.View" 
-        xmlns:i18n="clr-namespace:Alsolos.Commons.I18N;assembly=Alsolos.Commons"
+        xmlns:i18n="clr-namespace:Alsolos.Commons.Wpf.I18N;assembly=Alsolos.Commons.Wpf"
         xmlns:Renamer="clr-namespace:Alsolos.Photo.Renamer"
-        xmlns:simpleStretchPanel="clr-namespace:Alsolos.Commons.Controls.SimpleStretchPanel;assembly=Alsolos.Commons"
+        xmlns:simpleStretchPanel="clr-namespace:Alsolos.Commons.Wpf.Controls.SimpleStretchPanel;assembly=Alsolos.Commons.Wpf"
         Title="{Binding Title}" Height="512" Width="1024" 
         mc:Ignorable="d" d:DataContext="{d:DesignInstance View:FileRenameViewModel}">
     <Window.DataContext>

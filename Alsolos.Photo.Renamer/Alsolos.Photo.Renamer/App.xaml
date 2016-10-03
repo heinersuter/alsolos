@@ -6,8 +6,8 @@
         <ResourceDictionary>
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Alsolos.Commons;component/Styles/Styles.xaml"/>
-                <ResourceDictionary Source="/Alsolos.Commons;component/Mvvm/Converters/Converters.xaml"/>
+                <ResourceDictionary Source="/Alsolos.Commons.Wpf;component/Styles/Styles.xaml"/>
+                <ResourceDictionary Source="/Alsolos.Commons.Wpf;component/Mvvm/Converters/Converters.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
