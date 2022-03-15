@@ -3,43 +3,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:View="clr-namespace:Alsolos.Photo.Renamer.View" 
-        xmlns:i18n="clr-namespace:Alsolos.Commons.Wpf.I18N;assembly=Alsolos.Commons.Wpf"
-        xmlns:Renamer="clr-namespace:Alsolos.Photo.Renamer"
-        xmlns:simpleStretchPanel="clr-namespace:Alsolos.Commons.Wpf.Controls.SimpleStretchPanel;assembly=Alsolos.Commons.Wpf"
+        xmlns:view="clr-namespace:Alsolos.Photo.Renamer.View"
+        xmlns:renamer="clr-namespace:Alsolos.Photo.Renamer"
+        xmlns:simpleStretchPanel="http://alsolos.ch/Commons/Wpf"
+        xmlns:i18N="clr-namespace:Alsolos.Commons.Wpf.I18N;assembly=Alsolos.Commons.Wpf"
         Title="{Binding Title}" Height="512" Width="1024" 
-        mc:Ignorable="d" d:DataContext="{d:DesignInstance View:FileRenameViewModel}">
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance view:FileRenameViewModel}">
     <Window.DataContext>
-        <Renamer:MainViewModel />
+        <renamer:MainViewModel />
     </Window.DataContext>
 
     <UniformGrid Columns="4">
 
         <Border Background="LightBlue" Margin="0 0 8 0">
             <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
-                <TextBlock Text="{i18n:Translate Area_FileList}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
-                <View:FileListView DataContext="{Binding FileRenameViewModel.FileListViewModel}" />
+                <TextBlock Text="{i18N:Translate Area_FileList}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <view:FileListView DataContext="{Binding FileRenameViewModel.FileListViewModel}" />
             </simpleStretchPanel:SimpleStretchPanel>
         </Border>
 
         <Border Background="LightBlue" Margin="0 0 8 0">
             <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
-                <TextBlock Text="{i18n:Translate Area_Parameter}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
-                <View:ParameterView DataContext="{Binding FileRenameViewModel.ParameterViewModel}" />
+                <TextBlock Text="{i18N:Translate Area_Parameter}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <view:ParameterView DataContext="{Binding FileRenameViewModel.ParameterViewModel}" />
             </simpleStretchPanel:SimpleStretchPanel>
         </Border>
 
         <Border Background="LightBlue" Margin="0 0 8 0">
             <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
-                <TextBlock Text="{i18n:Translate Area_Preview}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
-                <View:FilePreviewView DataContext="{Binding FileRenameViewModel.FilePreviewViewModel}" />
+                <TextBlock Text="{i18N:Translate Area_Preview}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <view:FilePreviewView DataContext="{Binding FileRenameViewModel.FilePreviewViewModel}" />
             </simpleStretchPanel:SimpleStretchPanel>
         </Border>
 
         <Border Background="LightBlue" Margin="0">
             <simpleStretchPanel:SimpleStretchPanel Mode="VerticalStretchBottom">
-                <TextBlock Text="{i18n:Translate Area_Execute}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
-                <View:ExecuteView DataContext="{Binding FileRenameViewModel.ExecuteViewModel}" />
+                <TextBlock Text="{i18N:Translate Area_Execute}" HorizontalAlignment="Center" FontSize="16" FontWeight="DemiBold" Margin="8 4 8 8" />
+                <view:ExecuteView DataContext="{Binding FileRenameViewModel.ExecuteViewModel}" />
             </simpleStretchPanel:SimpleStretchPanel>
         </Border>
 
